@@ -6,6 +6,9 @@ const customerSchema = mongoose.Schema({
         required: true,
         unique: true
     },
+    mobile: {
+        type: String,
+    },
     name: {
         type: String,
         required: true
@@ -18,12 +21,16 @@ const customerSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    tableSize: {
+        type: String,
+        required: true
+    },
     exitTime: {
         type: String
     },
     order: [{
-        itemName: {
-            type: String,
+        itemId: {
+            type: Number,
             required
         },
         qty: {
@@ -39,7 +46,8 @@ const customerSchema = mongoose.Schema({
         type: Number
     },
     date: {
-        type: Date
+        type: String,
+        required: true
     }
 }, {
     timestamps: true

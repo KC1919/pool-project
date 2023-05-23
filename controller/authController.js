@@ -1,4 +1,3 @@
-const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
@@ -20,24 +19,20 @@ module.exports.register = async (req, res) => {
 
         const newUser = new User(userData);
 
-        const result = await newUser.save();
-        
-        if (result == null) {
-            console.log('Failed to create user');
+        newUser.save().then(response => {
             res.status(401).json({
                 message: 'Failed to create user',
                 success: false,
             })
-        } else {
-            console.log('User created successfully');
+        })
+        .catch(error => {
             res.status(200).json({
                 message: 'User created successfully',
                 success: true
             })
-        }
+        });
 
     } catch (error) {
-        console.log('Internal server error', error);
         res.status(500).json({
             message: 'Failed to create user',
             success: false,
@@ -81,14 +76,12 @@ module.exports.login = async (req, res) => {
                 });
 
             } else {
-                console.log('Invaid password');
                 res.status(401).json({
                     message: 'Invalid password',
                     success: false
                 });
             }
         } else {
-            console.log('Invalid email');
             res.status(401).json({
                 message: 'Invalid email',
                 success: false
