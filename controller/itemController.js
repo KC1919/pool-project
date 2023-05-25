@@ -14,67 +14,19 @@ module.exports.addItem = async (req, res) => {
 
         //if item with same name already exists
         if (itemPresent != null) {
-
-            //if item with same size already exists, then no need to add again
-
-            let sizePresent = false;
-
-            //checking if the item property we are trying to add already exists
-            for (let i = 0; i < itemPresent.props.length; i++) {
-                if (itemPresent.props[i].size == itemData.size) {
-                    sizePresent = true;
-                    break;
-                }
-            }
-
-            if (sizePresent == true) {
-                res.json({
-                    message: "Item already exists",
-                    success: false
-                });
-            } else {
-
-                //create a properties object for the current item with different size,
-                //but with same name
-
-                const itemProps = {
-                    "size": itemData.size,
-                    "qty": itemData.qty,
-                    "sellPrice": itemData.sellPrice,
-                    "costPrice": itemData.costPrice,
-                }
-
-                //push the props object to the existing array of properties of the item
-                itemPresent.props.push(itemProps);
-
-                //update the item properties 
-                Item.findOneAndUpdate({
-                    "itemId": itemPresent.itemId
-                }, itemPresent).then(result => {
-                    res.status(200).json({
-                        message: "Item added",
-                        success: true,
-                        result: result
-                    });
-                }).catch(error => {
-                    res.status(401).json({
-                        message: "Failed to add Item",
-                        success: false,
-                        error: error.message
-                    });
-                });
-            }
+            res.json({
+                message: "Item already exists",
+                success: false
+            });
         } else {
 
             //item details object
             const itemDetails = {
                 name: itemData.name.toUpperCase(),
-                props: {
-                    size: itemData.size,
-                    costPrice: parseInt(itemData.costPrice),
-                    sellPrice: parseInt(itemData.sellPrice),
-                    qty: parseInt(itemData.qty)
-                }
+                size: itemData.size,
+                costPrice: parseInt(itemData.costPrice),
+                sellPrice: parseInt(itemData.sellPrice),
+                qty: parseInt(itemData.qty)
             }
 
             //creating new item
@@ -95,9 +47,6 @@ module.exports.addItem = async (req, res) => {
                 });
             })
         }
-
-
-
     } catch (error) {
         res.status(500).json({
             message: "Failed to add Item, server error",
@@ -120,12 +69,20 @@ module.exports.removeItem = async (req, res) => {
                     $in: itemIds
                 }
             }).then((result) => {
-                console.log(result);
-                res.status(200).json({
-                    message: 'Item removed',
-                    success: true,
-                    result: result
-                });
+                if (result.deletedCount == 0) {
+                    res.status(400).json({
+                        message: 'Item does not exist',
+                        success: false,
+                        result: result
+                    });
+                } else {
+                    res.status(200).json({
+                        message: 'Item removed',
+                        success: true,
+                        result: result
+                    });
+                }
+
             }).catch((error) => {
                 res.status(401).json({
                     message: 'Failed to remove item',
@@ -153,25 +110,32 @@ module.exports.updateItem = async (req, res) => {
     try {
         const itemData = req.body;
 
-
         const itemUpdate = {
             "name": itemData.name,
-            "props": {
-                "size": itemData.size,
-                "sellPrice": itemData.sellPrice,
-                "costPrice": itemData.costPrice,
-                "qty": itemData.qty
-            }
+            "sellPrice": itemData.sellPrice,
+            "costPrice": itemData.costPrice,
+            "qty": itemData.qty
         }
 
-        await Item.findOneAndUpdate({
+        //update the item details
+        Item.findOneAndUpdate({
             itemId: itemData.itemId
         }, itemUpdate).then((result) => {
-            res.status(200).json({
-                message: 'Item updated',
-                success: true,
-                result: result
-            });
+
+            //if item exist
+            if (result != null) {
+                res.status(200).json({
+                    message: 'Item updated',
+                    success: true,
+                    result: result
+                });
+            } else {
+                res.status(400).json({
+                    message: 'Item does not exists',
+                    success: false,
+                    result: result
+                });
+            }
         }).catch((error) => {
             res.status(401).json({
                 message: 'Failed to update item',
