@@ -15,22 +15,24 @@ module.exports.register = async (req, res) => {
             name: user.name,
             email: user.email,
             password: hashPass,
+            isAdmin: user.isAdmin ? user.isAdmin : false
         }
 
         const newUser = new User(userData);
 
         newUser.save().then(response => {
-            res.status(401).json({
-                message: 'Failed to create user',
-                success: false,
+                res.status(200).json({
+                    message: 'User created successfully',
+                    success: true
+                })
             })
-        })
-        .catch(error => {
-            res.status(200).json({
-                message: 'User created successfully',
-                success: true
-            })
-        });
+            .catch(error => {
+                res.status(401).json({
+                    message: 'Failed to create user',
+                    success: false,
+                    error: error.message
+                })
+            });
 
     } catch (error) {
         res.status(500).json({

@@ -9,7 +9,8 @@ app.use(express.urlencoded({
 }));
 
 const authRouter = require('./routes/authRoutes');
-const customRouter = require('./routes/customerRoutes');
+const itemRouter = require('./routes/itemRoutes');
+const customRouter= require('./routes/customerRoutes');
 
 const cookieParser = require('cookie-parser');
 
@@ -24,6 +25,7 @@ app.set('view-engine', ejs);
 app.use(cookieParser());
 
 app.use('/auth', authRouter);
+app.use('/item', itemRouter);
 app.use('/customer', customRouter);
 
 app.listen(PORT, (err) => {

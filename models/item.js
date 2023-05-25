@@ -11,19 +11,24 @@ const itemSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    qty: {
-        type: Number,
-        required: true,
-        default: 0
-    },
-    costPrice: {
-        type: Number,
-        required: true
-    },
-    sellPrice: {
-        type: Number,
-        required: true
-    }
+    props: [{
+        size: String,
+        costPrice: {
+            type: Number,
+            required: true
+        },
+        sellPrice: {
+            type: Number,
+            required: true
+        },
+        qty: {
+            type: Number,
+            required: true,
+            default: 0
+        },
+    }]
+}, {
+    timestamps: true
 })
 
 const Item = mongoose.model('items', itemSchema);

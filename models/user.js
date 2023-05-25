@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema({
     },
     email: {
         type: String,
+        required: true,
         unique: true
     },
     mobile: {
@@ -17,6 +18,10 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         minLength: 8,
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     },
     resetToken: {
         type: String

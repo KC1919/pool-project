@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const customController = require('../controller/customerController');
+const verifyUser = require('../middleware/verify');
 
 router
-    .post('/addItem', customController.addItem)
-    .delete('/removeItem/:id', customController.removeItem)
-    .patch('/updateItem', customController.updateItem)
+    .post('/addCustomer', verifyUser, customController.addCustomer);
 
 
 module.exports = router;

@@ -31,7 +31,10 @@ const customerSchema = mongoose.Schema({
     order: [{
         itemId: {
             type: Number,
-            required
+            required: true
+        },
+        size: {
+            type: String
         },
         qty: {
             type: Number,
