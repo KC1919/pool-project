@@ -33,9 +33,6 @@ const customerSchema = mongoose.Schema({
             type: Number,
             required: true
         },
-        size: {
-            type: String
-        },
         qty: {
             type: Number,
             required: true,
@@ -46,7 +43,11 @@ const customerSchema = mongoose.Schema({
         }
     }],
     totalAmount: {
-        type: Number
+        type: Number,
+        default: 0
+    },
+    paymentMode: {
+        type: String
     },
     date: {
         type: String,

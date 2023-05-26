@@ -4,8 +4,10 @@ module.exports.addCustomer = async (req, res) => {
     try {
         const data = req.body;
 
+        //creating new customer
         const customer = new Customer(data);
 
+        //saving the customer in the database
         customer.save().then(result => {
             res.status(200).json({
                 message: "Customer created",
