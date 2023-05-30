@@ -38,8 +38,10 @@ const customerSchema = mongoose.Schema({
             required: true,
             default: 0
         },
-        price: {
-            type: Number
+        amount: {
+            type: Number,
+            required: true,
+            default: 0
         }
     }],
     totalAmount: {
@@ -52,7 +54,7 @@ const customerSchema = mongoose.Schema({
     date: {
         type: String,
         required: true
-    }
+    },
 }, {
     timestamps: true
 })

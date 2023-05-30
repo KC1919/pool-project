@@ -10,7 +10,11 @@ app.use(express.urlencoded({
 
 const authRouter = require('./routes/authRoutes');
 const itemRouter = require('./routes/itemRoutes');
-const customRouter= require('./routes/customerRoutes');
+const customRouter = require('./routes/customerRoutes');
+const orderRouter = require('./routes/orderRoutes');
+const saleRouter = require('./routes/saleRoutes');
+const tableRouter = require('./routes/tableRoutes');
+const membershipRouter = require('./routes/membershipRoutes');
 
 const cookieParser = require('cookie-parser');
 
@@ -27,6 +31,10 @@ app.use(cookieParser());
 app.use('/auth', authRouter);
 app.use('/item', itemRouter);
 app.use('/customer', customRouter);
+app.use('/order', orderRouter);
+app.use('/sale', saleRouter);
+app.use('/table', tableRouter);
+app.use('/membership', membershipRouter);
 
 app.listen(PORT, (err) => {
     console.log('Server listening on port: ' + PORT);

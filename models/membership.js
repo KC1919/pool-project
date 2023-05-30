@@ -9,7 +9,7 @@ const memberSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    points: {
+    credit: {
         type: Number,
         required: true,
         default: 0
