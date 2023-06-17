@@ -30,3 +30,18 @@ module.exports.addCustomer = async (req, res) => {
         })
     }
 }
+
+module.exports.allCustomers = async (req, res) => {
+    try {
+        const customers = await Customer.find({}).lean();
+
+        // console.log(customers);
+
+        res.render("customer.ejs", {
+            "customers": customers
+        });
+
+    } catch (error) {
+        console.log("Failed to fetch customers");
+    }
+}

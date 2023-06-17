@@ -4,7 +4,8 @@ const customController = require('../controller/customerController');
 const verifyUser = require('../middleware/verify');
 
 router
-    .post('/addCustomer', verifyUser, customController.addCustomer);
+    .get('/allCustomers', customController.allCustomers)
+    .post('/addCustomer', customController.addCustomer)
 
 
 module.exports = router;

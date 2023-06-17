@@ -10,5 +10,6 @@ router
     .post('/addMembership', verifyUser, membershipController.addMembership)
     .patch('/addCredit', verifyUser, membershipController.addCredit)
     .post('/applyMembership', verifyUser, membershipController.applyMembership)
+    .delete('/removeMembership', verifyUser, membershipController.removeMembership)
 
 module.exports = router;

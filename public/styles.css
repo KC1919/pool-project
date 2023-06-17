@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+.table-row {
+    transition: 0.3s;
+    opacity: 0.6;
+}
+
+.table-row:hover {
+    opacity: 1;
+    cursor: pointer;
+    zoom: 105%;
+}

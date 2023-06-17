@@ -72,10 +72,12 @@ module.exports.login = async (req, res) => {
 
                 // res.redirect('/customers');
 
-                res.status(200).json({
-                    message: 'User logged in successfully',
-                    success: true
-                });
+                // res.status(200).json({
+                //     message: 'User logged in successfully',
+                //     success: true
+                // });
+
+                res.redirect('/customer/allCustomers');
 
             } else {
                 res.status(401).json({
@@ -96,5 +98,13 @@ module.exports.login = async (req, res) => {
             success: false,
             error: error.message
         });
+    }
+}
+
+module.exports.getLogin = async (req, res) => {
+    try {
+        res.render('login.ejs');
+    } catch (error) {
+        console.log("Failed to load login page");
     }
 }

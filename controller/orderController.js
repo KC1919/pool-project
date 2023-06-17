@@ -186,6 +186,8 @@ module.exports.completeOrder = async (req, res) => {
         //human readable format for end time
         const endTime = date.toLocaleTimeString();
 
+        // console.log(endTime);
+
 
         //fetching customer details
         const customer = await Customer.findOne({

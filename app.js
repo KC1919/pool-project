@@ -2,6 +2,20 @@ const express = require('express');
 const app = express();
 const ejs = require('ejs');
 const PORT = 3000;
+const path=require('path')
+
+
+const cookieParser = require('cookie-parser');
+
+require('dotenv').config({
+    path: './config/.env'
+});
+
+const connectDb = require('./config/db');
+
+app.set('view-engine', ejs);
+app.use(express.static("public"));
+app.use(cookieParser());
 
 app.use(express.json());
 app.use(express.urlencoded({
@@ -15,18 +29,6 @@ const orderRouter = require('./routes/orderRoutes');
 const saleRouter = require('./routes/saleRoutes');
 const tableRouter = require('./routes/tableRoutes');
 const membershipRouter = require('./routes/membershipRoutes');
-
-const cookieParser = require('cookie-parser');
-
-require('dotenv').config({
-    path: './config/.env'
-});
-
-const connectDb = require('./config/db');
-
-app.use(express.static('public'));
-app.set('view-engine', ejs);
-app.use(cookieParser());
 
 app.use('/auth', authRouter);
 app.use('/item', itemRouter);

@@ -184,3 +184,49 @@ module.exports.applyMembership = async (req, res) => {
         });
     }
 }
+
+module.exports.removeMembership = async (req, res) => {
+    try {
+        const custMobile = req.body.mobile;
+
+        const memship = await Membership.findOne({
+            'mobile': custMobile
+        });
+
+        if (memship != null) {
+            Membership.findOneAndRemove({
+                'mobile': custMobile
+            }).then(result => {
+                if (result != null) {
+                    res.status(200).json({
+                        message: 'Membership removed successfully',
+                        success: true
+                    })
+                } else {
+                    res.status(400).json({
+                        message: 'Failed to remove Membership',
+                        success: false
+                    })
+                }
+            }).catch(error => {
+                res.status(400).json({
+                    message: 'Failed to remove Membership',
+                    success: false,
+                    error: error.message
+                })
+            })
+        } else {
+            res.status(400).json({
+                message: 'Membership not found',
+                success: false
+            })
+        }
+
+    } catch (error) {
+        res.status(500).json({
+            message: 'Failed to remove Membership',
+            success: false,
+            error: error.message
+        })
+    }
+}
