@@ -97,7 +97,7 @@ body {
     left: 35vw;
     /* bottom: 50%; */
     background-color:#D2F0FC;
-    /* display: none; */
+    display: none;
     z-index: 1;
     padding: 1rem 2rem;
     border-radius: 5px;
@@ -107,3 +107,20 @@ body {
     width: fit-content;
     margin: 0 auto;
 }
+
+.form-close-btn-div{
+    position: relative;
+    display: flex;
+    align-items: center;
+    left: 95%;
+    top: 20%;
+    width: fit-content;
+    height: 3vh;
+
+    :hover{
+        transition: 2ms;
+        cursor: pointer;
+        zoom: 110%;
+    }
+}
+

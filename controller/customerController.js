@@ -4,6 +4,14 @@ module.exports.addCustomer = async (req, res) => {
     try {
         const data = req.body;
 
+        const count = await Customer.countDocuments();
+
+        data.cid = count + 1;
+
+        // console.log(data);
+
+        data.entryTime = new Date().getTime();
+
         //creating new customer
         const customer = new Customer(data);
 
@@ -17,7 +25,7 @@ module.exports.addCustomer = async (req, res) => {
         }).catch(error => {
             res.status(401).json({
                 message: "Failed to create customer",
-                success: true,
+                success: false,
                 error: error.message
             })
         })
@@ -33,7 +41,7 @@ module.exports.addCustomer = async (req, res) => {
 
 module.exports.allCustomers = async (req, res) => {
     try {
-        const customers = await Customer.find({}).lean();
+        const customers = await Customer.find({}).lean().sort({"cid":-1});
 
         // console.log(customers);
 

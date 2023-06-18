@@ -13,6 +13,9 @@ const customerSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    time: {
+        type: String
+    },
     entryTime: {
         type: String,
         required: true
