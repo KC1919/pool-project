@@ -20,11 +20,9 @@ function handleNewCustomer(e) {
         // console.log(e.target);
 
         const table = document.getElementById('table');
-        console.log(table);
+        // console.log(table);
         const tableBody = document.getElementById('table-body');
 
-        // if (tableBody.children.length == 0) {
-        console.log("hello");
         const newTableRow = document.createElement('tr');
         newTableRow.setAttribute("class", "table-row");
         const th = document.createElement('th');
@@ -33,7 +31,7 @@ function handleNewCustomer(e) {
 
         const saveBtn=document.getElementById('save-btn')
 
-        console.log(saveBtn);
+        // console.log(saveBtn);
 
         th.innerHTML = "101";
 
@@ -90,10 +88,17 @@ function handleNewCustomer(e) {
     }
 }
 
-// function handleNewCustomer(e) {
-//     try {
+function handleNewCustomer(e) {
+    try {
+        const table = document.getElementById('table');
+        
+        const tableBody = document.getElementById('table-body');
 
-//     } catch (error) {
+        const newTableRow = document.createElement('tr');
+        newTableRow.setAttribute("class", "table-row");
 
-//     }
-// }
+
+    } catch (error) {
+
+    }
+}
