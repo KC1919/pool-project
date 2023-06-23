@@ -1,0 +1,50 @@
+body{
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.order-header-div {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    /* margin-top: 1rem; */
+    margin-bottom: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    background-color: #1c305c;
+    padding: 0.5rem;
+}
+
+.heading-div {
+    width: fit-content;
+    margin: 0 auto;
+    display: inline-block;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.add-customer-div {
+    text-align: center;
+    align-items: center;
+    position: absolute;
+    right: 2rem;
+    width: fit-content;
+    display: inline-block;
+    margin: 1rem 1rem;
+}
+
+.new-customer-btn{
+    background-color: #D2F0FC;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    width: fit-content;
+    height: 5vh;
+}
+
+.new-customer-btn:hover{
+    transition-duration: 1s;
+    zoom: 103%;
+}
