@@ -1,14 +1,26 @@
-function handleCustomerClick(e) {
+const socket = io('/');
+
+let customerId;
+
+// socket.on('message', data=>{
+//     console.log(data);
+// })
+
+async function handleCustomerClick(e) {
     try {
 
         const elemId = e.target.id;
-        const elem = document.getElementById('table-row-' + elemId);
+    
+        // console.log(elemId);
+        // const elem = document.getElementById('table-row-' + elemId);
         // console.log(elem);
 
-        for (let i = 0; i < elem.children.length - 1; i++) {
-            const child = elem.children[i];
-            console.log(child.innerHTML);
-        }
+        // for (let i = 0; i < elem.children.length - 1; i++) {
+        //     const child = elem.children[i];
+        //     console.log(child.innerHTML);
+        // }
+
+        window.location.href=`http://localhost:3000/order/orderItem/${elemId}`
 
     } catch (error) {
         console.log(error);
@@ -110,7 +122,7 @@ function closeForm(e) {
     }
 }
 
-function saveCustomer(e) {
+async function saveCustomer(e) {
     try {
         e.preventDefault();
 
@@ -139,9 +151,6 @@ function saveCustomer(e) {
         //creating new row with customer data
         const table = document.getElementById('table');
         const tableBody = document.getElementById('table-body');
-
-
-        const viewBtn = '<button class="view-btn" id="view-btn" onclick = "handleCustomerClick(event)" > View </button>'
 
         // console.log(viewBtn);
 
@@ -178,17 +187,24 @@ function saveCustomer(e) {
             newTableRow.appendChild(td);
         }
 
+        const viewBtn = document.createElement('button');
+        viewBtn.setAttribute('class', 'view-btn');
+        viewBtn.setAttribute('onclick', handleCustomerClick)
+        viewBtn.innerHTML = "View";
+
         const td = document.createElement('td');
-        td.innerHTML = viewBtn;
+        td.appendChild(viewBtn);
         newTableRow.append(td);
+
+        // console.log(tableBody.children.length);
 
         if (tableBody.children.length == 0) {
             // console.log(tableBody);
             tableBody.appendChild(newTableRow);
-            saveCustomerToDb(customerData);
+            saveCustomerToDb(customerData, viewBtn);
         } else {
             tableBody.insertBefore(newTableRow, tableBody.firstChild);
-            saveCustomerToDb(customerData);
+            saveCustomerToDb(customerData, viewBtn);
         }
 
     } catch (error) {
@@ -196,10 +212,10 @@ function saveCustomer(e) {
     }
 }
 
-async function saveCustomerToDb(customerData) {
+async function saveCustomerToDb(customerData, viewBtn) {
     try {
 
-        console.log(customerData);
+        // console.log(customerData);
         const response = await fetch("http://localhost:3000/customer/addCustomer", {
             method: "POST",
             headers: {
@@ -210,7 +226,12 @@ async function saveCustomerToDb(customerData) {
 
         const json = await response.json();
 
+        viewBtn.setAttribute('id', json.result.cid);
+
+        console.log(viewBtn);
+
         console.log(json);
+
     } catch (error) {
         console.log("Failed to save customer to database", error);
     }
