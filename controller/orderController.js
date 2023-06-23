@@ -1,5 +1,6 @@
 const Customer = require('../models/customer');
 const Table = require('../models/table');
+const Item = require('../models/item');
 
 module.exports.getCustomerOrder = async (req, res) => {
     try {
@@ -8,15 +9,44 @@ module.exports.getCustomerOrder = async (req, res) => {
         const cid = req.params.cid;
 
         //fetching customer order details using the "customer id" from the db
-        const orderData = await Customer.findOne({
+        const customer = await Customer.findOne({
             'cid': cid
         });
 
-        res.render('orderPage', {
-            'orderData': orderData
+        let items = [];
+
+        const customerOrder = customer.order;
+
+        customerOrder.forEach(async item => {
+            items.push(item.itemId);
+        })
+
+        // console.log(customerOrder);
+
+        // console.log(items);
+
+        const itemData = await Item.find({
+            "itemId": {
+                $in: items
+            }
+        }, {
+            "_id": 0,
+            "name": 1,
+            "costPrice": 1,
+            "sellPrice": 1,
+            "itemId": 1
+        })
+
+        console.log(itemData);
+
+        console.log(customerOrder);
+
+        res.render('order.ejs', {
+            'orderData': customerOrder
         });
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             message: "Order not found, server error",
             error: error.message

@@ -4,7 +4,7 @@ const verifyUser = require('../middleware/verify');
 const router = express.Router();
 
 router
-    .get('/orderItem/:cid', verifyUser)
+    .get('/orderItem/:cid', verifyUser, orderController.getCustomerOrder)
     .post('/addItem', verifyUser, orderController.addToOrder)
     .post('/completeOrder', verifyUser, orderController.completeOrder)
 

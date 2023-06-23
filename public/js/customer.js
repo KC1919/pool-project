@@ -211,8 +211,6 @@ async function saveCustomerToDb(customerData) {
         const json = await response.json();
 
         console.log(json);
-
-        console.log(json);
     } catch (error) {
         console.log("Failed to save customer to database", error);
     }
