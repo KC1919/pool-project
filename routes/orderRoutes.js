@@ -4,8 +4,9 @@ const verifyUser = require('../middleware/verify');
 const router = express.Router();
 
 router
-    .get('/orderItem/:cid', verifyUser, orderController.getCustomerOrder)
-    .post('/addItem', verifyUser, orderController.addToOrder)
+    .get('/customerOrder/:cid', verifyUser, orderController.getCustomerOrder)
+    .post('/orderItem', verifyUser, orderController.addToOrder)
     .post('/completeOrder', verifyUser, orderController.completeOrder)
+    .delete('/removeItem', verifyUser, orderController.removeItem)
 
 module.exports = router;

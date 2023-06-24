@@ -18,6 +18,9 @@
 </head>
 <body>
     <div class="order-header-div">
+      <div class="back-btn-div">
+        <button class="back-btn" type="button" onclick="customersPage(event)">Back</button>
+      </div>
       <div class="heading-div">
         <h1 style="width: fit-content;">Order</h1>
       </div>
@@ -30,6 +33,7 @@
         <table class="table text-center" id="table">
             <thead class="thead-dark">
               <tr>
+                <!-- <th scope="col">#</th> -->
                 <th scope="col">Item</th>
                 <th scope="col">Price/item</th>
                 <th scope="col">Qty.</th>
@@ -43,6 +47,13 @@
                   <td><%=item.sellPrice%></td>
                   <td><%=item.qty%></td>
                   <td><%=item.sellPrice*item.qty%></td>
+
+                  <td>
+                    <button class="remove-btn" id=<%=item.itemId%> type="button" onclick="removeItem(event)">
+                      remove
+                    </button>
+                  </td>
+
               </tr>
               <%})%>
       
@@ -59,8 +70,9 @@
               <div class="form-group form-input-div">
                   <label for="item-name">Select Item</label>
                   <select class="form-select select-item" name="" id="select-item">
+                    <option value="select" selected>Select</option>
                     <% items.forEach(item=>{%>
-                    <option id=<%=item.itemId%> value=<%=item.name%>><%=item.name%></option>
+                      <option id=<%=item.itemId%> value=<%=item.name%>><%=item.name%></option>
                   <%})%>
                   </select>
               </div> 
@@ -84,8 +96,8 @@
     ></script>
 
     <script type="text/javascript">
-      const items = `<%=items%>`;
-      console.log(items);
+      const items = <%-JSON.stringify(items)%>;
+      const cid = <%-cid%>
     </script>
 
     <script src="/js/order.js"></script>

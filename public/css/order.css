@@ -45,6 +45,25 @@ body {
     height: 5vh;
 }
 
+.back-btn-div{
+    text-align: center;
+    align-items: center;
+    position: absolute;
+    left: 2rem;
+    width: fit-content;
+    display: inline-block;
+    margin: 1rem 1rem;
+}
+
+.back-btn {
+    background-color: #D2F0FC;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    width: 5vw;
+    height: 5vh;
+}
+
 .new-order-btn:hover{
     transition-duration: 1s;
     zoom: 103%;
@@ -61,12 +80,12 @@ body {
     /* zoom: 105%; */
 }
 
-.view-btn {
+.remove-btn {
     background-color: #D2F0FC;
     border: none;
     border-radius: 5px;
     color: black;
-    width: 3.5vw;
+    width: fit-content;
     height: 4vh;
 }
 

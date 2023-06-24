@@ -10,6 +10,14 @@ function handleNewOrder(e) {
     }
 }
 
+async function customersPage(e) {
+    try {
+        window.location.href = "http://localhost:3000/customer/allCustomers";
+    } catch (error) {
+        console.log("Cannot go to customers page");
+    }
+}
+
 function closeForm(e) {
     try {
         const formDivElem = document.getElementById('new-order-form-div');
@@ -32,86 +40,138 @@ async function placeOrder(e) {
         const itemId = item.options[item.selectedIndex].id;
         const itemQty = document.getElementById("item-qty").value;
 
-
-        const orderData = {
-            itemName,
-            itemId,
-            itemQty
-        };
-
-        // console.log(orderData);
-        // console.log(items);
-
         let pricePerItem;
-        // for (let i = 0; i < itemsArr.length; i++) {
-        //     if (itemsArr[i].itemId == itemId) {
-        //         pricePerItem = itemsArr[i].sellPrice;
-        //         break;
-        //     }
-        // }
-
-        console.log(pricePerItem);
-
-        orderForm.reset();
-        // closeForm(null);
-
-        //creating new row with customer data
-        const tableBody = document.getElementById('table-body');
-
-        const newTableRow = document.createElement('tr');
-        newTableRow.setAttribute("class", "table-row");
-        const th = document.createElement('th');
-
-        if (tableBody.children.length == 0) {
-            th.innerHTML = "1"
-        } else {
-            const val = tableBody.children.length;
-            const oid = parseInt(val) + 1;
-            th.innerHTML = oid;
+        let totalQty;
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].itemId == itemId) {
+                pricePerItem = items[i].sellPrice;
+                totalQty = items[i].qty;
+                break;
+            }
         }
 
-        newTableRow.appendChild(th);
+        if (totalQty < itemQty) {
+            alert("Insufficient Stock for the selected item");
+        } else {
+            orderForm.reset();
+            // closeForm(null);
 
-        // for (let i = 0; i <= 3; i++) {
-        //     const td = document.createElement('td');
+            //creating new row with customer data
+            const tableBody = document.getElementById('table-body');
 
-        //     if (i == 0)
-        //         td.innerHTML = itemName;
-        //     else if (i == 1)
-        //         td.innerHTML = mobile;
-        //     else if (i == 2)
-        //         td.innerHTML = tableNumber;
-        //     else if (i == 3)
-        //         td.innerHTML = tableSize;
-        //     else if (i == 4)
-        //         td.innerHTML = date;
-        //     else if (i == 5)
-        //         td.innerHTML = time;
+            const newTableRow = document.createElement('tr');
+            newTableRow.setAttribute("class", "table-row");
 
-        //     newTableRow.appendChild(td);
-        // }
+            // const th = document.createElement('th');
 
-        // const viewBtn = document.createElement('button');
-        // viewBtn.setAttribute('class', 'view-btn');
-        // viewBtn.setAttribute('onclick', handleCustomerClick)
-        // viewBtn.innerHTML = "View";
+            // if (tableBody.children.length == 0) {
+            //     th.innerHTML = "1"
+            // } else {
+            //     const val = tableBody.children.length;
+            //     const oid = parseInt(val) + 1;
+            //     th.innerHTML = oid;
+            // }
 
-        // const td = document.createElement('td');
-        // td.appendChild(viewBtn);
-        // newTableRow.append(td);
+            // newTableRow.appendChild(th);
 
-        // // console.log(tableBody.children.length);
+            for (let i = 0; i <= 3; i++) {
+                const td = document.createElement('td');
 
-        // if (tableBody.children.length == 0) {
-        //     // console.log(tableBody);
-        //     tableBody.appendChild(newTableRow);
-        //     saveCustomerToDb(customerData, viewBtn);
-        // } else {
-        //     tableBody.insertBefore(newTableRow, tableBody.firstChild);
-        //     saveCustomerToDb(customerData, viewBtn);
-        // }
+                if (i == 0)
+                    td.innerHTML = itemName;
+                else if (i == 1)
+                    td.innerHTML = pricePerItem;
+                else if (i == 2)
+                    td.innerHTML = itemQty;
+                else if (i == 3)
+                    td.innerHTML = itemQty * pricePerItem;
+
+                newTableRow.appendChild(td);
+            }
+
+            const removeBtn = document.createElement('button');
+            removeBtn.setAttribute('class', 'remove-btn');
+            removeBtn.addEventListener('click', removeItem);
+            removeBtn.setAttribute('id', itemId);
+            removeBtn.innerHTML = "remove";
+
+            const td = document.createElement('td');
+            td.appendChild(removeBtn);
+            newTableRow.append(td);
+
+            newTableRow.setAttribute('id', 'table-row-' + itemId);
+
+            tableBody.appendChild(newTableRow);
+
+            console.log(cid);
+
+            const orderData = {
+                cid,
+                itemId,
+                itemQty,
+                'amount': itemQty * pricePerItem
+            };
+
+            saveOrderToDb(orderData);
+        }
 
     } catch (error) {
         console.log("Failed to add customer", error);
+    }
+}
+
+async function saveOrderToDb(orderData) {
+    try {
+        const response = await fetch('http://localhost:3000/order/orderItem', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(orderData)
+        })
+
+        const json = await response.json();
+
+        console.log(json);
+
+    } catch (error) {
+
+    }
+}
+
+async function removeItem(e) {
+    try {
+
+        const rowId = e.target.id;
+        const rowElem = document.getElementById('table-row-' + rowId);
+        const itemQty = rowElem.cells[2].innerHTML;
+        rowElem.remove();
+
+
+        removeItemFromDb(rowId, itemQty);
+
+    } catch (error) {
+        console.log('Failed to remove item', error);
+    }
+}
+
+async function removeItemFromDb(itemId, itemQty) {
+    try {
+        const response = await fetch('http://localhost:3000/order/removeItem', {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "itemId": itemId,
+                "itemQty": itemQty
+            })
+        })
+
+        const json = await response.json();
+
+        console.log(json);
+    } catch (error) {
+        console.log("Failed to remove item from order");
     }
 }

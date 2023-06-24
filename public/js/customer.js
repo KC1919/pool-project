@@ -20,7 +20,7 @@ async function handleCustomerClick(e) {
         //     console.log(child.innerHTML);
         // }
 
-        window.location.href=`http://localhost:3000/order/orderItem/${elemId}`
+        window.location.href=`http://localhost:3000/order/customerOrder/${elemId}`
 
     } catch (error) {
         console.log(error);
