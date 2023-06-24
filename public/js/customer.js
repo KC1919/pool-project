@@ -11,7 +11,7 @@ async function handleCustomerClick(e) {
 
         const elemId = e.target.id;
     
-        // console.log(elemId);
+        console.log(elemId);
         // const elem = document.getElementById('table-row-' + elemId);
         // console.log(elem);
 

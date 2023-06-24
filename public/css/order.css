@@ -1,6 +1,7 @@
-body{
-    box-sizing: border-box;
+body {
     margin: 0;
+    border: 0;
+    box-sizing: border-box;
 }
 
 .order-header-div {
@@ -25,7 +26,7 @@ body{
     justify-content: center;
 }
 
-.add-customer-div {
+.add-order-div {
     text-align: center;
     align-items: center;
     position: absolute;
@@ -35,7 +36,7 @@ body{
     margin: 1rem 1rem;
 }
 
-.new-customer-btn{
+.new-order-btn {
     background-color: #D2F0FC;
     border: none;
     border-radius: 5px;
@@ -44,7 +45,77 @@ body{
     height: 5vh;
 }
 
-.new-customer-btn:hover{
+.new-order-btn:hover{
     transition-duration: 1s;
     zoom: 103%;
+}
+
+.table-row {
+    transition: 0.3s;
+    opacity: 0.7;
+}
+
+.table-row:hover {
+    opacity: 1;
+    cursor: pointer;
+    /* zoom: 105%; */
+}
+
+.view-btn {
+    background-color: #D2F0FC;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    width: 3.5vw;
+    height: 4vh;
+}
+
+.item-qty-div {
+    display: flex;
+}
+
+.select-item {
+    cursor: pointer;
+}
+
+.form-input-div {
+    width: 60%;
+    margin: 1rem;
+    border-radius: 5px;
+}
+
+.order-form-div {
+    width: 30%;
+    height: fit-content;
+    margin: 0 auto;
+    position: absolute;
+    top: 22vh;
+    left: 35vw;
+    /* bottom: 50%; */
+    background-color: #D2F0FC;
+    display: none;
+    z-index: 1;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+}
+
+.order-btn {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.form-close-btn-div {
+    position: relative;
+    display: flex;
+    align-items: center;
+    left: 95%;
+    top: 20%;
+    width: fit-content;
+    height: 3vh;
+
+    :hover {
+        transition: 2ms;
+        cursor: pointer;
+        zoom: 110%;
+    }
 }

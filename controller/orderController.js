@@ -13,21 +13,25 @@ module.exports.getCustomerOrder = async (req, res) => {
             'cid': cid
         });
 
-        let items = [];
+        //array to store item ids
+        let itemIds = [];
 
+        //getting details of customer order
         const customerOrder = customer.order;
 
+        // storing the item ids from all the items in the order
         customerOrder.forEach(async item => {
-            items.push(item.itemId);
+            itemIds.push(item.itemId);
         })
 
         // console.log(customerOrder);
 
-        // console.log(items);
+        // console.log(itemIds);
 
+        //fetching the item details of all the items present in the order
         const itemData = await Item.find({
             "itemId": {
-                $in: items
+                $in: itemIds
             }
         }, {
             "_id": 0,
@@ -37,12 +41,39 @@ module.exports.getCustomerOrder = async (req, res) => {
             "itemId": 1
         })
 
-        console.log(itemData);
+        let itemsMap = new Map();
 
-        console.log(customerOrder);
+        //storing the item details in the map, for fater access and reduce complexity
+        itemData.forEach(item => {
+            itemsMap.set(item.itemId, item);
+        })
 
+
+        //array to store the updated order with item details for all the items in the order 
+        let updatedCustomerOrder = []
+
+        // customerOrder.forEach(order=>{
+
+        //updating each item details present in the order
+        for (let i = 0; i < customerOrder.length; i++) {
+            const itemData = itemsMap.get(customerOrder[i].itemId);
+            let newOrder = JSON.parse(JSON.stringify(customerOrder[i]));
+            newOrder.costPrice = itemData.costPrice;
+            newOrder.sellPrice = itemData.sellPrice;
+            newOrder.itemName = itemData.name;
+            updatedCustomerOrder.push(newOrder);
+        }
+
+        // console.log(updatedCustomerOrder);
+
+        const items = await Item.find({});
+
+        // console.log(items);
+
+        //sending the order details to the orders page of the customer
         res.render('order.ejs', {
-            'orderData': customerOrder
+            'orderData': updatedCustomerOrder,
+            'items': items
         });
 
     } catch (error) {
