@@ -168,7 +168,7 @@ async function saveCustomer(e) {
 
         newTableRow.appendChild(th);
 
-        for (let i = 0; i <= 5; i++) {
+        for (let i = 0; i <= 6; i++) {
             const td = document.createElement('td');
 
             if (i == 0)
@@ -183,13 +183,15 @@ async function saveCustomer(e) {
                 td.innerHTML = date;
             else if (i == 5)
                 td.innerHTML = time;
+            else if (i == 6)
+                td.innerHTML = "";
 
             newTableRow.appendChild(td);
         }
 
         const viewBtn = document.createElement('button');
         viewBtn.setAttribute('class', 'view-btn');
-        viewBtn.setAttribute('onclick', handleCustomerClick)
+        viewBtn.addEventListener('click', handleCustomerClick)
         viewBtn.innerHTML = "View";
 
         const td = document.createElement('td');
@@ -225,6 +227,8 @@ async function saveCustomerToDb(customerData, viewBtn) {
         })
 
         const json = await response.json();
+
+        console.log(json);
 
         viewBtn.setAttribute('id', json.result.cid);
 

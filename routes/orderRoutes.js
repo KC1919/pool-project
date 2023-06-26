@@ -8,5 +8,6 @@ router
     .post('/orderItem', verifyUser, orderController.addToOrder)
     .post('/completeOrder', verifyUser, orderController.completeOrder)
     .delete('/removeItem', verifyUser, orderController.removeItem)
+    .post('/finishOrder', verifyUser, orderController.finishOrder)
 
 module.exports = router;

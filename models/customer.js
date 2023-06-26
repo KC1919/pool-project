@@ -14,7 +14,8 @@ const customerSchema = mongoose.Schema({
         required: true
     },
     time: {
-        type: String
+        type: String,
+        required: true
     },
     entryTime: {
         type: String,
@@ -48,12 +49,20 @@ const customerSchema = mongoose.Schema({
             min: 0
         }
     }],
+    orderAmount: {
+        type: Number,
+        default: 0
+    },
     totalAmount: {
         type: Number,
         default: 0
     },
     paymentMode: {
         type: String
+    },
+    paymentStatus: {
+        type: Boolean,
+        default: false
     },
     date: {
         type: String,

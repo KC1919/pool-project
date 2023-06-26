@@ -1,9 +1,19 @@
 const Customer = require('../models/customer');
 const Table = require('../models/table');
 const Item = require('../models/item');
+const app = require('express')();
+const io = app.get("socketio");
+const Sale = require('../models/sale');
+
+
 
 module.exports.getCustomerOrder = async (req, res) => {
     try {
+
+        // const io = req.app.get("socketio")
+        // io.on('connection', socket => {
+        //     console.log("Client connected");
+        // })
 
         //extracting customer id from the request parameter
         const cid = req.params.cid;
@@ -43,7 +53,7 @@ module.exports.getCustomerOrder = async (req, res) => {
 
         let itemsMap = new Map();
 
-        //storing the item details in the map, for fater access and reduce complexity
+        //storing the item details in the map, for faster access and reduce complexity
         itemData.forEach(item => {
             itemsMap.set(item.itemId, item);
         })
@@ -74,7 +84,9 @@ module.exports.getCustomerOrder = async (req, res) => {
         res.render('order.ejs', {
             'orderData': updatedCustomerOrder,
             'items': items,
-            'cid': cid
+            'cid': cid,
+            'paymentStatus': customer.paymentStatus,
+            'totalBillPaid': customer.totalAmount
         });
 
     } catch (error) {
@@ -199,7 +211,7 @@ module.exports.addToOrder = async (req, res) => {
                     'order': orderDetails
                 },
                 $inc: {
-                    'totalAmount': amount
+                    'orderAmount': amount
                 }
             }).then(async result => {
 
@@ -268,7 +280,7 @@ module.exports.removeItem = async (req, res) => {
                 }
             },
             $inc: {
-                'totalAmount': -1 * amount
+                'orderAmount': -1 * amount
             }
         }).then(async result => {
 
@@ -318,6 +330,15 @@ module.exports.removeItem = async (req, res) => {
 module.exports.completeOrder = async (req, res) => {
     try {
 
+        const io = req.app.get("socketio");
+
+        // io.on('connection', socket => {
+        //     console.log("Client connected");
+        //     socket.emit('orderComplete', {
+        //         "data": "done"
+        //     });
+        // })
+
         // console.log(new Date().getTime());
 
         const date = new Date();
@@ -340,7 +361,9 @@ module.exports.completeOrder = async (req, res) => {
             'cid': data.cid
         }, {
             'tableSize': 1,
-            'entryTime': 1
+            'entryTime': 1,
+            'totalAmount': 1,
+            'orderAmount': 1
         });
 
         //calculating time duration played
@@ -362,20 +385,43 @@ module.exports.completeOrder = async (req, res) => {
         //calculating price for the time duration played
         tableAmount = Math.round(tableAmountPerHour.price * timeRatio);
 
-        //total amount = tableAmount + orderAmount
-        const totalAmount = tableAmount + parseInt(data.amount);
 
-        // console.log(totalAmount);
+        //total amount = tableAmount + orderAmount
+        const totalPayableAmount = tableAmount + customer.orderAmount;
+
+        // console.log(customer.totalAmount);
+        // console.log(tableAmount);
+        // console.log(totalPayableAmount);
+
+        const billData = {
+            "orderAmount": customer.orderAmount,
+            "tableAmount": tableAmount,
+            "totalPayableAmount": totalPayableAmount
+        }
 
         //updating total amount and exit time for customer
-        await Customer.findOneAndUpdate({
+        const result = await Customer.updateOne({
             'cid': data.cid
         }, {
             $set: {
-                'totalAmount': totalAmount,
+                'totalAmount': totalPayableAmount,
                 'exitTime': endTime
             }
         });
+
+
+        if (result.matchedCount != 0) {
+            res.status(200).json({
+                "billData": billData,
+                success: true
+            })
+        } else {
+            res.status(400).json({
+                "message": "Failed to generate bill",
+                success: false,
+                error: result
+            })
+        }
 
     } catch (error) {
         res.status(500).json({
@@ -383,5 +429,65 @@ module.exports.completeOrder = async (req, res) => {
             success: false,
             error: error.message
         });
+    }
+}
+
+module.exports.finishOrder = async (req, res) => {
+    try {
+        const paymentStatus = req.body.paymentStatus;
+        const cid = req.body.cid;
+
+        const customer = await Customer.findOne({
+            "cid": cid
+        }, {
+            "totalAmount": 1
+        });
+
+        Customer.updateOne({
+            'cid': cid
+        }, {
+            $set: {
+                'paymentStatus': paymentStatus
+            }
+        }).then(async result => {
+            if (result.matchedCount != 0) {
+                const currentDate = new Date().toLocaleDateString();
+                const saleUpdateResult = await Sale.findOneAndUpdate({
+                    "date": currentDate
+                }, {
+                    $inc: {
+                        "totalCustomer": 1,
+                        "totalAmount": customer.totalAmount
+                    }
+                }, {
+                    upsert: true
+                })
+
+                // console.log(saleUpdateResult);
+
+                res.status(200).json({
+                    "message": "payment status and sales updated",
+                    success: true
+                })
+            } else {
+                res.status(400).json({
+                    "message": "Failed to updated payment status",
+                    success: false
+                })
+            }
+        }).catch(error => {
+            res.status(400).json({
+                "message": "Failed to updated payment status",
+                success: false,
+                error: error.message
+            })
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            "message": "Failed to updated payment status",
+            success: false,
+            error: error.message
+        })
     }
 }

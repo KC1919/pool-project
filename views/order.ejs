@@ -14,7 +14,7 @@
     />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     <div class="order-header-div">
@@ -25,7 +25,7 @@
         <h1 style="width: fit-content;">Order</h1>
       </div>
         <div class="add-order-div">
-          <button class="new-order-btn" type="button" onclick="handleNewOrder(event)">New Order</button>
+          <button class="new-order-btn" id="new-order-btn" type="button" onclick="handleNewOrder(event)">New Order</button>
         </div>
     </div>
 
@@ -49,7 +49,7 @@
                   <td><%=item.sellPrice*item.qty%></td>
 
                   <td>
-                    <button class="remove-btn" id=<%=item.itemId%> type="button" onclick="removeItem(event)">
+                    <button class="remove-btn" id=remove-btn-<%=item.itemId%> type="button" onclick="removeItem(event)">
                       remove
                     </button>
                   </td>
@@ -58,12 +58,20 @@
               <%})%>
       
             </tbody>
-          </table>
+        </table>
+
+        <div class="complete-order-btn-div">
+          <button class="new-order-btn" id="complete-order-btn" type="button" onclick="completeOrder(event)">Complete</button>
+        </div>
+
+        <div class="bill-paid-div" id="bill-paid-div">
+          <p>Bill Paid : <strong>Rs. <%=totalBillPaid%></strong></p>
+        </div>
     </div>
 
     <div class="order-form-div" id="new-order-form-div">
       <form id="new-order-form">   
-          <div class="form-close-btn-div" onclick="closeForm(event)">
+          <div class="form-close-btn-div" onclick="closeOrderForm(event)">
               <i class="fa-sharp fa-solid fa-xmark fa-lg"></i>
           </div>
           <div class="item-qty-div">
@@ -88,6 +96,59 @@
           </div>
 
       </form>
+    </div>
+
+
+    <div class="complete-order-modal-div" id="complete-order-div">
+
+      <!-- <div class="form-close-btn-div " onclick="closeCompletePaymentForm(event)">
+        <i class="fa-sharp fa-solid fa-xmark fa-lg"></i>
+      </div> -->
+
+      <div class="table-amount-div amount-div" id="table-amount-div">
+        <p>Table Amount :</p>
+        <p>Rs. <b></b> </p>
+      </div>
+
+      <div class="order-amount-div amount-div" id="order-amount-div">
+        <p>Food Amount :</p>
+        <p>Rs. <b></b> </p>
+      </div>
+
+      <div class="total-amount-div amount-div" id="total-amount-div">
+        <p><strong>Total Amount :</strong></p>
+        <p><b>Rs. </b></p>
+      </div>
+
+      <div class="membership-div">
+        <div class="membership-input-div">
+          <p for="Membership">Membership: </p>
+          <div class="membership-input">
+            <input id="memship-mobile" class="form-control" type="text" placeholder="Enter mobile" name="membership">
+          </div>
+          <div>
+            <button class="btn btn-primary btn-sm" type="button" onclick="applyMembership(event)">Apply</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="payment-mode-div">
+        <div class="radio-input-div">
+          <label for="cash">Cash</label>
+          <input class="radio-btn" id="radio-btn-cash" type="radio" name="cash">
+        </div>
+
+        <div class="radio-input-div">
+          <label for="online">Online</label>
+          <input class="radio-btn" id="radio-btn-online" type="radio" name="online" selected>
+        </div>
+      </div>
+
+      <div class="finish-order-btn-div">
+        <button class="btn btn-primary btn-sm" type="button" onclick="finishOrder(event)">Finish</button>
+      </div>
+    </div>
+
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
@@ -97,7 +158,10 @@
 
     <script type="text/javascript">
       const items = <%-JSON.stringify(items)%>;
-      const cid = <%-cid%>
+      const cid = <%-JSON.stringify(cid)%>;
+      const orderData=<%-JSON.stringify(orderData)%>;
+      const paymentStatus=<%-JSON.stringify(paymentStatus)%>;
+      const totalBillPaid=<%-JSON.stringify(totalBillPaid)%>
     </script>
 
     <script src="/js/order.js"></script>

@@ -16,8 +16,8 @@ module.exports.updateSale = async (req, res) => {
         });
 
         //if the current date sale is present in the db
-        if (result!=null) {
-            
+        if (result != null) {
+
             //then update the sale
 
             //updated data
@@ -52,7 +52,7 @@ module.exports.updateSale = async (req, res) => {
             })
 
         } else {
-            
+
             //if sale not present, create the sale with current date
 
             //details of sale
@@ -95,4 +95,26 @@ module.exports.updateSale = async (req, res) => {
     }
 }
 
+module.exports.getSales = async (req, res) => {
+    try {
+        const salesData = await Sale.find({});
 
+        console.log(salesData);
+
+        res.render('sales.ejs', {
+            "salesData": salesData
+        });
+
+        // res.status(200).json({
+        //     "message": "Sales data",
+        //     success: true,
+        //     "salesData": salesData
+        // })
+    } catch (error) {
+        res.status(500).json({
+            "message": "Failed to fetch Sales data",
+            success: false,
+            "error": error.message
+        })
+    }
+}

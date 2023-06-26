@@ -4,7 +4,7 @@ const saleSchema = mongoose.Schema({
     date: {
         type: String,
         required: true,
-        default: new Date().toLocaleDateString()
+        // default: new Date().toLocaleDateString()
     },
     totalAmount: {
         type: Number,
@@ -13,14 +13,14 @@ const saleSchema = mongoose.Schema({
     },
     totalCustomer: {
         type: Number,
-        defualt: 0
+        default: 0
     },
     totalProfit: {
         type: Number,
         default: 0
     }
 }, {
-    timestapms: true
+    timestamps: true
 })
 
 const Sale = mongoose.model('sale', saleSchema);

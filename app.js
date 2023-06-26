@@ -33,13 +33,6 @@ const tableRouter = require('./routes/tableRoutes');
 const membershipRouter = require('./routes/membershipRoutes');
 
 
-app.use('/auth', authRouter);
-app.use('/item', itemRouter);
-app.use('/customer', customRouter);
-app.use('/order', orderRouter);
-app.use('/sale', saleRouter);
-app.use('/table', tableRouter);
-app.use('/membership', membershipRouter);
 
 const server = app.listen(PORT, (err) => {
     console.log('Server listening on port: ' + PORT);
@@ -48,6 +41,18 @@ const server = app.listen(PORT, (err) => {
 
 const io = socketio(server);
 
-io.on('connection', socket => {
-    console.log('Client connected');
-})
+app.set("socketio", io);
+app.set("data","kunal")
+
+
+app.use('/auth', authRouter);
+app.use('/item', itemRouter);
+app.use('/customer', customRouter);
+app.use('/order', orderRouter);
+app.use('/sale', saleRouter);
+app.use('/table', tableRouter);
+app.use('/membership', membershipRouter);
+
+// io.on('connection', socket => {
+//     console.log('Client connected');
+// })

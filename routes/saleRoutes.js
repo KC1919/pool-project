@@ -5,6 +5,7 @@ const saleController = require('../controller/saleController');
 const router = express.Router();
 
 router
-    .post('/updateSale', verifyUser, saleController.updateSale);
+    .post('/updateSale', verifyUser, saleController.updateSale)
+    .get('/getSales', verifyUser, saleController.getSales);
 
 module.exports = router;

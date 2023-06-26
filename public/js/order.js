@@ -1,3 +1,26 @@
+const socket = io('/');
+
+socket.on('completeOrder', data => {
+    console.log(data);
+})
+
+const billPaidElem = document.getElementById('bill-paid-div');
+
+if (paymentStatus == true) {
+    for (let i = 0; i < orderData.length; i++) {
+        const removeBtn = document.getElementById('remove-btn-' + orderData[i].itemId);
+        removeBtn.setAttribute("hidden", "hidden");
+    }
+
+    const completeOrderBtn = document.getElementById('complete-order-btn');
+    const newOrderBtn = document.getElementById('new-order-btn');
+
+    completeOrderBtn.setAttribute("hidden", "hidden");
+    newOrderBtn.setAttribute("hidden", "hidden");
+
+    billPaidElem.style.display = "block";
+}
+
 function handleNewOrder(e) {
     try {
 
@@ -6,7 +29,7 @@ function handleNewOrder(e) {
         formDivElem.style.display = "block";
 
     } catch (error) {
-        console.log("Failed to display form");
+        alert("Failed to display new order form");
     }
 }
 
@@ -18,7 +41,7 @@ async function customersPage(e) {
     }
 }
 
-function closeForm(e) {
+function closeOrderForm(e) {
     try {
         const formDivElem = document.getElementById('new-order-form-div');
 
@@ -27,6 +50,17 @@ function closeForm(e) {
         console.log("Failed to close form");
     }
 }
+
+function closeCompletePaymentForm(e) {
+    try {
+        const formDivElem = document.getElementById('complete-order-div');
+
+        formDivElem.style.display = "none";
+    } catch (error) {
+        console.log("Failed to close form");
+    }
+}
+
 
 async function placeOrder(e) {
     try {
@@ -103,7 +137,7 @@ async function placeOrder(e) {
 
             tableBody.appendChild(newTableRow);
 
-            console.log(cid);
+            // console.log(cid);
 
             const orderData = {
                 cid,
@@ -116,7 +150,7 @@ async function placeOrder(e) {
         }
 
     } catch (error) {
-        console.log("Failed to add customer", error);
+        alert("Failed to add customer", error);
     }
 }
 
@@ -135,7 +169,7 @@ async function saveOrderToDb(orderData) {
         console.log(json);
 
     } catch (error) {
-
+        alert("Failed to save order to DB")
     }
 }
 
@@ -173,5 +207,127 @@ async function removeItemFromDb(itemId, itemQty) {
         console.log(json);
     } catch (error) {
         console.log("Failed to remove item from order");
+    }
+}
+
+async function completeOrder(e) {
+    try {
+        // console.log(cid);
+
+        const response = await fetch('http://localhost:3000/order/completeOrder', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "cid": cid
+            })
+        })
+
+        const jsonResp = await response.json();
+
+        // console.log(jsonResp);
+
+        const orderAmount = jsonResp.billData.orderAmount;
+        const tableAmount = jsonResp.billData.tableAmount;
+        const totalPayableAmount = jsonResp.billData.totalPayableAmount;
+
+        const completeOrderElem = document.getElementById('complete-order-div');
+
+        // console.log(completeOrderElem);
+
+        for (let i = 0; i < 3; i++) {
+            if (i == 0) {
+                completeOrderElem.children[i].children[1].innerHTML = tableAmount;
+            } else if (i == 1) {
+                completeOrderElem.children[i].children[1].innerHTML = orderAmount;
+            } else if (i == 2) {
+                completeOrderElem.children[i].children[1].innerHTML = totalPayableAmount;
+            }
+        }
+
+        completeOrderElem.style.display = "block";
+
+    } catch (error) {
+        alert('Failed to complete order', error);
+    }
+}
+
+async function applyMembership(e) {
+    try {
+        const totalAmountElem = document.getElementById('total-amount-div').children[1];
+        const totalAmount = totalAmountElem.innerHTML;
+        const mobile = document.getElementById("memship-mobile").value;
+
+        console.log(totalAmount);
+        const response = await fetch("http://localhost:3000/membership/applyMembership", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "totalAmount": totalAmount,
+                "cid": cid,
+                "mobile": mobile
+            })
+        })
+
+        const jsonResp = await response.json();
+
+        alert(jsonResp.message);
+
+        totalAmountElem.innerHTML = 0;
+
+
+
+    } catch (error) {
+        alert("Failed to apply membership", error);
+    }
+}
+
+async function finishOrder(e) {
+    try {
+        const paymentDiv = document.getElementById('complete-order-div');
+
+        const orderAmount = document.getElementById("order-amount-div").children[1].innerHTML;
+        const tableAmount = document.getElementById("table-amount-div").children[1].innerHTML;
+
+        console.log(orderAmount);
+        console.log(tableAmount);
+
+        paymentDiv.style.display = "none";
+
+        for (let i = 0; i < orderData.length; i++) {
+            const removeBtn = document.getElementById('remove-btn-' + orderData[i].itemId);
+            removeBtn.disabled = true;
+        }
+
+        const completeOrderBtn = document.getElementById('complete-order-btn');
+        const newOrderBtn = document.getElementById('new-order-btn');
+
+        completeOrderBtn.setAttribute("hidden", "hidden");
+        newOrderBtn.setAttribute("hidden", "hidden");
+
+        for (let i = 0; i < orderData.length; i++) {
+            const removeBtn = document.getElementById('remove-btn-' + orderData[i].itemId);
+            removeBtn.setAttribute("hidden", "hidden");
+        }
+
+        billPaidElem.innerHTML = `Bill Paid : <strong>Rs.  ${parseInt(orderAmount) + parseInt(tableAmount)}</strong>`;
+        billPaidElem.style.display = "block";
+
+        const response = await fetch("http://localhost:3000/order/finishOrder", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "paymentStatus": true,
+                "cid": cid
+            })
+        })
+
+    } catch (error) {
+        alert("Failed to finish payment" + error);
     }
 }

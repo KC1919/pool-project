@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+.header-div {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    /* margin-top: 1rem; */
+    margin-bottom: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    background-color: #1c305c;
+    padding: 0.5rem;
+}
+
+.heading-div {
+    width: fit-content;
+    margin: 0 auto;
+    display: inline-block;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}

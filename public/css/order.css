@@ -45,7 +45,7 @@ body {
     height: 5vh;
 }
 
-.back-btn-div{
+.back-btn-div {
     text-align: center;
     align-items: center;
     position: absolute;
@@ -64,7 +64,7 @@ body {
     height: 5vh;
 }
 
-.new-order-btn:hover{
+.new-order-btn:hover {
     transition-duration: 1s;
     zoom: 103%;
 }
@@ -137,4 +137,77 @@ body {
         cursor: pointer;
         zoom: 110%;
     }
+}
+
+.complete-order-btn-div {
+    margin: 2rem auto;
+    width: fit-content;
+}
+
+.complete-order-modal-div {
+    width: 30%;
+    height: fit-content;
+    margin: 0 auto;
+    position: absolute;
+    top: 22vh;
+    left: 35vw;
+    /* bottom: 50%; */
+    background-color: #D2F0FC;
+    display: none;
+    z-index: 1;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    box-shadow: -2px 3px 10px;
+}
+
+.amount-div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.payment-mode-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.radio-input-div{
+    margin: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .membership-div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} */
+
+.membership-input-div{
+    /* margin: 1rem; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.finish-order-btn-div{
+    margin: 0.5rem auto;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+}
+
+.membership-input{
+    margin: 1rem;
+}
+
+.bill-paid-div{
+    position: absolute;
+    right: 15%;
+    display: none;
+}
+
+.bill-paid-div>p{
+    font-size: larger;
 }

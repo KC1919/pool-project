@@ -1,5 +1,8 @@
 const Membership = require('../models/membership');
 
+const request=require('request');
+
+
 module.exports.addMembership = async (req, res) => {
     try {
         const memshipData = req.body;
@@ -96,7 +99,12 @@ module.exports.addCredit = async (req, res) => {
 
 module.exports.applyMembership = async (req, res) => {
     try {
+
+        // const data=request.app.get("data");
+        // console.log(data);
         const billData = req.body;
+
+        // console.log(billData);
 
         const memship = await Membership.findOne({
             'mobile': billData.mobile
@@ -104,7 +112,7 @@ module.exports.applyMembership = async (req, res) => {
 
         if (memship != null) {
             const credRemaining = memship.credit;
-            const totalBill = parseInt(billData.amount);
+            const totalBill = parseInt(billData.totalAmount);
 
             if (credRemaining >= totalBill) {
                 Membership.findOneAndUpdate({
@@ -137,40 +145,7 @@ module.exports.applyMembership = async (req, res) => {
                 if (credRemaining == 0) {
                     res.status(200).json({
                         message: 'No credit!',
-                        success: true
-                    });
-                } else {
-                    Membership.findOneAndUpdate({
-                        'mobile': billData.mobile
-                    }, {
-                        $set: {
-                            'credit': 0
-                        }
-                    }).then(result => {
-                        if (result != null) {
-                            res.status(200).json({
-                                message: 'Membership applied',
-                                success: true
-                            });
-                        } else {
-                            res.status(400).json({
-                                message: 'Failed to apply Membership',
-                                success: false,
-                                error: error.message
-                            });
-                        }
-                    }).catch(error => {
-                        res.status(400).json({
-                            message: 'Failed to apply Membership',
-                            success: false,
-                            error: error.message
-                        });
-                    });
-
-                    res.status(200).json({
-                        message: 'Membership applied!',
-                        success: true,
-                        'bill to be paid': totalBill - credRemaining
+                        success: false
                     });
                 }
             }

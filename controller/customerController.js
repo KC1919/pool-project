@@ -1,16 +1,23 @@
 const Customer = require('../models/customer');
+const {
+    v4
+} = require('uuid');
 
 module.exports.addCustomer = async (req, res) => {
     try {
         const data = req.body;
 
+        // console.log(data);
+
         const count = await Customer.countDocuments();
 
-        data.cid = count + 1;
+        data.cid = v4();
 
         // console.log(data);
 
         data.entryTime = new Date().getTime();
+
+        data.time = new Date().toLocaleTimeString();
 
         //creating new customer
         const customer = new Customer(data);
@@ -41,7 +48,10 @@ module.exports.addCustomer = async (req, res) => {
 
 module.exports.allCustomers = async (req, res) => {
     try {
-        const customers = await Customer.find({}).lean().sort({"cid":-1});
+        const customers = await Customer.find({}).lean().sort({
+            "date": -1,
+            "time": -1
+        });
 
         // console.log(customers);
 
