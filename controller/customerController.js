@@ -63,3 +63,27 @@ module.exports.allCustomers = async (req, res) => {
         console.log("Failed to fetch customers");
     }
 }
+
+module.exports.filterCustomers = async (req, res) => {
+    try {
+        const filterDate = req.params.filterDate;
+
+        // console.log(filterDate);
+        
+        const customers = await Customer.find({
+            'date': filterDate
+        }).lean().sort({
+            "date": -1,
+            "time": -1
+        });
+
+        // console.log(customers);
+
+        res.render("customer.ejs", {
+            "customers": customers
+        });
+
+    } catch (error) {
+        console.log("Failed to fetch customers");
+    }
+}

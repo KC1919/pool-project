@@ -7,7 +7,8 @@ body {
 .header-div {
     text-align: center;
     align-items: center;
-    justify-content: center;
+    display: flex;
+    justify-content: space-between;
     /* margin-top: 1rem; */
     margin-bottom: 3rem;
     margin-left: auto;
@@ -15,12 +16,22 @@ body {
     color: white;
     background-color: #1c305c;
     padding: 0.5rem;
+    width: 100%;
+}
+
+.search-bar-div{
+
+}
+
+.search-bar-btn-div{
+    display: flex;
+    width: 20%;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .heading-div {
     width: fit-content;
-    margin: 0 auto;
-    display: inline-block;
     align-items: center;
     text-align: center;
     justify-content: center;
@@ -29,10 +40,7 @@ body {
 .add-customer-div {
     text-align: center;
     align-items: center;
-    position: absolute;
-    right: 2rem;
     width: fit-content;
-    display: inline-block;
     margin: 1rem 1rem;
 }
 
@@ -123,4 +131,3 @@ body {
         zoom: 110%;
     }
 }
-

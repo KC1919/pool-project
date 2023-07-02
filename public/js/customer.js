@@ -10,7 +10,7 @@ async function handleCustomerClick(e) {
     try {
 
         const elemId = e.target.id;
-    
+
         console.log(elemId);
         // const elem = document.getElementById('table-row-' + elemId);
         // console.log(elem);
@@ -20,85 +20,12 @@ async function handleCustomerClick(e) {
         //     console.log(child.innerHTML);
         // }
 
-        window.location.href=`http://localhost:3000/order/customerOrder/${elemId}`
+        window.location.href = `http://localhost:3000/order/customerOrder/${elemId}`
 
     } catch (error) {
         console.log(error);
     }
 }
-
-// function handleNewCustomer(e) {
-//     try {
-//         // console.log(e.target);
-
-//         const table = document.getElementById('table');
-//         // console.log(table);
-//         const tableBody = document.getElementById('table-body');
-
-//         const newTableRow = document.createElement('tr');
-//         newTableRow.setAttribute("class", "table-row");
-//         const th = document.createElement('th');
-
-//         // const viewBtn = '<button class="btn btn-primary btn-sm" onclick="handleCustomerClick(event)" id=<%=customer.cid%>View</button>'
-
-//         const saveBtn=document.getElementById('save-btn')
-
-//         // console.log(saveBtn);
-
-//         th.innerHTML = "101";
-
-//         // const inputElem = document.createElement('input');
-//         // inputElem.setAttribute('type', 'text');
-
-//         // console.log(inputElem);
-
-//         newTableRow.appendChild(th);
-
-//         for (let i = 0; i < 5; i++) {
-//             const td = document.createElement('td');
-//             const inputElem = document.createElement('input');
-
-
-//             if (i == 0){
-//                 inputElem.setAttribute('type', 'text');
-//                 td.appendChild(inputElem);
-//             }
-//             else if (i == 1){
-//                 inputElem.setAttribute('type', 'text');
-//                 td.appendChild(inputElem);
-//             }
-//             else if (i == 2){
-//                 inputElem.setAttribute('type', 'text');
-//                 td.appendChild(inputElem);
-//             }
-//             else if (i == 3){
-//                 inputElem.setAttribute('type', 'date');
-//                 td.appendChild(inputElem);
-//             }
-//             else if (i == 4){
-//                 inputElem.setAttribute('type', 'time');
-//                 td.appendChild(inputElem);
-//             }
-//             td.appendChild(inputElem)
-
-//             newTableRow.appendChild(td);
-//         }
-
-//         const td = document.createElement('td');
-//         td.appendChild(saveBtn);
-//         newTableRow.appendChild(td);
-
-//         tableBody.appendChild(newTableRow);
-
-//         // } else {
-
-//         // }
-//         // console.log(tableBody);
-
-//     } catch (error) {
-
-//     }
-// }
 
 function handleNewCustomer(e) {
     try {
@@ -238,5 +165,17 @@ async function saveCustomerToDb(customerData, viewBtn) {
 
     } catch (error) {
         console.log("Failed to save customer to database", error);
+    }
+}
+
+async function filterByDate(e) {
+    try {
+        const filterDate = document.getElementById('date-input-filter').value;
+    
+        window.location.href = `http://localhost:3000/customer/filterCustomers/${filterDate}`
+
+    } catch (error) {
+        console.log("Failed to filter customer result", error.message);
+        alert("Failed to filter customer result", error.message);
     }
 }

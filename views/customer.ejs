@@ -20,6 +20,17 @@
     <%- include('header.ejs'); -%>
 
     <div class="header-div">
+
+      <div class="search-bar-btn-div">
+        <div class="search-bar-div">
+          <input id="date-input-filter" class="form-control" type="date" placeholder="Search by date">
+        </div>
+
+        <div class="search-btn-div">
+          <button type="button" class="btn btn-primary btn-sm" onclick="filterByDate(event)">Search</button>
+        </div>
+      </div>
+
       <div class="heading-div">
         <h1 style="width: fit-content;">All Customers</h1>
       </div>
