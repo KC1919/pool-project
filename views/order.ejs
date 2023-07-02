@@ -66,8 +66,16 @@
           <button class="new-order-btn" id="complete-order-btn" type="button" onclick="completeOrder(event)">Complete</button>
         </div>
 
-        <div class="bill-paid-div" id="bill-paid-div">
-          <p>Bill Paid : <strong>Rs. <%=totalBillPaid%></strong></p>
+        <div class="payment-mode-bill-div">
+          <div class="bill-paid-div" id="bill-paid-div">
+            <p>Order amount : <strong>Rs. <%=orderAmount%></strong></p>
+            <p>Table amount : <strong>Rs. <%=totalBillPaid - orderAmount%></strong></p>
+            <p>Bill Paid : <strong>Rs. <%=totalBillPaid%></strong></p>
+          </div>
+  
+          <div class="payment-method-div" id="payment-method-div">
+            <p>Payment Mode : <strong> <%=paymentMode%> </strong></p>
+          </div>
         </div>
     </div>
 
@@ -103,9 +111,9 @@
 
     <div class="complete-order-modal-div" id="complete-order-div">
 
-      <!-- <div class="form-close-btn-div " onclick="closeCompletePaymentForm(event)">
+      <div class="form-close-btn-div" onclick="closeCompletePaymentForm(event)">
         <i class="fa-sharp fa-solid fa-xmark fa-lg"></i>
-      </div> -->
+      </div>
 
       <div class="table-amount-div amount-div" id="table-amount-div">
         <p>Table Amount :</p>
@@ -137,12 +145,12 @@
       <div class="payment-mode-div">
         <div class="radio-input-div">
           <label for="cash">Cash</label>
-          <input class="radio-btn" id="radio-btn-cash" type="radio" name="cash">
+          <input class="radio-btn" id="radio-btn-cash" type="radio" name="cash" onclick="handleCashPayment(event)">
         </div>
 
         <div class="radio-input-div">
           <label for="online">Online</label>
-          <input class="radio-btn" id="radio-btn-online" type="radio" name="online" selected>
+          <input class="radio-btn" id="radio-btn-online" type="radio" name="online" onclick="handleOnlinePayment(event)" checked="true">
         </div>
       </div>
 
@@ -163,7 +171,7 @@
       const cid = <%-JSON.stringify(cid)%>;
       const orderData=<%-JSON.stringify(orderData)%>;
       const paymentStatus=<%-JSON.stringify(paymentStatus)%>;
-      const totalBillPaid=<%-JSON.stringify(totalBillPaid)%>
+      const totalBillPaid=<%-JSON.stringify(totalBillPaid)%>;
     </script>
 
     <script src="/js/order.js"></script>

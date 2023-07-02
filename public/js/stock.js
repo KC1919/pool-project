@@ -19,7 +19,6 @@ function closeEditItemForm(e) {
     }
 }
 
-
 function handleNewStock(e) {
     try {
         const formDivElem = document.getElementById('add-item-form-div');
@@ -122,7 +121,6 @@ async function saveItemToDb(itemData) {
         alert('Failed to save item to database', error.message);
     }
 }
-
 
 async function editItem(e) {
     try {

@@ -4,7 +4,10 @@
 //     console.log(data);
 // })
 
+let paymentMode = "Online";
+
 const billPaidElem = document.getElementById('bill-paid-div');
+const paymentMethodElem = document.getElementById('payment-method-div');
 
 if (paymentStatus == true) {
     for (let i = 0; i < orderData.length; i++) {
@@ -19,6 +22,7 @@ if (paymentStatus == true) {
     newOrderBtn.setAttribute("hidden", "hidden");
 
     billPaidElem.style.display = "block";
+    paymentMethodElem.style.display = "block";
 }
 
 function handleNewOrder(e) {
@@ -54,7 +58,7 @@ function closeOrderForm(e) {
 function closeCompletePaymentForm(e) {
     try {
         const formDivElem = document.getElementById('complete-order-div');
-
+        console.log(formDivElem);
         formDivElem.style.display = "none";
     } catch (error) {
         console.log("Failed to close form");
@@ -138,7 +142,8 @@ async function placeOrder(e) {
         }
 
     } catch (error) {
-        alert("Failed to add customer", error);
+        console.log("Failed to add order", error.message);
+        alert("Failed to add order", error);
     }
 }
 
@@ -224,12 +229,12 @@ async function completeOrder(e) {
 
         // console.log(completeOrderElem);
 
-        for (let i = 0; i < 3; i++) {
-            if (i == 0) {
+        for (let i = 1; i <= 3; i++) {
+            if (i == 1) {
                 completeOrderElem.children[i].children[1].innerHTML = tableAmount;
-            } else if (i == 1) {
-                completeOrderElem.children[i].children[1].innerHTML = orderAmount;
             } else if (i == 2) {
+                completeOrderElem.children[i].children[1].innerHTML = orderAmount;
+            } else if (i == 3) {
                 completeOrderElem.children[i].children[1].innerHTML = totalPayableAmount;
             }
         }
@@ -237,6 +242,7 @@ async function completeOrder(e) {
         completeOrderElem.style.display = "block";
 
     } catch (error) {
+        console.log(error.message);
         alert('Failed to complete order', error);
     }
 }
@@ -280,8 +286,8 @@ async function finishOrder(e) {
         const orderAmount = document.getElementById("order-amount-div").children[1].innerHTML;
         const tableAmount = document.getElementById("table-amount-div").children[1].innerHTML;
 
-        console.log(orderAmount);
-        console.log(tableAmount);
+        // console.log(orderAmount);
+        // console.log(tableAmount);
 
         paymentDiv.style.display = "none";
 
@@ -304,6 +310,9 @@ async function finishOrder(e) {
         billPaidElem.innerHTML = `Bill Paid : <strong>Rs.  ${parseInt(orderAmount) + parseInt(tableAmount)}</strong>`;
         billPaidElem.style.display = "block";
 
+        paymentMethodElem.innerHTML = `Payment Mode : <strong>  ${paymentMode}</strong>`;
+        paymentMethodElem.style.display = "block";
+
         const response = await fetch("http://localhost:3000/order/finishOrder", {
             method: "POST",
             headers: {
@@ -311,11 +320,50 @@ async function finishOrder(e) {
             },
             body: JSON.stringify({
                 "paymentStatus": true,
-                "cid": cid
+                "cid": cid,
+                "paymentMode": paymentMode
             })
         })
 
     } catch (error) {
         alert("Failed to finish payment" + error);
+    }
+}
+
+async function handleCashPayment(e) {
+    try {
+        const paymentModeElem = e.target;
+        // console.log(paymentModeElem);
+        const elemId = paymentModeElem.id;
+
+        console.log(elemId);
+
+        if (elemId == "radio-btn-cash") {
+            const onlineElem = document.getElementById("radio-btn-online");
+            onlineElem.checked = false;
+            // paymentModeElem.setAttribute('checked', 'true');
+            paymentMode = "Cash";
+        }
+    } catch (error) {
+        console.log("Failed to select payment mode", error.message);
+        alert("Failed to select payment mode", error.message);
+    }
+}
+
+async function handleOnlinePayment(e) {
+    try {
+        const paymentModeElem = e.target;
+        console.log(paymentModeElem);
+        const elemId = paymentModeElem.id;
+
+        if (elemId == "radio-btn-online") {
+            const cashElem = document.getElementById("radio-btn-cash");
+            cashElem.checked = false;
+            // paymentModeElem.setAttribute('checked', 'true');
+            paymentMode = "Online";
+        }
+    } catch (error) {
+        console.log("Failed to select payment mode", error.message);
+        alert("Failed to select payment mode", error.message);
     }
 }

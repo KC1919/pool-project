@@ -202,12 +202,25 @@ body {
     margin: 1rem;
 }
 
+.payment-mode-bill-div{
+    margin: 2rem auto;
+    width: fit-content;
+    align-items: center;
+    position: relative;
+    left: 35%;
+}
+
 .bill-paid-div{
-    position: absolute;
-    right: 15%;
     display: none;
+    margin: 1rem auto;
 }
 
 .bill-paid-div>p{
     font-size: larger;
+}
+
+
+.payment-method-div{
+    display: none;
+    margin: 1rem auto; 
 }

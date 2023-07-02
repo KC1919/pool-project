@@ -86,7 +86,9 @@ module.exports.getCustomerOrder = async (req, res) => {
             'items': items,
             'cid': cid,
             'paymentStatus': customer.paymentStatus,
-            'totalBillPaid': customer.totalAmount
+            'totalBillPaid': customer.totalAmount,
+            'orderAmount': customer.orderAmount,
+            'paymentMode': customer.paymentMode
         });
 
     } catch (error) {
@@ -436,6 +438,7 @@ module.exports.finishOrder = async (req, res) => {
     try {
         const paymentStatus = req.body.paymentStatus;
         const cid = req.body.cid;
+        const paymentMode = req.body.paymentMode;
 
         const customer = await Customer.findOne({
             "cid": cid
@@ -447,7 +450,8 @@ module.exports.finishOrder = async (req, res) => {
             'cid': cid
         }, {
             $set: {
-                'paymentStatus': paymentStatus
+                'paymentStatus': paymentStatus,
+                'paymentMode': paymentMode
             }
         }).then(async result => {
             if (result.matchedCount != 0) {
