@@ -39,7 +39,7 @@ function handleNewOrder(e) {
 
 async function customersPage(e) {
     try {
-        window.location.href = "http://localhost:3000/customer/allCustomers";
+        window.location.href = "/customer/allCustomers";
     } catch (error) {
         console.log("Cannot go to customers page");
     }
@@ -149,7 +149,7 @@ async function placeOrder(e) {
 
 async function saveOrderToDb(orderData) {
     try {
-        const response = await fetch('http://localhost:3000/order/orderItem', {
+        const response = await fetch('/order/orderItem', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -184,7 +184,7 @@ async function removeItem(e) {
 
 async function removeItemFromDb(itemId, itemQty) {
     try {
-        const response = await fetch('http://localhost:3000/order/removeItem', {
+        const response = await fetch('/order/removeItem', {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -207,7 +207,7 @@ async function completeOrder(e) {
     try {
         // console.log(cid);
 
-        const response = await fetch('http://localhost:3000/order/completeOrder', {
+        const response = await fetch('/order/completeOrder', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -254,7 +254,7 @@ async function applyMembership(e) {
         const mobile = document.getElementById("memship-mobile").value;
 
         console.log(totalAmount);
-        const response = await fetch("http://localhost:3000/membership/applyMembership", {
+        const response = await fetch("/membership/applyMembership", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -313,7 +313,7 @@ async function finishOrder(e) {
         paymentMethodElem.innerHTML = `Payment Mode : <strong>  ${paymentMode}</strong>`;
         paymentMethodElem.style.display = "block";
 
-        const response = await fetch("http://localhost:3000/order/finishOrder", {
+        const response = await fetch("/order/finishOrder", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

@@ -20,7 +20,7 @@ async function handleCustomerClick(e) {
         //     console.log(child.innerHTML);
         // }
 
-        window.location.href = `http://localhost:3000/order/customerOrder/${elemId}`
+        window.location.href = `/order/customerOrder/${elemId}`
 
     } catch (error) {
         console.log(error);
@@ -145,7 +145,7 @@ async function saveCustomerToDb(customerData, viewBtn) {
     try {
 
         // console.log(customerData);
-        const response = await fetch("http://localhost:3000/customer/addCustomer", {
+        const response = await fetch("/customer/addCustomer", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -172,7 +172,7 @@ async function filterByDate(e) {
     try {
         const filterDate = document.getElementById('date-input-filter').value;
     
-        window.location.href = `http://localhost:3000/customer/filterCustomers/${filterDate}`
+        window.location.href = `/customer/filterCustomers/${filterDate}`
 
     } catch (error) {
         console.log("Failed to filter customer result", error.message);

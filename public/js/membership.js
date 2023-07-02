@@ -111,7 +111,7 @@ async function addMember(e) {
 
 async function saveMemberToDb(memberData) {
     try {
-        const response = await fetch('http://localhost:3000/membership/addMembership', {
+        const response = await fetch('/membership/addMembership', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -143,7 +143,7 @@ async function removeMember(e) {
 
 async function removeMemberFromDb(memberId) {
     try {
-        const response = await fetch('http://localhost:3000/membership/removeMembership', {
+        const response = await fetch('/membership/removeMembership', {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json'
@@ -196,7 +196,7 @@ async function editMember(e) {
 
 async function editMemberDataDB(memberData) {
     try {
-        const response = await fetch('http://localhost:3000/membership/addCredit', {
+        const response = await fetch('/membership/addCredit', {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json'

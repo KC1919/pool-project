@@ -103,7 +103,7 @@ function addNewItem(e) {
 
 async function saveItemToDb(itemData) {
     try {
-        const response = await fetch('http://localhost:3000/item/addItem', {
+        const response = await fetch('/item/addItem', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -150,7 +150,7 @@ async function editItem(e) {
 
         editForm.reset();
 
-        const response = await fetch('http://localhost:3000/item/updateItem', {
+        const response = await fetch('/item/updateItem', {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json'
@@ -180,7 +180,7 @@ async function deleteItem(e) {
         const rowElem = document.getElementById('table-row-' + itemId);
         rowElem.remove();
 
-        const response = await fetch('http://localhost:3000/item/removeItem', {
+        const response = await fetch('/item/removeItem', {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json'
