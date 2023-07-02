@@ -8,5 +8,6 @@ router
     .patch('/addCredit', verifyUser, membershipController.addCredit)
     .post('/applyMembership', verifyUser, membershipController.applyMembership)
     .delete('/removeMembership', verifyUser, membershipController.removeMembership)
+    .get('/getMemberships', verifyUser, membershipController.getMembership);
 
 module.exports = router;

@@ -1,8 +1,8 @@
-const socket = io('/');
+// const socket = io('/');
 
-socket.on('completeOrder', data => {
-    console.log(data);
-})
+// socket.on('completeOrder', data => {
+//     console.log(data);
+// })
 
 const billPaidElem = document.getElementById('bill-paid-div');
 
@@ -95,18 +95,6 @@ async function placeOrder(e) {
 
             const newTableRow = document.createElement('tr');
             newTableRow.setAttribute("class", "table-row");
-
-            // const th = document.createElement('th');
-
-            // if (tableBody.children.length == 0) {
-            //     th.innerHTML = "1"
-            // } else {
-            //     const val = tableBody.children.length;
-            //     const oid = parseInt(val) + 1;
-            //     th.innerHTML = oid;
-            // }
-
-            // newTableRow.appendChild(th);
 
             for (let i = 0; i <= 3; i++) {
                 const td = document.createElement('td');

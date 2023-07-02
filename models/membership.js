@@ -14,6 +14,8 @@ const memberSchema = mongoose.Schema({
         required: true,
         default: 0
     }
+}, {
+    timestamps: true
 })
 
 const Membership = mongoose.model('membership', memberSchema);

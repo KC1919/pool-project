@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,7 +16,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="/socket.io/socket.io.js"></script>
 </head>
-<body>
+<body> -->
+  <link rel="stylesheet" href="/css/order.css">
+  <%-include('header.ejs')%>
     <div class="order-header-div">
       <div class="back-btn-div">
         <button class="back-btn" type="button" onclick="customersPage(event)">Back</button>
@@ -70,15 +72,15 @@
     </div>
 
     <div class="order-form-div" id="new-order-form-div">
-      <form id="new-order-form">   
+      <form onsubmit="placeOrder(event)" id="new-order-form">   
           <div class="form-close-btn-div" onclick="closeOrderForm(event)">
               <i class="fa-sharp fa-solid fa-xmark fa-lg"></i>
           </div>
           <div class="item-qty-div">
               <div class="form-group form-input-div">
                   <label for="item-name">Select Item</label>
-                  <select class="form-select select-item" name="" id="select-item">
-                    <option value="select" selected>Select</option>
+                  <select class="form-select select-item" name="" id="select-item" required>
+                    <option value="" selected>Select</option>
                     <% items.forEach(item=>{%>
                       <option id=<%=item.itemId%> value=<%=item.name%>><%=item.name%></option>
                   <%})%>
@@ -92,7 +94,7 @@
           </div>
 
           <div class="form-group form-input-div order-btn">
-              <button type="submit" class="btn btn-primary btn-sm" onclick="placeOrder(event)">Order</button>
+              <button type="submit" class="btn btn-primary btn-sm">Order</button>
           </div>
 
       </form>

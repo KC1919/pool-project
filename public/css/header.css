@@ -1,0 +1,30 @@
+.navbar-div {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    height: 8%;
+}
+
+.nav-link-div {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 30%;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+.link:hover {
+    transition: 2ms;
+    zoom: 102%;
+}
+
+.nav-search-div{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 20%;
+}

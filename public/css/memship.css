@@ -1,0 +1,130 @@
+
+.header-div {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    /* margin-top: 1rem; */
+    margin-bottom: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    background-color: #1c305c;
+    padding: 0.5rem;
+}
+
+.heading-div {
+    width: fit-content;
+    margin: 0 auto;
+    display: inline-block;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.edit-memship-div-btn {
+    text-align: center;
+    align-items: center;
+    position: absolute;
+    left: 2rem;
+    width: fit-content;
+    display: inline-block;
+    margin: 1rem 1rem;
+}
+
+.edit-memship-form-div {
+    align-items: center;
+    justify-content: center;
+    width: 23%;
+    height: fit-content;
+    margin: 0 auto;
+    position: absolute;
+    top: 22vh;
+    left: 35vw;
+    /* bottom: 50%; */
+    background-color: #D2F0FC;
+    display: none;
+    z-index: 1;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    box-shadow: -2px 2px 5px;
+}
+
+.add-memship-form-div {
+    /* text-align: center; */
+    align-items: center;
+    justify-content: center;
+    width: 23%;
+    height: fit-content;
+    margin: 0 auto;
+    position: absolute;
+    top: 22vh;
+    left: 35vw;
+    /* bottom: 50%; */
+    background-color: #D2F0FC;
+    display: none;
+    z-index: 1;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    box-shadow: -2px 2px 5px;
+}
+
+.add-memship-div-btn {
+    text-align: center;
+    align-items: center;
+    position: absolute;
+    right: 2rem;
+    width: fit-content;
+    display: inline-block;
+    margin: 1rem 1rem;
+}
+
+.new-memship-btn {
+    background-color: #D2F0FC;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    width: fit-content;
+    height: 5vh;
+}
+
+.form-close-btn-div {
+    position: relative;
+    display: flex;
+    align-items: center;
+    left: 95%;
+    top: 20%;
+    width: fit-content;
+    height: 3vh;
+
+    :hover {
+        transition: 2ms;
+        cursor: pointer;
+        zoom: 110%;
+    }
+}
+
+.memship-input-div{
+    width: 90%;
+}
+
+
+.form-input-div{
+    margin: 1rem;
+}
+
+.add-member-btn-div{
+    width: fit-content;
+    margin: 1rem auto;
+}
+
+.table-row {
+    transition: 0.3s;
+    opacity: 0.8;
+}
+
+.table-row:hover {
+    opacity: 1;
+    cursor: pointer;
+    /* zoom: 105%; */
+}
+

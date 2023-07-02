@@ -1,7 +1,5 @@
 const Membership = require('../models/membership');
 
-const request=require('request');
-
 
 module.exports.addMembership = async (req, res) => {
     try {
@@ -49,7 +47,10 @@ module.exports.addMembership = async (req, res) => {
 
 module.exports.addCredit = async (req, res) => {
     try {
-        const credData = req.body;
+        const credData = req.body.memberData;
+
+
+        // console.log(credData);
 
         const memship = await Membership.findOne({
             'mobile': credData.mobile
@@ -59,8 +60,8 @@ module.exports.addCredit = async (req, res) => {
             Membership.findOneAndUpdate({
                 'mobile': credData.mobile
             }, {
-                $set: {
-                    'credit': memship.credit + parseInt(credData.credit)
+                $inc: {
+                    'credit': parseInt(credData.credit)
                 }
             }).then(result => {
                 if (result != null) {
@@ -162,7 +163,8 @@ module.exports.applyMembership = async (req, res) => {
 
 module.exports.removeMembership = async (req, res) => {
     try {
-        const custMobile = req.body.mobile;
+
+        const custMobile = req.body.memberId;
 
         const memship = await Membership.findOne({
             'mobile': custMobile
@@ -203,5 +205,22 @@ module.exports.removeMembership = async (req, res) => {
             success: false,
             error: error.message
         })
+    }
+}
+
+module.exports.getMembership = async (req, res) => {
+    try {
+        const memberships = await Membership.find({});
+
+        res.render('membership.ejs', {
+            "memberships": memberships
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            "message": "Failed to load memberships",
+            success: false,
+            error: error.message
+        });
     }
 }

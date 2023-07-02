@@ -6,7 +6,9 @@ module.exports.addItem = async (req, res) => {
     try {
 
         //item data
-        const itemData = req.body;
+        const itemData = req.body.itemData;
+
+        console.log(itemData);
 
         const itemPresent = await Item.findOne({
             "name": itemData.name.toUpperCase()
@@ -23,7 +25,6 @@ module.exports.addItem = async (req, res) => {
             //item details object
             const itemDetails = {
                 name: itemData.name.toUpperCase(),
-                size: itemData.size,
                 costPrice: parseInt(itemData.costPrice),
                 sellPrice: parseInt(itemData.sellPrice),
                 qty: parseInt(itemData.qty)
@@ -60,14 +61,18 @@ module.exports.removeItem = async (req, res) => {
     try {
 
         //item id to be removed
-        const itemIds = req.body.itemId;
+        const itemId = req.body.itemId;
 
-        if (itemIds.length > 0) {
+        // if (itemIds.length > 0) {
             //removing the item from the item collection in database
-            Item.deleteMany({
-                "itemId": {
-                    $in: itemIds
-                }
+            // Item.deleteMany({
+            //     "itemId": {
+            //         $in: itemIds
+            //     }
+            // })
+
+            Item.findOneAndDelete({
+                "itemId": itemId
             }).then((result) => {
                 if (result.deletedCount == 0) {
                     res.status(400).json({
@@ -90,12 +95,13 @@ module.exports.removeItem = async (req, res) => {
                     error: error.message
                 });
             });
-        } else {
-            res.status(400).json({
-                "message": "Item not found",
-                success: false
-            })
-        }
+        // }
+        //  else {
+        //     res.status(400).json({
+        //         "message": "Item not found",
+        //         success: false
+        //     })
+        // }
 
     } catch (error) {
         res.status(500).json({
@@ -110,17 +116,20 @@ module.exports.updateItem = async (req, res) => {
     try {
         const itemData = req.body;
 
-        const itemUpdate = {
-            "name": itemData.name,
-            "sellPrice": itemData.sellPrice,
-            "costPrice": itemData.costPrice,
-            "qty": itemData.qty
-        }
+        // console.log(itemData);
 
         //update the item details
         Item.findOneAndUpdate({
-            itemId: itemData.itemId
-        }, itemUpdate).then((result) => {
+            itemId: itemData.itemId,
+        }, {
+            $set: {
+                'sellPrice': itemData.sellPrice,
+                'costPrice': itemData.costPrice,
+            },
+            $inc: {
+                'qty': itemData.qty
+            }
+        }).then((result) => {
 
             //if item exist
             if (result != null) {
@@ -150,5 +159,28 @@ module.exports.updateItem = async (req, res) => {
             success: false,
             error: error.message
         });
+    }
+}
+
+module.exports.getStock = async (req, res) => {
+    try {
+        const stockData = await Item.find({});
+
+        res.render('stock.ejs', {
+            "itemsData": stockData
+        });
+
+        // res.status(200).json({
+        //     "message": "Stock data",
+        //     success: true,
+        //     "stockData": stockData
+        // })
+
+    } catch (error) {
+        res.status(500).json({
+            "message": "Failed to fetch stock data, server error",
+            success: false,
+            "error": error.message
+        })
     }
 }

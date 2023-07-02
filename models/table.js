@@ -7,6 +7,8 @@ const tableSchema = mongoose.Schema({
     price: {
         type: Number
     }
+}, {
+    timestamps: true
 })
 
 const Table = mongoose.model('table', tableSchema);

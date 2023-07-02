@@ -1,0 +1,126 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership</title>
+</head> -->
+
+<link rel="stylesheet" href="/css/memship.css">
+<%- include('header.ejs'); -%>
+    <body>
+        <div class="header-div">
+            <div class="heading-div">
+                <h1 style="width: fit-content">Memberships</h1>
+            </div>
+
+            <div class="add-memship-div-btn">
+                <button class="new-memship-btn" id="new-stock-btn" type="button" onclick="handleNewMember(event)">New Member</button>
+            </div>
+    
+            <div class="edit-memship-div-btn">
+                <button class="new-memship-btn" id="edit-stock-btn" type="button" onclick="handleEditMember(event)">Edit Member</button>
+            </div>
+        </div>
+
+        <div class="memship-table-div">
+            <table class="table text-center" id="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Mobile</th>
+                        <th scope="col">Credits</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <% memberships.forEach(memship=>{ %>
+                        <tr class="table-row" id=table-row-<%=memship.mobile%>>
+                            <td scope="row">
+                                <%=memship.name%>
+                            </td>
+                            <td scope="row">
+                                <%=memship.mobile%>
+                            </td>
+                            <td>
+                                <%=memship.credit%>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" id=<%=memship.mobile%> onclick="removeMember(event)">Delete</button>
+                            </td>
+                        </tr>
+                        <%})%>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="add-memship-form-div" id="add-memship-form-div">
+            <form onsubmit="addMember(event)" id="add-memship-form">
+                <div class="form-close-btn-div" onclick="closeNewMemberForm(event)">
+                    <i class="fa-sharp fa-solid fa-xmark fa-lg"></i>
+                </div>
+                <div class="memship-input-div">
+                    <div class="form-group form-input-div">
+                        <label for="name">Name</label>
+                        <input id="new-member-name" class="form-control" type="text" placeholder="Enter Name" required>
+                    </div>
+
+                    <div class="form-group form-input-div">
+                        <label for="mobile">Mobile</label>
+                        <input class="form-control" id="new-member-mobile" type="text" placeholder="Enter Mobile" required>
+                    </div>
+
+                    <div class="form-group form-input-div">
+                        <label for="quantity">Credits</label>
+                        <input class="form-control" id="new-member-credit" type="number" placeholder="Enter Credits" required>
+                    </div>
+
+
+                    <div class="form-group form-input-div add-member-btn-div">
+                        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                    </div>
+                </div>    
+            </form>
+        </div>
+
+        <div class="edit-memship-form-div" id="edit-memship-form-div">
+            <form onsubmit="editMember(event)" id="edit-memship-form">
+                <div class="form-close-btn-div" onclick="closeEditMemberForm(event)">
+                    <i class="fa-sharp fa-solid fa-xmark fa-lg"></i>
+                </div>
+                <div class="memship-input-div">
+                    <div class="form-group form-input-div">
+                        <label for="name">Name</label>
+                        <select class="form-select select-item" name="" id="select-name" required>
+                            <option value="" selected>Select</option>
+                            <% memberships.forEach(memship=>{ %>
+                              <option id=name-<%=memship.mobile%> value=<%=memship.name%> ><%=memship.name%></option>
+                          <%})%>
+                          </select>
+                    </div>
+
+                    <div class="form-group form-input-div">
+                        <label for="mobile">Mobile</label>
+                        <select class="form-select select-item" name="" id="select-mobile" required>
+                            <option value="" selected>Select</option>
+                            <% memberships.forEach(memship=>{ %>
+                              <option id=mobile-<%=memship.mobile%> value=<%=memship.mobile%> ><%=memship.mobile%></option>
+                          <%})%>
+                        </select>
+                    </div>
+
+                    <div class="form-group form-input-div">
+                        <label for="quantity">Credits</label>
+                        <input class="form-control" id="edit-member-credit" type="number" placeholder="Enter Credits" required>
+                    </div>
+
+
+                    <div class="form-group form-input-div edit-member-btn-div">
+                        <button type="submit" class="btn btn-primary btn-sm" onclick="editMember(event)">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+    <script src="/js/membership.js"></script>
+</html>
