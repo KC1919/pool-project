@@ -42,7 +42,16 @@ const server = app.listen(PORT, (err) => {
 const io = socketio(server);
 
 app.set("socketio", io);
-app.set("data","kunal")
+
+
+app.get('/', (req, res) => {
+    try {
+        res.render('home.ejs');
+    } catch (error) {
+        console.log("Failed to render home page: ", error.message);
+        alert("Failed to render home page: ", error.message);
+    }
+})
 
 
 app.use('/auth', authRouter);

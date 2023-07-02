@@ -72,12 +72,12 @@ module.exports.login = async (req, res) => {
 
                 // res.redirect('/customers');
 
-                res.status(200).json({
-                    message: 'User logged in successfully',
-                    success: true
-                });
+                // res.status(200).json({
+                //     message: 'User logged in successfully',
+                //     success: true
+                // });
 
-                // res.redirect('/customer/allCustomers');
+                res.redirect('/customer/allCustomers');
 
             } else {
                 res.status(401).json({
