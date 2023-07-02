@@ -443,7 +443,8 @@ module.exports.finishOrder = async (req, res) => {
         const customer = await Customer.findOne({
             "cid": cid
         }, {
-            "totalAmount": 1
+            "totalAmount": 1,
+            "date":1
         });
 
         Customer.updateOne({
@@ -455,9 +456,12 @@ module.exports.finishOrder = async (req, res) => {
             }
         }).then(async result => {
             if (result.matchedCount != 0) {
-                const currentDate = new Date().toLocaleDateString();
+
+                // let currentDate = new Date().toISOString().replace(/T.*/,'').split('-').join('-')
+                // console.log(currentDate);
+            
                 const saleUpdateResult = await Sale.findOneAndUpdate({
-                    "date": currentDate
+                    "date": customer.date
                 }, {
                     $inc: {
                         "totalCustomer": 1,

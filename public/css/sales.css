@@ -5,9 +5,10 @@ body {
 }
 
 .header-div {
+    display: flex;
     text-align: center;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     /* margin-top: 1rem; */
     margin-bottom: 3rem;
     margin-left: auto;
@@ -17,10 +18,16 @@ body {
     padding: 0.5rem;
 }
 
+.search-bar-btn-div{
+    display: flex;
+    width: 20%;
+    align-items: center;
+    justify-content: space-around;
+}
+
 .heading-div {
     width: fit-content;
-    margin: 0 auto;
-    display: inline-block;
+    margin: 0 25rem;
     align-items: center;
     text-align: center;
     justify-content: center;

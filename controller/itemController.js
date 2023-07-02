@@ -116,7 +116,7 @@ module.exports.updateItem = async (req, res) => {
     try {
         const itemData = req.body;
 
-        // console.log(itemData);
+        console.log(itemData);
 
         //update the item details
         Item.findOneAndUpdate({

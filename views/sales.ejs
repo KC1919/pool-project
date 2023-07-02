@@ -15,6 +15,17 @@
     <link rel="stylesheet" href="/css/sales.css">
     <%- include('header.ejs'); -%>
     <div class="header-div">
+
+        <div class="search-bar-btn-div">
+            <div class="search-bar-div">
+              <input id="date-input-filter" class="form-control" type="date" placeholder="Search by date">
+            </div>
+    
+            <div class="search-btn-div">
+              <button type="button" class="btn btn-primary btn-sm" onclick="filterByDate(event)">Search</button>
+            </div>
+          </div>
+    
         <div class="heading-div">
             <h1 style="width: fit-content">Sales Data</h1>
         </div>
@@ -26,6 +37,7 @@
               <tr>
                 <!-- <th scope="col">#</th> -->
                 <th scope="col">Date</th>
+                <th scope="col">Customers</th>
                 <th scope="col">Sale</th>
                 <!-- <th scope="col">Profit</th> -->
               </tr>
@@ -34,6 +46,7 @@
               <% salesData.forEach(sales=>{ %>
               <tr class="table-row" id=table-row-<%=sales.date%>>
                   <td scope="row"><%=sales.date%></td>
+                  <td><%=sales.totalCustomer%></td>
                   <td>Rs. <%=sales.totalAmount%></td>
               </tr>
               <%})%>
@@ -41,6 +54,7 @@
             </tbody>
         </table>
     </div>
+    <script src="/js/sales.js"></script>
 </body>
 
 </html>

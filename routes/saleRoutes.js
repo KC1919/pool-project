@@ -6,6 +6,7 @@ const router = express.Router();
 
 router
     .post('/updateSale', verifyUser, saleController.updateSale)
-    .get('/getSales', verifyUser, saleController.getSales);
+    .get('/getSales', verifyUser, saleController.getSales)
+    .get('/filterSales/:filterDate', verifyUser, saleController.filterSales);
 
 module.exports = router;

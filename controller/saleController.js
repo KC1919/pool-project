@@ -10,6 +10,8 @@ module.exports.updateSale = async (req, res) => {
         // console.log(Date());
         // console.log(new Date())
 
+        // console.log(saleData);
+
 
         const result = await Sale.findOne({
             "date": saleData.date
@@ -99,7 +101,7 @@ module.exports.getSales = async (req, res) => {
     try {
         const salesData = await Sale.find({});
 
-        console.log(salesData);
+        // console.log(salesData);
 
         res.render('sales.ejs', {
             "salesData": salesData
@@ -116,5 +118,28 @@ module.exports.getSales = async (req, res) => {
             success: false,
             "error": error.message
         })
+    }
+}
+
+module.exports.filterSales = async (req, res) => {
+    try {
+        const filterDate = req.params.filterDate;
+
+        console.log(filterDate);
+        
+        const sales = await Sale.find({
+            'date': filterDate
+        }).lean().sort({
+            "date": -1
+        });
+
+        console.log(sales);
+
+        res.render("sales.ejs", {
+            "salesData": sales
+        });
+
+    } catch (error) {
+        console.log("Failed to fetch sales");
     }
 }

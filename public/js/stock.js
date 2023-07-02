@@ -131,14 +131,16 @@ async function editItem(e) {
 
         const item = document.getElementById("select-item");
         const itemName = item.value;
-        const itemId = item.options[item.selectedIndex].id;
+        const itemId = item.options[item.selectedIndex].dataset.id;
         const itemQty = document.getElementById("edit-item-qty").value;
         const sellPrice = document.getElementById("edit-sell-price").value;
         const costPrice = document.getElementById("edit-cost-price").value;
 
+        console.log(itemId);
+
         const itemData = {
             "name": itemName,
-            itemId,
+            "itemId":itemId,
             "qty": itemQty,
             sellPrice,
             costPrice
@@ -167,8 +169,8 @@ async function editItem(e) {
         }
 
     } catch (error) {
-        console.log("Failed to edit item");
-        alert("Failed to edit item", error.message)
+        console.log("Failed to edit item: ",error.message);
+        alert("Failed to edit item: ", error.message)
     }
 }
 
