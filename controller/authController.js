@@ -66,7 +66,7 @@ module.exports.login = async (req, res) => {
 
                 //storing the token in cookie and sending it to the user
                 res.cookie('secret', token, {
-                    maxAge: 86400,
+                    maxAge: 86400000,
                     // signed: true
                 })
 
