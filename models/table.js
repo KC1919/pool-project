@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const tableSchema = mongoose.Schema({
-    number: {
-        type: Number,
-        required: true
-    },
+    // number: {
+    //     type: Number,
+    //     required: true
+    // },
     size: {
         type: String,
         required: true
