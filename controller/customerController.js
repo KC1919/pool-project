@@ -2,6 +2,7 @@ const Customer = require('../models/customer');
 const {
     v4
 } = require('uuid');
+const Table = require('../models/table');
 
 module.exports.addCustomer = async (req, res) => {
     try {
@@ -9,7 +10,7 @@ module.exports.addCustomer = async (req, res) => {
 
         // console.log(data);
 
-        const count = await Customer.countDocuments();
+        // const count = await Customer.countDocuments();
 
         data.cid = v4();
 
@@ -17,7 +18,9 @@ module.exports.addCustomer = async (req, res) => {
 
         data.entryTime = new Date().getTime();
 
-        data.time = new Date().toLocaleTimeString();
+        data.time = new Date().toLocaleTimeString('en-GB', {
+            timeZone: 'Asia/Kolkata'
+        });
 
         //creating new customer
         const customer = new Customer(data);
@@ -55,8 +58,11 @@ module.exports.allCustomers = async (req, res) => {
 
         // console.log(customers);
 
+        const tableData = await Table.find({});
+
         res.render("customer.ejs", {
-            "customers": customers
+            "customers": customers,
+            "tableData": tableData
         });
 
     } catch (error) {
@@ -69,7 +75,7 @@ module.exports.filterCustomers = async (req, res) => {
         const filterDate = req.params.filterDate;
 
         // console.log(filterDate);
-        
+
         const customers = await Customer.find({
             'date': filterDate
         }).lean().sort({

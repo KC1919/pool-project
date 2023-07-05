@@ -94,12 +94,18 @@
             <div class="table-size-number-div">
                 <div class="form-group form-input-div">
                     <label for="tableNumber">Table No.</label>
-                    <input class="form-control" id="tableNumber" type="text" name="tableNumber" placeholder="Table number" required>
+                    <select class="form-select select-item" name="tableNumber" id="select-table-number" required>
+                      <option value="">Select</option>
+                      <%tableData.forEach(table=>{%>
+                        <option data-id=<%=table.number%> value=<%=table.number%>><%=table.number%></option>
+                      <%})%>
+                    </select>
+                    <!-- <input class="form-control" id="tableNumber" type="text" name="tableNumber" placeholder="Table number" required> -->
                 </div> 
 
                 <div class="form-group form-input-div">
                     <label for="tableSize">Table Size</label>
-                    <select class="form-control" name="" id="tableSize" required>
+                    <select class="form-select" name="" id="select-table-size" required>
                         <option value="small">small</option>
                         <option value="medium">medium</option>
                         <option value="large">large</option>

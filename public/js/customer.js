@@ -58,8 +58,9 @@ async function saveCustomer(e) {
         //new customer data
         const name = document.getElementById("name").value;
         const mobile = document.getElementById("mobile").value;
-        const tableNumber = document.getElementById("tableNumber").value;
-        const tableSize = document.getElementById("tableSize").value;
+        const tableNumberElem = document.getElementById("select-table-number");
+        const tableNumber=tableNumberElem.options[tableNumberElem.selectedIndex].dataset.id
+        const tableSize = document.getElementById("select-table-size").value;
         const date = document.getElementById("date").value;
         const time = document.getElementById("time").value;
 

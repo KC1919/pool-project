@@ -6,9 +6,9 @@ const isAdmin = require('../middleware/verifyAdmin');
 
 
 router
-    .post('/addItem', verifyUser, itemController.addItem)
-    .delete('/removeItem', verifyUser, itemController.removeItem)
-    .patch('/updateItem', verifyUser, itemController.updateItem)
+    .post('/addItem', verifyUser, isAdmin, itemController.addItem)
+    .delete('/removeItem', verifyUser, isAdmin, itemController.removeItem)
+    .patch('/updateItem', verifyUser, isAdmin, itemController.updateItem)
     .get('/getStock', verifyUser, itemController.getStock);
 
 
