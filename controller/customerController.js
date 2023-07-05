@@ -85,10 +85,13 @@ module.exports.filterCustomers = async (req, res) => {
             "time": -1
         });
 
+        const tableData = await Table.find({});
+
         // console.log(customers);
 
         res.render("customer.ejs", {
-            "customers": customers
+            "customers": customers,
+            "tableData": tableData
         });
 
     } catch (error) {
