@@ -253,7 +253,7 @@ async function applyMembership(e) {
         const totalAmount = totalAmountElem.innerHTML;
         const mobile = document.getElementById("memship-mobile").value;
 
-        console.log(totalAmount);
+        // console.log(totalAmount);
         const response = await fetch("/membership/applyMembership", {
             method: "POST",
             headers: {

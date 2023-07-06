@@ -353,7 +353,9 @@ module.exports.completeOrder = async (req, res) => {
 
 
         //human readable format for end time
-        const endTime = date.toLocaleTimeString();
+        const endTime = date.toLocaleTimeString('en-GB', {
+            timeZone: 'Asia/Kolkata'
+        });
 
         // console.log(endTime);
 
@@ -444,7 +446,7 @@ module.exports.finishOrder = async (req, res) => {
             "cid": cid
         }, {
             "totalAmount": 1,
-            "date":1
+            "date": 1
         });
 
         Customer.updateOne({
@@ -459,7 +461,7 @@ module.exports.finishOrder = async (req, res) => {
 
                 // let currentDate = new Date().toISOString().replace(/T.*/,'').split('-').join('-')
                 // console.log(currentDate);
-            
+
                 const saleUpdateResult = await Sale.findOneAndUpdate({
                     "date": customer.date
                 }, {
