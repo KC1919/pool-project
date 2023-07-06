@@ -69,7 +69,7 @@
         <div class="payment-mode-bill-div">
           <div class="bill-paid-div" id="bill-paid-div">
             <p>Order amount : <strong>Rs. <%=orderAmount%></strong></p>
-            <p>Table amount : <strong>Rs. <%=totalBillPaid - orderAmount%></strong></p>
+            <p>Table amount : <strong>Rs. <%=totalBillAmount - orderAmount%></strong></p>
             <p>Bill Paid : <strong>Rs. <%=totalBillPaid%></strong></p>
           </div>
   
@@ -171,6 +171,7 @@
       const cid = <%-JSON.stringify(cid)%>;
       const orderData=<%-JSON.stringify(orderData)%>;
       const paymentStatus=<%-JSON.stringify(paymentStatus)%>;
+      const totalBillAmount=<%-JSON.stringify(totalBillAmount)%>;
       const totalBillPaid=<%-JSON.stringify(totalBillPaid)%>;
     </script>
 
