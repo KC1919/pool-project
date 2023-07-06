@@ -55,6 +55,9 @@
       <tbody id="table-body">
         <% customers.forEach((customer,index)=>{ %>
         <tr class="table-row" id=table-row-<%=customer.cid%>>
+          <% if (customer.paymentStatus==false) { %>
+            <style> #table-row-<%=customer.cid%> { background-color:#77DD77 }</style>
+          <% } %>
             <th scope="row"><%=index+1%></th>
             <td><%=customer.name%></td>
             <td><%=customer.mobile%></td>

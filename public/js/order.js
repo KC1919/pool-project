@@ -291,7 +291,7 @@ async function finishOrder(e) {
         // console.log(orderAmount);
         // console.log(tableAmount);
 
-        console.log(totalAmountPaid);
+        // console.log(totalAmountPaid);
 
         paymentDiv.style.display = "none";
 
