@@ -64,7 +64,7 @@ async function saveCustomer(e) {
         const date = document.getElementById("date").value;
         const time = document.getElementById("time").value;
 
-        const tableNumber=document.getElementById('tableNumber').value;
+        const tableNumber = document.getElementById('tableNumber').value;
         const customerData = {
             "name": name,
             "mobile": mobile,
@@ -172,9 +172,15 @@ async function saveCustomerToDb(customerData, viewBtn) {
 
 async function filterByDate(e) {
     try {
-        const filterDate = document.getElementById('date-input-filter').value;
-    
-        window.location.href = `/customer/filterCustomers/${filterDate}`
+        const filterElem = document.getElementById('date-input-filter');
+
+        const filterDate = filterElem.value;
+
+        if (filterDate.length > 0) {
+            window.location.href = `/customer/filterCustomers/${filterDate}`
+        } else {
+            alert("Select Date");
+        }
 
     } catch (error) {
         console.log("Failed to filter customer result", error.message);
