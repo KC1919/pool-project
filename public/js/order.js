@@ -253,7 +253,7 @@ async function applyMembership(e) {
         const totalAmount = totalAmountElem.innerHTML;
         const mobile = document.getElementById("memship-mobile").value;
 
-        // console.log(totalAmount);
+        console.log(totalAmount);
         const response = await fetch("/membership/applyMembership", {
             method: "POST",
             headers: {
@@ -268,10 +268,12 @@ async function applyMembership(e) {
 
         const jsonResp = await response.json();
 
+        // console.log(jsonResp);
+        if (jsonResp.success == true) {
+            totalAmountElem.innerHTML = jsonResp.amountToBePaid;
+        }
+
         alert(jsonResp.message);
-
-        totalAmountElem.innerHTML = 0;
-
 
 
     } catch (error) {
@@ -283,31 +285,30 @@ async function finishOrder(e) {
     try {
         const paymentDiv = document.getElementById('complete-order-div');
 
-        const orderAmount = document.getElementById("order-amount-div").children[1].innerHTML;
-        const tableAmount = document.getElementById("table-amount-div").children[1].innerHTML;
-
+        // const orderAmount = document.getElementById("order-amount-div").children[1].innerHTML;
+        // const tableAmount = document.getElementById("table-amount-div").children[1].innerHTML;
+        const totalAmountPaid = document.getElementById('total-amount-div').children[1].innerHTML;
         // console.log(orderAmount);
         // console.log(tableAmount);
 
-        paymentDiv.style.display = "none";
+        console.log(totalAmountPaid);
 
-        for (let i = 0; i < orderData.length; i++) {
-            const removeBtn = document.getElementById('remove-btn-' + orderData[i].itemId);
-            removeBtn.disabled = true;
-        }
+        paymentDiv.style.display = "none";
 
         const completeOrderBtn = document.getElementById('complete-order-btn');
         const newOrderBtn = document.getElementById('new-order-btn');
 
-        completeOrderBtn.setAttribute("hidden", "hidden");
-        newOrderBtn.setAttribute("hidden", "hidden");
+        completeOrderBtn.hidden = true;
+        newOrderBtn.hidden = true;
 
         for (let i = 0; i < orderData.length; i++) {
             const removeBtn = document.getElementById('remove-btn-' + orderData[i].itemId);
-            removeBtn.setAttribute("hidden", "hidden");
+            removeBtn.hidden = true;
         }
 
-        billPaidElem.innerHTML = `Bill Paid : <strong>Rs.  ${parseInt(orderAmount) + parseInt(tableAmount)}</strong>`;
+        // billPaidElem.innerHTML = `Bill Paid : <strong>Rs.  ${parseInt(orderAmount) + parseInt(tableAmount)}</strong>`;
+
+        billPaidElem.innerHTML = `Bill Paid : <strong>Rs. ${parseInt(totalAmountPaid)} </strong>`;
         billPaidElem.style.display = "block";
 
         paymentMethodElem.innerHTML = `Payment Mode : <strong>  ${paymentMode}</strong>`;

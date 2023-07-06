@@ -57,6 +57,10 @@ const customerSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    totalPaidAmount: {
+        type: Number,
+        default: 0
+    },
     paymentMode: {
         type: String
     },

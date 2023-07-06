@@ -86,8 +86,9 @@ module.exports.getCustomerOrder = async (req, res) => {
             'items': items,
             'cid': cid,
             'paymentStatus': customer.paymentStatus,
-            'totalBillPaid': customer.totalAmount,
             'orderAmount': customer.orderAmount,
+            'totalBillAmount': customer.totalAmount,
+            'totalBillPaid': customer.totalPaidAmount,
             'paymentMode': customer.paymentMode
         });
 
@@ -409,6 +410,7 @@ module.exports.completeOrder = async (req, res) => {
         }, {
             $set: {
                 'totalAmount': totalPayableAmount,
+                'totalPaidAmount': totalPayableAmount,
                 'exitTime': endTime
             }
         });
