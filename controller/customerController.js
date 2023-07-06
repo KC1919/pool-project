@@ -60,7 +60,7 @@ module.exports.allCustomers = async (req, res) => {
 
         const tableData = await Table.find({});
 
-        console.log(tableData);
+        // console.log(tableData);
 
         res.render("customer.ejs", {
             "customers": customers,
