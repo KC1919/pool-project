@@ -182,23 +182,28 @@ async function editItem(e) {
 
 async function deleteItem(e) {
     try {
-        const itemId = e.target.id;
-        const rowElem = document.getElementById('table-row-' + itemId);
-        rowElem.remove();
 
-        const response = await fetch('/item/removeItem', {
-            method: "DELETE",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "itemId": itemId
-            })
-        });
+        const confrimDelete=confirm("Remove the item?");
 
-        const jsonResp = await response.json();
-
-        alert(jsonResp.message);
+        if(confrimDelete==true){
+            const itemId = e.target.id;
+            const rowElem = document.getElementById('table-row-' + itemId);
+            rowElem.remove();
+    
+            const response = await fetch('/item/removeItem', {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "itemId": itemId
+                })
+            });
+    
+            const jsonResp = await response.json();
+    
+            alert(jsonResp.message);
+        }
 
     } catch (error) {
         console.log("Failed to remove item", error.message);

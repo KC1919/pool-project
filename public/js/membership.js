@@ -130,10 +130,15 @@ async function saveMemberToDb(memberData) {
 
 async function removeMember(e) {
     try {
-        const memberId = e.target.id;
-        const rowElem = document.getElementById('table-row-' + memberId);
-        rowElem.remove();
-        removeMemberFromDb(memberId);
+
+        const confirmRemove=confirm("Remove the membership?");
+
+        if(confirmRemove==true){
+            const memberId = e.target.id;
+            const rowElem = document.getElementById('table-row-' + memberId);
+            rowElem.remove();
+            removeMemberFromDb(memberId);
+        }
 
     } catch (error) {
         console.log("Failed to remove membership", error.message);

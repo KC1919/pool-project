@@ -106,9 +106,9 @@ async function placeOrder(e) {
                 if (i == 0)
                     td.innerHTML = itemName;
                 else if (i == 1)
-                    td.innerHTML = pricePerItem;
-                else if (i == 2)
                     td.innerHTML = itemQty;
+                else if (i == 2)
+                    td.innerHTML = pricePerItem;
                 else if (i == 3)
                     td.innerHTML = itemQty * pricePerItem;
 
@@ -313,7 +313,7 @@ async function finishOrder(e) {
 
             // const orderAmount = document.getElementById("order-amount-div").children[1].innerHTML;
             // const tableAmount = document.getElementById("table-amount-div").children[1].innerHTML;
-            const totalAmountPaid = document.getElementById('total-amount-div').children[1].innerHTML;
+            // const totalAmountPaid = document.getElementById('total-amount-div').children[1].innerHTML;
             // console.log(orderAmount);
             // console.log(tableAmount);
 
@@ -321,11 +321,11 @@ async function finishOrder(e) {
 
             paymentDiv.style.display = "none";
 
-            const completeOrderBtn = document.getElementById('complete-order-btn');
-            const newOrderBtn = document.getElementById('new-order-btn');
+            // const completeOrderBtn = document.getElementById('complete-order-btn');
+            // const newOrderBtn = document.getElementById('new-order-btn');
 
-            completeOrderBtn.hidden = true;
-            newOrderBtn.hidden = true;
+            // completeOrderBtn.hidden = true;
+            // newOrderBtn.hidden = true;
 
             // for (let i = 0; i < orderData.length; i++) {
             //     const removeBtn = document.getElementById('remove-btn-' + orderData[i].itemId);
@@ -334,11 +334,15 @@ async function finishOrder(e) {
 
             // billPaidElem.innerHTML = `Bill Paid : <strong>Rs.  ${parseInt(orderAmount) + parseInt(tableAmount)}</strong>`;
 
-            billPaidElem.innerHTML = `Bill Paid : <strong>Rs. ${parseInt(totalAmountPaid)} </strong>`;
-            billPaidElem.style.display = "block";
+            // billPaidElem.children[0].innerHTML='Bill Paid :';
+            // billPaidElem.children[1].innerHTML=`<strong>Rs. ${parseInt(totalAmountPaid)} </strong>`;
+            // billPaidElem.innerHTML = `Bill Paid : <strong>Rs. ${parseInt(totalAmountPaid)} </strong>`;
+            // billPaidElem.style.display = "block";
 
-            paymentMethodElem.innerHTML = `Payment Mode : <strong>  ${paymentMode}</strong>`;
-            paymentMethodElem.style.display = "block";
+            // paymentMethodElem.children[0].innerHTML='Payment Mode :';
+            // paymentMethodElem.children[1].innerHTML=`<strong>  ${paymentMode} </strong>`;
+            // paymentMethodElem.innerHTML = `<p>Payment Mode :</p> <br> <strong>  ${paymentMode} </strong>`;
+            // paymentMethodElem.style.display = "block";
 
             const response = await fetch("/order/finishOrder", {
                 method: "POST",

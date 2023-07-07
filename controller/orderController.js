@@ -479,7 +479,7 @@ module.exports.finishOrder = async (req, res) => {
                 }, {
                     $inc: {
                         "totalCustomer": 1,
-                        "totalAmount": customer.totalAmount
+                        "totalAmount": customer.totalPaidAmount
                     }
                 }, {
                     upsert: true

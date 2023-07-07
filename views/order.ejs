@@ -37,8 +37,8 @@
               <tr>
                 <!-- <th scope="col">#</th> -->
                 <th scope="col">Item</th>
-                <th scope="col">Price/item</th>
                 <th scope="col">Qty.</th>
+                <th scope="col">Price/item</th>
                 <th scope="col">Total Price</th>
               </tr>
             </thead>
@@ -46,8 +46,8 @@
               <% orderData.forEach(item=>{ %>
               <tr class="table-row" id=table-row-<%=item.itemId%>>
                   <td scope="row"><%=item.itemName%></td>
-                  <td><%=item.sellPrice%></td>
                   <td><%=item.qty%></td>
+                  <td><%=item.sellPrice%></td>
                   <td><%=item.sellPrice*item.qty%></td>
 
                   <td>
