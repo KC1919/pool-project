@@ -266,8 +266,12 @@ module.exports.removeItem = async (req, res) => {
     try {
         const cid = req.body.cid;
 
+        // console.log(cid);
+
         const itemId = req.body.itemId;
         const itemQty = req.body.itemQty;
+
+        // console.log(itemId);
 
         const item = await Item.findOne({
             'itemId': itemId
@@ -275,8 +279,11 @@ module.exports.removeItem = async (req, res) => {
 
         const amount = item.sellPrice * parseInt(itemQty);
 
+        console.log(amount);
+
         Customer.findOneAndUpdate({
-            'cid': cid,
+            'cid': cid
+        }, {
             $pull: {
                 "order": {
                     "itemId": itemId
@@ -288,7 +295,7 @@ module.exports.removeItem = async (req, res) => {
         }).then(async result => {
 
             // console.log(result);
-            if (result.modifiedCount != 0) {
+            if (result != null) {
                 const result = await Item.updateOne({
                     'itemId': itemId
                 }, {
@@ -301,20 +308,22 @@ module.exports.removeItem = async (req, res) => {
                     res.status(200).json({
                         message: "Item removed from order",
                         success: true,
-                        error: error.message
                     });
                 } else {
                     res.status(400).json({
                         message: "Failed to remove item from order",
                         success: false,
-                        error: error.message
                     });
                 }
+            } else {
+                res.status(400).json({
+                    "message": "Failed to remove item",
+                    success: false
+                })
             }
-            // console.log(result);
-            // res.redirect('/customer/allCustomers')
-            // res.redirect(`/orderItem/${cid}`)
+            
         }).catch(error => {
+            console.log(error);
             res.status(400).json({
                 message: "Failed to remove item from order",
                 success: false,
@@ -322,6 +331,7 @@ module.exports.removeItem = async (req, res) => {
             });
         })
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             message: "Failed to remove item from order, server error",
             success: false,

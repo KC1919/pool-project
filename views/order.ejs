@@ -68,13 +68,22 @@
 
         <div class="payment-mode-bill-div">
           <div class="bill-paid-div" id="bill-paid-div">
-            <p>Order amount : <strong>Rs. <%=orderAmount%></strong></p>
-            <p>Table amount : <strong>Rs. <%=totalBillAmount - orderAmount%></strong></p>
-            <p>Bill Paid : <strong>Rs. <%=totalBillPaid%></strong></p>
-          </div>
-  
-          <div class="payment-method-div" id="payment-method-div">
-            <p>Payment Mode : <strong> <%=paymentMode%> </strong></p>
+            <div class="bill-paid-data">
+              <p>Order amount :</p>
+              <strong>Rs. <%=orderAmount%></strong>
+            </div>
+            <div class="bill-paid-data">
+              <p>Table amount :</p>
+              <strong>Rs. <%=totalBillAmount - orderAmount%></strong>
+            </div>
+            <div class="bill-paid-data">
+              <p>Bill Paid :</p>
+              <strong>Rs. <%=totalBillPaid%></strong>
+            </div>
+            <div class="bill-paid-data">
+              <p>Payment Mode :</p>
+              <strong> <%=paymentMode%> </strong>
+            </div>
           </div>
         </div>
     </div>
@@ -133,8 +142,9 @@
       <div class="membership-div">
         <div class="membership-input-div">
           <p for="Membership">Membership: </p>
+
           <div class="membership-input">
-            <input id="memship-mobile" class="form-control" type="text" placeholder="Enter mobile" name="membership">
+            <input id="memship-mobile" class="form-control" type="text" placeholder="Enter mobile">
           </div>
           <div>
             <button class="btn btn-primary btn-sm" type="button" onclick="applyMembership(event)">Apply</button>
@@ -155,7 +165,7 @@
       </div>
 
       <div class="finish-order-btn-div">
-        <button class="btn btn-primary btn-sm" type="button" onclick="finishOrder(event)">Finish</button>
+        <button class="btn btn-primary btn-sm" id="finish-order-btn" type="button" onclick="finishOrder(event)">Finish</button>
       </div>
     </div>
 

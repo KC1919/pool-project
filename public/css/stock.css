@@ -109,3 +109,14 @@
 .sell-cost-div{
     display: flex;
 }
+
+.table-row {
+    transition: 0.3s;
+    opacity: 0.8;
+}
+
+.table-row:hover {
+    opacity: 1;
+    cursor: pointer;
+    /* zoom: 105%; */
+}

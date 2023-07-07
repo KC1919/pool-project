@@ -127,49 +127,55 @@ async function editItem(e) {
 
         e.preventDefault();
 
-        const editForm = document.getElementById('edit-item-form');
+        const confirmEdit = confirm("Save Changes");
 
-        const item = document.getElementById("select-item");
-        const itemName = item.value;
-        const itemId = item.options[item.selectedIndex].dataset.id;
-        const itemQty = document.getElementById("edit-item-qty").value;
-        const sellPrice = document.getElementById("edit-sell-price").value;
-        const costPrice = document.getElementById("edit-cost-price").value;
+        if (confirmEdit == true) {
 
-        console.log(itemId);
+            const editForm = document.getElementById('edit-item-form');
 
-        const itemData = {
-            "name": itemName,
-            "itemId":itemId,
-            "qty": itemQty,
-            sellPrice,
-            costPrice
-        }
+            const item = document.getElementById("select-item");
+            const itemName = item.value;
+            const itemId = item.options[item.selectedIndex].dataset.id;
+            const itemQty = document.getElementById("edit-item-qty").value;
+            const sellPrice = document.getElementById("edit-sell-price").value;
+            const costPrice = document.getElementById("edit-cost-price").value;
 
-        // console.log(itemData);
+            console.log(itemId);
 
-        editForm.reset();
+            const itemData = {
+                "name": itemName,
+                "itemId": itemId,
+                "qty": itemQty,
+                sellPrice,
+                costPrice
+            }
 
-        const response = await fetch('/item/updateItem', {
-            method: "PATCH",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(itemData)
-        })
+            // console.log(itemData);
 
-        const jsonResp = await response.json();
+            editForm.reset();
 
-        console.log(jsonResp);
+            const response = await fetch('/item/updateItem', {
+                method: "PATCH",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(itemData)
+            })
 
-        if (jsonResp.success == true) {
-            alert(jsonResp.message);
-        } else {
-            alert(jsonResp.message + '\n' + jsonResp.error);
+            const jsonResp = await response.json();
+
+            console.log(jsonResp);
+
+            if (jsonResp.success == true) {
+                alert(jsonResp.message);
+                window.location.reload();
+            } else {
+                alert(jsonResp.message + '\n' + jsonResp.error);
+            }
         }
 
     } catch (error) {
-        console.log("Failed to edit item: ",error.message);
+        console.log("Failed to edit item: ", error.message);
         alert("Failed to edit item: ", error.message)
     }
 }

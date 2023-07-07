@@ -161,9 +161,11 @@ async function saveCustomerToDb(customerData, viewBtn) {
 
         viewBtn.setAttribute('id', json.result.cid);
 
-        console.log(viewBtn);
+        window.location.reload();
 
-        console.log(json);
+        // console.log(viewBtn);
+
+        // console.log(json);
 
     } catch (error) {
         console.log("Failed to save customer to database", error);

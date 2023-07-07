@@ -65,7 +65,13 @@
             <td><%=customer.tableSize%></td>
             <td><%=customer.date%></td>
             <td><%=customer.time%></td>
-            <td><%=customer.exitTime%></td>
+            <td>
+              <% if (customer.paymentStatus==true) { %>
+                <%=customer.exitTime%>
+              <% }else{%>
+                
+              <% } %>
+            </td>
             <td>
               <button class="view-btn" id=<%= customer.cid %>
                 onclick="handleCustomerClick(event)">View
