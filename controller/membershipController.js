@@ -116,8 +116,13 @@ module.exports.applyMembership = async (req, res) => {
         let amountToBePaid = 0;
 
         if (memship != null) {
-
-            amountToBePaid = Math.round(0.9 * parseInt(billData.totalAmount));
+            billData.totalAmount = parseInt(billData.totalAmount)
+            if (billData.totalAmount < 1000)
+                amountToBePaid = billData.totalAmount;
+            else if (billData.totalAmount == 1000)
+                amountToBePaid = Math.round(0.9 * billData.totalAmount);
+            else if (billData.totalAmount > 1000)
+                amountToBePaid = Math.round(0.85 * billData.totalAmount);
 
             // console.log(amountToBePaid);
 

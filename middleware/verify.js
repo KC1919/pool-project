@@ -10,11 +10,15 @@ const verifyUser = async (req, res, next) => {
         next();
 
     } catch (error) {
-        res.status(500).json({
-            'message': 'Unauthorized request, server error',
-            success: false,
-            error: error.message
-        });
+
+        console.log('Unauthorized request, server error');
+
+        res.redirect('/')
+        // res.status(500).json({
+        //     'message': 'Unauthorized request, server error',
+        //     success: false,
+        //     error: error.message
+        // });
     }
 }
 

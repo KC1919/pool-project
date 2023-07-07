@@ -106,9 +106,9 @@ async function placeOrder(e) {
                 if (i == 0)
                     td.innerHTML = itemName;
                 else if (i == 1)
-                    td.innerHTML = pricePerItem;
-                else if (i == 2)
                     td.innerHTML = itemQty;
+                else if (i == 2)
+                    td.innerHTML = pricePerItem;
                 else if (i == 3)
                     td.innerHTML = itemQty * pricePerItem;
 
@@ -118,7 +118,7 @@ async function placeOrder(e) {
             const removeBtn = document.createElement('button');
             removeBtn.setAttribute('class', 'remove-btn');
             removeBtn.addEventListener('click', removeItem);
-            removeBtn.setAttribute('id', itemId);
+            removeBtn.setAttribute('id', 'remove-btn-' + itemId);
             removeBtn.innerHTML = "remove";
 
             const td = document.createElement('td');
@@ -169,13 +169,19 @@ async function saveOrderToDb(orderData) {
 async function removeItem(e) {
     try {
 
-        const rowId = e.target.id;
+        // const confirmDelete = confirm('Are you sure to remove an item?');
+        // console.log(confirmDelete);
+        // if (confirmDelete == true) {
+        const rowId = e.target.id.split('-')[2];
+        console.log(rowId);
         const rowElem = document.getElementById('table-row-' + rowId);
+        console.log(rowElem);
         const itemQty = rowElem.cells[2].innerHTML;
         rowElem.remove();
 
-
         removeItemFromDb(rowId, itemQty);
+        // }
+
 
     } catch (error) {
         console.log('Failed to remove item', error);
@@ -184,6 +190,10 @@ async function removeItem(e) {
 
 async function removeItemFromDb(itemId, itemQty) {
     try {
+
+        // console.log(itemId, itemQty);
+
+        console.log(cid);
         const response = await fetch('/order/removeItem', {
             method: "DELETE",
             headers: {
@@ -191,15 +201,16 @@ async function removeItemFromDb(itemId, itemQty) {
             },
             body: JSON.stringify({
                 "itemId": itemId,
-                "itemQty": itemQty
+                "itemQty": itemQty,
+                "cid": cid
             })
         })
 
-        const json = await response.json();
+        const jsonResp = await response.json();
+        alert(jsonResp.message);
 
-        console.log(json);
     } catch (error) {
-        console.log("Failed to remove item from order");
+        console.log("Failed to remove item from order", error);
     }
 }
 
@@ -281,50 +292,72 @@ async function applyMembership(e) {
     }
 }
 
+async function memshipInput(e) {
+    try {
+        const number = e.target.value;
+        const finishBtn = document.getElementById('finish-order-btn');
+        finishBtn.disabled = true;
+        // console.log(number);
+    } catch (error) {
+        console.log("Failed to input number", error);
+    }
+}
+
 async function finishOrder(e) {
     try {
-        const paymentDiv = document.getElementById('complete-order-div');
 
-        // const orderAmount = document.getElementById("order-amount-div").children[1].innerHTML;
-        // const tableAmount = document.getElementById("table-amount-div").children[1].innerHTML;
-        const totalAmountPaid = document.getElementById('total-amount-div').children[1].innerHTML;
-        // console.log(orderAmount);
-        // console.log(tableAmount);
+        const confirmFinishOrder = confirm("Click yes to finish the order.")
 
-        // console.log(totalAmountPaid);
+        if (confirmFinishOrder) {
+            const paymentDiv = document.getElementById('complete-order-div');
 
-        paymentDiv.style.display = "none";
+            // const orderAmount = document.getElementById("order-amount-div").children[1].innerHTML;
+            // const tableAmount = document.getElementById("table-amount-div").children[1].innerHTML;
+            // const totalAmountPaid = document.getElementById('total-amount-div').children[1].innerHTML;
+            // console.log(orderAmount);
+            // console.log(tableAmount);
 
-        const completeOrderBtn = document.getElementById('complete-order-btn');
-        const newOrderBtn = document.getElementById('new-order-btn');
+            // console.log(totalAmountPaid);
 
-        completeOrderBtn.hidden = true;
-        newOrderBtn.hidden = true;
+            paymentDiv.style.display = "none";
 
-        for (let i = 0; i < orderData.length; i++) {
-            const removeBtn = document.getElementById('remove-btn-' + orderData[i].itemId);
-            removeBtn.hidden = true;
+            // const completeOrderBtn = document.getElementById('complete-order-btn');
+            // const newOrderBtn = document.getElementById('new-order-btn');
+
+            // completeOrderBtn.hidden = true;
+            // newOrderBtn.hidden = true;
+
+            // for (let i = 0; i < orderData.length; i++) {
+            //     const removeBtn = document.getElementById('remove-btn-' + orderData[i].itemId);
+            //     removeBtn.hidden = true;
+            // }
+
+            // billPaidElem.innerHTML = `Bill Paid : <strong>Rs.  ${parseInt(orderAmount) + parseInt(tableAmount)}</strong>`;
+
+            // billPaidElem.children[0].innerHTML='Bill Paid :';
+            // billPaidElem.children[1].innerHTML=`<strong>Rs. ${parseInt(totalAmountPaid)} </strong>`;
+            // billPaidElem.innerHTML = `Bill Paid : <strong>Rs. ${parseInt(totalAmountPaid)} </strong>`;
+            // billPaidElem.style.display = "block";
+
+            // paymentMethodElem.children[0].innerHTML='Payment Mode :';
+            // paymentMethodElem.children[1].innerHTML=`<strong>  ${paymentMode} </strong>`;
+            // paymentMethodElem.innerHTML = `<p>Payment Mode :</p> <br> <strong>  ${paymentMode} </strong>`;
+            // paymentMethodElem.style.display = "block";
+
+            const response = await fetch("/order/finishOrder", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "paymentStatus": true,
+                    "cid": cid,
+                    "paymentMode": paymentMode
+                })
+            })
         }
 
-        // billPaidElem.innerHTML = `Bill Paid : <strong>Rs.  ${parseInt(orderAmount) + parseInt(tableAmount)}</strong>`;
-
-        billPaidElem.innerHTML = `Bill Paid : <strong>Rs. ${parseInt(totalAmountPaid)} </strong>`;
-        billPaidElem.style.display = "block";
-
-        paymentMethodElem.innerHTML = `Payment Mode : <strong>  ${paymentMode}</strong>`;
-        paymentMethodElem.style.display = "block";
-
-        const response = await fetch("/order/finishOrder", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "paymentStatus": true,
-                "cid": cid,
-                "paymentMode": paymentMode
-            })
-        })
+        window.location.reload();
 
     } catch (error) {
         alert("Failed to finish payment" + error);
