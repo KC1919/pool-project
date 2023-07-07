@@ -159,7 +159,8 @@ async function saveOrderToDb(orderData) {
 
         const json = await response.json();
 
-        console.log(json);
+        // console.log(json);/
+        window.location.reload();
 
     } catch (error) {
         alert("Failed to save order to DB")
@@ -173,11 +174,13 @@ async function removeItem(e) {
         // console.log(confirmDelete);
         // if (confirmDelete == true) {
         const rowId = e.target.id.split('-')[2];
-        console.log(rowId);
+        // console.log(rowId);
         const rowElem = document.getElementById('table-row-' + rowId);
-        console.log(rowElem);
-        const itemQty = rowElem.cells[2].innerHTML;
+        // console.log(rowElem);
+        const itemQty = rowElem.cells[1].innerHTML;
         rowElem.remove();
+
+        // console.log(itemQty);
 
         removeItemFromDb(rowId, itemQty);
         // }
@@ -193,7 +196,7 @@ async function removeItemFromDb(itemId, itemQty) {
 
         // console.log(itemId, itemQty);
 
-        console.log(cid);
+        // console.log(cid);
         const response = await fetch('/order/removeItem', {
             method: "DELETE",
             headers: {

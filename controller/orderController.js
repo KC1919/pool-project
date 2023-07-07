@@ -153,7 +153,7 @@ module.exports.addToOrder = async (req, res) => {
                 "amount": orderDetails.amount + presentItem.amount
             }
 
-            // console.log(updateItem);
+            console.log(updateItem);
 
             //updating the item in the orders list of the customer
             Customer.updateOne({
@@ -165,11 +165,19 @@ module.exports.addToOrder = async (req, res) => {
                     "order.$.amount": updateItem.amount
                 },
                 $inc: {
-                    'totalAmount': amount
+                    "orderAmount": amount
                 }
             }).then(async result => {
 
                 if (result.modifiedCount != 0) {
+
+                    // await Customer.updateOne({
+                    //     'cid': cid
+                    // }, {
+                    //     $inc: {
+                    //         "totalAmount": amount
+                    //     }
+                    // })
 
                     const result = await Item.updateOne({
                         'itemId': orderDetails.itemId
@@ -198,6 +206,7 @@ module.exports.addToOrder = async (req, res) => {
                     });
                 }
             }).catch(error => {
+                console.log(error);
                 res.status(401).json({
                     message: "Failed to update order",
                     success: false,
@@ -208,7 +217,7 @@ module.exports.addToOrder = async (req, res) => {
 
             //then add the item to the order list of the customer
             Customer.updateOne({
-                'cid': cid
+                'cid': cid,
             }, {
                 $push: {
                     'order': orderDetails
@@ -245,6 +254,7 @@ module.exports.addToOrder = async (req, res) => {
                     });
                 }
             }).catch(error => {
+                console.log(error);
                 res.status(401).json({
                     message: "Failed to update order",
                     success: false,
@@ -254,6 +264,7 @@ module.exports.addToOrder = async (req, res) => {
         }
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             message: "Failed to update order, server error",
             success: false,
@@ -267,6 +278,8 @@ module.exports.removeItem = async (req, res) => {
         const cid = req.body.cid;
 
         // console.log(cid);
+
+        console.log(req.body);
 
         const itemId = req.body.itemId;
         const itemQty = req.body.itemQty;
@@ -321,7 +334,7 @@ module.exports.removeItem = async (req, res) => {
                     success: false
                 })
             }
-            
+
         }).catch(error => {
             console.log(error);
             res.status(400).json({
@@ -343,7 +356,7 @@ module.exports.removeItem = async (req, res) => {
 module.exports.completeOrder = async (req, res) => {
     try {
 
-        const io = req.app.get("socketio");
+        // const io = req.app.get("socketio");
 
         // io.on('connection', socket => {
         //     console.log("Client connected");
