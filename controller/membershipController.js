@@ -117,9 +117,14 @@ module.exports.applyMembership = async (req, res) => {
 
         if (memship != null) {
             billData.totalAmount = parseInt(billData.totalAmount)
-            if (billData.totalAmount < 1000)
+            if (billData.totalAmount < 1000) {
                 amountToBePaid = billData.totalAmount;
-            else if (billData.totalAmount == 1000)
+                return res.status(200).json({
+                    "message": "Membership could not appplied, amount is less than 1000!",
+                    "success": true,
+                    "amountToBePaid": amountToBePaid
+                });
+            } else if (billData.totalAmount == 1000)
                 amountToBePaid = Math.round(0.9 * billData.totalAmount);
             else if (billData.totalAmount > 1000)
                 amountToBePaid = Math.round(0.85 * billData.totalAmount);

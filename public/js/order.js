@@ -309,6 +309,10 @@ async function memshipInput(e) {
 async function finishOrder(e) {
     try {
 
+        const memshipData=document.getElementById('memship-mobile').value;
+        if(memshipData.length==0)
+            alert("If membership exists, kindly apply.")
+
         const confirmFinishOrder = confirm("Click yes to finish the order.")
 
         if (confirmFinishOrder) {
