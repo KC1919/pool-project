@@ -160,7 +160,7 @@ async function saveOrderToDb(orderData) {
         const json = await response.json();
 
         // console.log(json);/
-        // window.location.reload();
+        window.location.reload();
 
     } catch (error) {
         alert("Failed to save order to DB")
