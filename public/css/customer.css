@@ -105,6 +105,7 @@ body {
     z-index: 1;
     padding: 1rem 2rem;
     border-radius: 5px;
+    box-shadow: -3px 3px 10px;
 }
 
 .save-btn{
@@ -127,3 +128,12 @@ body {
         zoom: 110%;
     }
 }
+
+/* #date-input-filter{
+    cursor: default;
+} */
+
+
+/* .form-control{
+    cursor: pointer;
+} */
