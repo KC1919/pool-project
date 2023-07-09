@@ -108,3 +108,24 @@ module.exports.getLogin = async (req, res) => {
         console.log("Failed to load login page");
     }
 }
+
+module.exports.logout = async (req, res) => {
+    try {
+        res.cookie('secret', "", {
+            maxAge: Date.now()
+        });
+
+        res.status(200).json({
+            "message": "User logged out",
+            success: true
+        })
+
+    } catch (error) {
+        console.log("failed to logout user", error);
+        res.status(500).json({
+            "message": "Failed to logout user",
+            success: false,
+            error: error.message
+        })
+    }
+}

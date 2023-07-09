@@ -6,6 +6,7 @@ router
     .get('/login', authController.getLogin)
     .post('/register', authController.register)
     .post('/login', authController.login)
+    .post('/logout',authController.logout)
 
 
 module.exports = router;
