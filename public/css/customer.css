@@ -10,7 +10,7 @@ body {
     display: flex;
     justify-content: space-between;
     /* margin-top: 1rem; */
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     margin-left: auto;
     margin-right: auto;
     color: white;
@@ -129,11 +129,10 @@ body {
     }
 }
 
-/* #date-input-filter{
-    cursor: default;
-} */
-
-
-/* .form-control{
-    cursor: pointer;
-} */
+.pagination-div{
+    width: 20%;
+    margin: 1rem auto;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}

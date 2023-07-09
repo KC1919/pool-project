@@ -77,7 +77,7 @@ module.exports.login = async (req, res) => {
                 //     success: true
                 // });
 
-                res.redirect('/customer/allCustomers');
+                res.redirect('/customer/allCustomers/1');
 
             } else {
                 res.status(401).json({

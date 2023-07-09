@@ -83,6 +83,16 @@
       </tbody>
     </table>
 
+    <div class="pagination-div" id="pagination-div">
+      <div class="pagination-btn" id="pagination-prev-btn">
+        <button type="button" class="btn btn-primary btn-sm" onclick="handlePrevClick(event)">Prev</button>
+      </div>
+
+      <div class="pagination-btn" id="pagination-next-btn">
+        <button type="button" class="btn btn-primary btn-sm" onclick="handleNextClick(event)">Next</button>
+      </div>
+    </div>
+
     <div class="customer-form" id="new-customer-form-div">
         <form onsubmit="saveCustomer(event)" id="new-customer-form">   
             <div class="form-close-btn-div" onclick="closeForm(event)">

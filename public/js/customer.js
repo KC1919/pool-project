@@ -189,3 +189,36 @@ async function filterByDate(e) {
         alert("Failed to filter customer result", error.message);
     }
 }
+
+async function handlePrevClick(e) {
+    try {
+        let currPage = parseInt(localStorage.getItem("page"));
+        console.log(currPage);
+        if (currPage > 1) {
+            currPage -= 1;
+            localStorage.setItem("page", `${currPage}`);
+            window.location.href = `/customer/allCustomers/${currPage}`;
+        } else {
+            //do nothing  
+        }
+    } catch (error) {
+        console.log("Cannot load previous page", error);
+    }
+}
+
+async function handleNextClick(e) {
+    try {
+
+        if(localStorage.getItem("page")==null){
+            localStorage.setItem("page","1");
+        }
+        
+        let currPage = parseInt(localStorage.getItem("page"));
+        currPage+=1;
+        localStorage.setItem("page", `${currPage}`);
+        window.location.href = `/customer/allCustomers/${currPage}`;
+
+    } catch (error) {
+        console.log("Cannot load next page", error);
+    }
+}
