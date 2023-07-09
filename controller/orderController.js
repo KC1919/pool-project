@@ -153,7 +153,7 @@ module.exports.addToOrder = async (req, res) => {
                 "amount": orderDetails.amount + presentItem.amount
             }
 
-            console.log(updateItem);
+            // console.log(updateItem);
 
             //updating the item in the orders list of the customer
             Customer.updateOne({
@@ -279,7 +279,7 @@ module.exports.removeItem = async (req, res) => {
 
         // console.log(cid);
 
-        console.log(req.body);
+        // console.log(req.body);
 
         const itemId = req.body.itemId;
         const itemQty = req.body.itemQty;
@@ -470,7 +470,7 @@ module.exports.finishOrder = async (req, res) => {
         const customer = await Customer.findOne({
             "cid": cid
         }, {
-            "totalAmount": 1,
+            "totalPaidAmount": 1,
             "date": 1
         });
 
@@ -486,6 +486,9 @@ module.exports.finishOrder = async (req, res) => {
 
                 // let currentDate = new Date().toISOString().replace(/T.*/,'').split('-').join('-')
                 // console.log(currentDate);
+
+                // console.log(customer.date);
+                // console.log(customer.totalPaidAmount);
 
                 const saleUpdateResult = await Sale.findOneAndUpdate({
                     "date": customer.date
