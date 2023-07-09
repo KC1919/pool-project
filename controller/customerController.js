@@ -102,7 +102,7 @@ module.exports.filterCustomers = async (req, res) => {
         //     "time": -1
         // })
 
-        const customersCount = await Customer.countDocuments();
+        // const customersCount = await Customer.countDocuments();
 
         const customers = await Customer.find({
             'date': filterDate
@@ -111,6 +111,9 @@ module.exports.filterCustomers = async (req, res) => {
             "time": -1
         });
 
+        const customerCount = customers.length;
+        // console.log(countCustomer);
+
         const tableData = await Table.find({});
 
         // console.log(customers);
@@ -118,7 +121,7 @@ module.exports.filterCustomers = async (req, res) => {
         res.render("customer.ejs", {
             "customers": customers,
             "tableData": tableData,
-            "customerCount": customersCount
+            "customerCount": customerCount
         });
 
     } catch (error) {
