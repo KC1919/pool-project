@@ -31,6 +31,15 @@
     width: 20%;
 } */
 
-.form-control{
+.form-control {
     cursor: pointer;
+}
+
+.logout-btn-div {
+    width: 10%;
+    margin: 1rem auto;
+    text-align: center;
+    position: absolute;
+    right: 0.5rem;
+    top: -0.1rem;
 }
