@@ -1,10 +1,8 @@
-
-
 if (parseInt(localStorage.getItem("salesPageNumber")) * 10 > salesCount) {
     document.getElementById('pagination-next-btn-div').hidden = true;
 }
 
-if (parseInt(localStorage.getItem("salesPageNumber")) * 10 <= salesCount) {
+if (localStorage.getItem("salesPageNumber") == null || parseInt(localStorage.getItem("salesPageNumber")) * 10 <= salesCount) {
     document.getElementById('pagination-prev-btn-div').hidden = true;
 }
 
@@ -28,7 +26,7 @@ async function handlePrevClick(e) {
     try {
         let currPage = parseInt(localStorage.getItem("salesPageNumber"));
         // console.log(currPage);
-        if (currPage!=null && currPage > 1) {
+        if (currPage != null && currPage > 1) {
             currPage -= 1;
             localStorage.setItem("salesPageNumber", `${currPage}`);
             window.location.href = `/sale/getSales/${currPage}`;
@@ -43,12 +41,12 @@ async function handlePrevClick(e) {
 async function handleNextClick(e) {
     try {
 
-        if(localStorage.getItem("salesPageNumber")==null){
-            localStorage.setItem("salesPageNumber","1");
+        if (localStorage.getItem("salesPageNumber") == null) {
+            localStorage.setItem("salesPageNumber", "1");
         }
-        
+
         let currPage = parseInt(localStorage.getItem("salesPageNumber"));
-        currPage+=1;
+        currPage += 1;
         localStorage.setItem("salesPageNumber", `${currPage}`);
         window.location.href = `/sale/getSales/${currPage}`;
 

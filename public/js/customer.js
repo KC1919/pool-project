@@ -11,7 +11,7 @@ if (parseInt(localStorage.getItem("page")) * 10 > customerCount) {
     document.getElementById('pagination-next-btn-div').hidden = true;
 }
 
-if (parseInt(localStorage.getItem("page")) * 10 <= customerCount) {
+if (localStorage.getItem("page") == null || parseInt(localStorage.getItem("page")) * 10 <= customerCount) {
     document.getElementById('pagination-prev-btn-div').hidden = true;
 }
 
