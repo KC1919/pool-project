@@ -138,7 +138,7 @@ module.exports.filterSales = async (req, res) => {
     try {
         const filterDate = req.params.filterDate;
 
-        console.log(filterDate);
+        // console.log(filterDate);
 
         const sales = await Sale.find({
             'date': filterDate
@@ -146,10 +146,12 @@ module.exports.filterSales = async (req, res) => {
             "date": -1
         });
 
-        console.log(sales);
+        // console.log(sales);
+        const salesCount = await Sale.countDocuments();
 
         res.render("sales.ejs", {
-            "salesData": sales
+            "salesData": sales,
+            "salesCount": salesCount
         });
 
     } catch (error) {
