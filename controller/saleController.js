@@ -99,12 +99,25 @@ module.exports.updateSale = async (req, res) => {
 
 module.exports.getSales = async (req, res) => {
     try {
-        const salesData = await Sale.find({});
+
+        const pageNumber = req.params.page;
+        const skipCount = (pageNumber - 1) * 10;
+
+        // console.log(pageNumber);
+        // console.log(skipCount);
+
+        const salesData = await Sale.find({}).skip(skipCount).limit(10).sort({
+            "date": -1
+        })
+        // const salesData = await Sale.find({});
 
         // console.log(salesData);
 
+        const salesCount = await Sale.countDocuments();
+
         res.render('sales.ejs', {
-            "salesData": salesData
+            "salesData": salesData,
+            "salesCount": salesCount
         });
 
         // res.status(200).json({
@@ -126,7 +139,7 @@ module.exports.filterSales = async (req, res) => {
         const filterDate = req.params.filterDate;
 
         console.log(filterDate);
-        
+
         const sales = await Sale.find({
             'date': filterDate
         }).lean().sort({

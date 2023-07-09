@@ -84,11 +84,11 @@
     </table>
 
     <div class="pagination-div" id="pagination-div">
-      <div class="pagination-btn" id="pagination-prev-btn">
+      <div class="pagination-btn" id="pagination-prev-btn-div">
         <button type="button" class="btn btn-primary btn-sm" onclick="handlePrevClick(event)">Prev</button>
       </div>
 
-      <div class="pagination-btn" id="pagination-next-btn">
+      <div class="pagination-btn" id="pagination-next-btn-div">
         <button type="button" class="btn btn-primary btn-sm" onclick="handleNextClick(event)">Next</button>
       </div>
     </div>
@@ -158,6 +158,10 @@
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
       crossorigin="anonymous"
     ></script>
+
+    <script>
+      const customerCount=<%-JSON.stringify(customerCount)%>;
+    </script>
     <script src="/js/customer.js"></script>
   </body>
 </html>

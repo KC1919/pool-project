@@ -6,6 +6,15 @@ let customerId;
 //     console.log(data);
 // })
 
+
+if (parseInt(localStorage.getItem("page")) * 10 > customerCount) {
+    document.getElementById('pagination-next-btn-div').hidden = true;
+}
+
+if (parseInt(localStorage.getItem("page")) * 10 <= customerCount) {
+    document.getElementById('pagination-prev-btn-div').hidden = true;
+}
+
 async function handleCustomerClick(e) {
     try {
 
@@ -209,12 +218,12 @@ async function handlePrevClick(e) {
 async function handleNextClick(e) {
     try {
 
-        if(localStorage.getItem("page")==null){
-            localStorage.setItem("page","1");
+        if (localStorage.getItem("page") == null) {
+            localStorage.setItem("page", "1");
         }
-        
+
         let currPage = parseInt(localStorage.getItem("page"));
-        currPage+=1;
+        currPage += 1;
         localStorage.setItem("page", `${currPage}`);
         window.location.href = `/customer/allCustomers/${currPage}`;
 
