@@ -93,6 +93,17 @@ module.exports.filterCustomers = async (req, res) => {
 
         // console.log(filterDate);
 
+        // const pageNumber = req.params.page;
+        // const skipCount = (pageNumber - 1) * 10;
+
+
+        // const customer = await Customer.find({'date': filterDate}).skip(skipCount).limit(10).sort({
+        //     "date": -1,
+        //     "time": -1
+        // })
+
+        const customersCount = await Customer.countDocuments();
+
         const customers = await Customer.find({
             'date': filterDate
         }).lean().sort({
@@ -106,7 +117,8 @@ module.exports.filterCustomers = async (req, res) => {
 
         res.render("customer.ejs", {
             "customers": customers,
-            "tableData": tableData
+            "tableData": tableData,
+            "customerCount": customersCount
         });
 
     } catch (error) {
