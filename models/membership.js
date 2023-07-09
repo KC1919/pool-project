@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const memberSchema = mongoose.Schema({
     mobile: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     name: {
         type: String,
