@@ -39,7 +39,7 @@ function handleNewOrder(e) {
 
 async function customersPage(e) {
     try {
-        window.location.href = "/customer/allCustomers";
+        window.location.href = "/customer/allCustomers/1";
     } catch (error) {
         console.log("Cannot go to customers page");
     }
