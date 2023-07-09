@@ -2,7 +2,7 @@ if (parseInt(localStorage.getItem("salesPageNumber")) * 10 > salesCount) {
     document.getElementById('pagination-next-btn-div').hidden = true;
 }
 
-if (localStorage.getItem("salesPageNumber") == null || parseInt(localStorage.getItem("salesPageNumber")) * 10 <= salesCount) {
+if (salesCount <= 10 || localStorage.getItem("salesPageNumber") == null || parseInt(localStorage.getItem("salesPageNumber")) * 10 <= salesCount) {
     document.getElementById('pagination-prev-btn-div').hidden = true;
 }
 

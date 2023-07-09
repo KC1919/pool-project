@@ -147,7 +147,7 @@ module.exports.filterSales = async (req, res) => {
         });
 
         // console.log(sales);
-        const salesCount = await Sale.countDocuments();
+        const salesCount = sales.length;
 
         res.render("sales.ejs", {
             "salesData": sales,

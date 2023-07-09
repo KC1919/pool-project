@@ -55,6 +55,15 @@
         </table>
     </div>
 
+    <div class="no-data-div" id="no-data-div" style="text-align:center; width:30%; margin: 2rem auto;font-size: larger;">
+      No Data Found
+      <% if(salesCount==0){ %>
+        <style> .no-data-div { display: block; }</style>
+      <%}else{%>
+        <style> .no-data-div { display: none; }</style>
+      <%}%>
+    </div>  
+
     <div class="pagination-div" id="pagination-div">
       <div class="pagination-btn" id="pagination-prev-btn-div">
         <button type="button" class="btn btn-primary btn-sm" onclick="handlePrevClick(event)">Prev</button>
