@@ -51,10 +51,24 @@ module.exports.addCustomer = async (req, res) => {
 
 module.exports.allCustomers = async (req, res) => {
     try {
-        const customers = await Customer.find({}).lean().sort({
+
+        const pageNumber = req.params.page;
+        const skipCount = (pageNumber - 1) * 10;
+
+
+        const customer = await Customer.find({}).skip(skipCount).limit(10).sort({
             "date": -1,
             "time": -1
-        });
+        })
+
+        const customersCount = await Customer.countDocuments();
+
+        // console.log(customersCount);
+
+        // const customers = await Customer.find({}).lean().sort({
+        //     "date": -1,
+        //     "time": -1
+        // });
 
         // console.log(customers);
 
@@ -63,8 +77,9 @@ module.exports.allCustomers = async (req, res) => {
         // console.log(tableData);
 
         res.render("customer.ejs", {
-            "customers": customers,
-            "tableData": tableData
+            "customers": customer,
+            "tableData": tableData,
+            "customerCount": customersCount
         });
 
     } catch (error) {

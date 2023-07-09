@@ -4,7 +4,7 @@ const customController = require('../controller/customerController');
 const verifyUser = require('../middleware/verify');
 
 router
-    .get('/allCustomers', verifyUser, customController.allCustomers)
+    .get('/allCustomers/:page', verifyUser, customController.allCustomers)
     .get('/filterCustomers/:filterDate', verifyUser, customController.filterCustomers)
     .post('/addCustomer', verifyUser, customController.addCustomer)
 

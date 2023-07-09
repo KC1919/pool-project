@@ -32,3 +32,11 @@ body {
     text-align: center;
     justify-content: center;
 }
+
+.pagination-div{
+    width: 20%;
+    margin: 1rem auto;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
