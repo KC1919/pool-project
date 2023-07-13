@@ -20,11 +20,11 @@ module.exports.addCustomer = async (req, res) => {
         // console.log(new Date().getTime(data.time));
         // console.log(new Date().getTime());
 
-        // console.log(new Date(data.date + " " + data.time).toLocaleTimeString('en-GB', {
-        //     timeZone: 'Asia/Kolkata'
-        // }));
+        console.log(new Date(data.date + " " + data.time).toLocaleTimeString('en-GB', {
+            timeZone: 'Asia/Kolkata'
+        }));
 
-        // console.log(new Date(data.date + " " + data.time).getTime());
+        console.log(new Date(data.date + " " + data.time).getTime());
         // console.log(new Date().getTime());
 
         // data.entryTime = new Date().getTime();
