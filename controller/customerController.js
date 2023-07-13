@@ -16,11 +16,28 @@ module.exports.addCustomer = async (req, res) => {
 
         // console.log(data);
 
-        data.entryTime = new Date().getTime();
+        // console.log(Date.parse(data.time));
+        // console.log(new Date().getTime(data.time));
+        // console.log(new Date().getTime());
 
-        data.time = new Date().toLocaleTimeString('en-GB', {
+        // console.log(new Date(data.date + " " + data.time).toLocaleTimeString('en-GB', {
+        //     timeZone: 'Asia/Kolkata'
+        // }));
+
+        // console.log(new Date(data.date + " " + data.time).getTime());
+        // console.log(new Date().getTime());
+
+        // data.entryTime = new Date().getTime();
+
+        data.entryTime = new Date(data.date + " " + data.time).getTime()
+
+        // data.time = new Date().toLocaleTimeString('en-GB', {
+        //     timeZone: 'Asia/Kolkata'
+        // });
+
+        data.time = new Date(data.date + " " + data.time).toLocaleTimeString('en-GB', {
             timeZone: 'Asia/Kolkata'
-        });
+        })
 
         //creating new customer
         const customer = new Customer(data);
