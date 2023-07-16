@@ -13,7 +13,7 @@ module.exports.addCustomer = async (req, res) => {
         //generating unique customer id
         data.cid = v4();
 
-        console.log(new Date(data.date + " " + data.time).toLocaleTimeString('en-GB', {
+        console.log(new Date().toLocaleTimeString('en-GB', {
             timeZone: 'Asia/Kolkata'
         }));
 
