@@ -3,6 +3,7 @@ const Customer = require('../models/customer');
 
 module.exports.addMembership = async (req, res) => {
     try {
+
         const memshipData = req.body;
 
         const result = await Membership.findOne({
@@ -207,9 +208,13 @@ module.exports.removeMembership = async (req, res) => {
 
         const custMobile = req.body.memberId;
 
+        console.log(custMobile);
+
         const memship = await Membership.findOne({
             'mobile': custMobile
         });
+
+        console.log(memship);
 
         if (memship != null) {
             Membership.findOneAndRemove({

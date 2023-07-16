@@ -8,7 +8,7 @@ module.exports.addCustomer = async (req, res) => {
     try {
         const data = req.body;
 
-        // console.log(data);
+        console.log(data);
 
         // const count = await Customer.countDocuments();
 
@@ -35,9 +35,11 @@ module.exports.addCustomer = async (req, res) => {
         //     timeZone: 'Asia/Kolkata'
         // });
 
-        data.time = new Date(data.date + " " + data.time).toLocaleTimeString('en-GB', {
-            timeZone: 'Asia/Kolkata'
-        })
+        // data.time = new Date(data.date + " " + data.time).toLocaleTimeString('en-GB', {
+        //     timeZone: 'Asia/Kolkata'
+        // })
+
+        // console.log(data);
 
         //creating new customer
         const customer = new Customer(data);
