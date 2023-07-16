@@ -17,17 +17,17 @@ module.exports.addCustomer = async (req, res) => {
         //     timeZone: 'Asia/Kolkata'
         // }));
 
-        console.log("Selected current time",new Date(data.date + " " + data.time).getTime());
+        console.log("Selected current time", new Date(data.date + " " + data.time).getTime());
 
         // console.log("Other selected current time",new Date().toLocaleTimeString('en-GB', {
         //     timeZone: 'Asia/Kolkata'
         // }).getTime());
 
-        console.log("Current time",new Date().getTime());
-        
+        console.log("Current time", new Date().getTime());
+
         // data.entryTime = new Date().getTime();
 
-        data.entryTime = new Date().getTime()
+        data.entryTime = new Date(data.date + " " + data.time).getTime();
 
         // data.time = new Date().toLocaleTimeString('en-GB', {
         //     timeZone: 'Asia/Kolkata'
