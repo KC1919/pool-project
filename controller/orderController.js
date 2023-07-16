@@ -367,7 +367,7 @@ module.exports.completeOrder = async (req, res) => {
         //calculating exit time
         const exitTime = date.getTime();
 
-        console.log("Current exit time", exitTime);
+
 
 
         //human readable format for end time
@@ -379,9 +379,10 @@ module.exports.completeOrder = async (req, res) => {
         //removing the seconds
         endTime = endTime.substring(0, endTime.length - 3);
 
+        
         // console.log(endTime.substring(0,endTime.length-3));
-
-
+        
+        
         //fetching customer details
         const customer = await Customer.findOne({
             'cid': data.cid
@@ -389,8 +390,13 @@ module.exports.completeOrder = async (req, res) => {
             'tableSize': 1,
             'entryTime': 1,
             'totalAmount': 1,
-            'orderAmount': 1
+            'orderAmount': 1,
+            'date': 1
         });
+        
+        console.log("My current exit time", new Date(customer.date + " " + endTime).getTime());
+
+        console.log("Current exit time", exitTime);
 
         //calculating time duration played
         const timeDiff = parseInt(exitTime) - parseInt(customer.entryTime);
