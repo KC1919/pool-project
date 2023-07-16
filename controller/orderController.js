@@ -171,14 +171,6 @@ module.exports.addToOrder = async (req, res) => {
 
                 if (result.modifiedCount != 0) {
 
-                    // await Customer.updateOne({
-                    //     'cid': cid
-                    // }, {
-                    //     $inc: {
-                    //         "totalAmount": amount
-                    //     }
-                    // })
-
                     const result = await Item.updateOne({
                         'itemId': orderDetails.itemId
                     }, {
@@ -377,11 +369,14 @@ module.exports.completeOrder = async (req, res) => {
 
 
         //human readable format for end time
-        const endTime = date.toLocaleTimeString('en-GB', {
+        let endTime = date.toLocaleTimeString('en-GB', {
             timeZone: 'Asia/Kolkata'
         });
 
-        // console.log(endTime);
+        //removing the seconds
+        endTime = endTime.substring(0, endTime.length - 3);
+
+        // console.log(endTime.substring(0,endTime.length-3));
 
 
         //fetching customer details

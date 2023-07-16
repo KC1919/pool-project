@@ -54,8 +54,12 @@ module.exports.login = async (req, res) => {
             'email': email
         });
 
+        // console.log(user);
+
         if (user != null) {
-            if (bcrypt.compare(password, user.password)) {
+            const passMatchRes = await bcrypt.compare(password, user.password);
+            
+            if (passMatchRes == true) {
                 //implement send otp: tentative
                 // res.redirect('/customers');
 
