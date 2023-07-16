@@ -367,9 +367,6 @@ module.exports.completeOrder = async (req, res) => {
         //calculating exit time
         // const exitTime = date.getTime();
 
-        const exitTime = new Date(customer.date + " " + endTime).getTime();
-
-
 
 
         //human readable format for end time
@@ -395,6 +392,9 @@ module.exports.completeOrder = async (req, res) => {
             'orderAmount': 1,
             'date': 1
         });
+
+        //calculating exit time
+        const exitTime = new Date(customer.date + " " + endTime).getTime();
 
         console.log("My current exit time", new Date(customer.date + " " + endTime).getTime());
 
@@ -459,6 +459,7 @@ module.exports.completeOrder = async (req, res) => {
         }
 
     } catch (error) {
+        console.log("Failed to complete order", error);
         res.status(500).json({
             message: "Failed to complete order, server error",
             success: false,
