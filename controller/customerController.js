@@ -17,7 +17,9 @@ module.exports.addCustomer = async (req, res) => {
             timeZone: 'Asia/Kolkata'
         }));
 
-        console.log(new Date(data.date + " " + data.time).getTime());
+        console.log("Selected current time",new Date(data.date + " " + data.time).getTime());
+
+        console.log("Current time",new Date().getTime());
         
         // data.entryTime = new Date().getTime();
 

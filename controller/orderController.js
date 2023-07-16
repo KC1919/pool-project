@@ -367,7 +367,7 @@ module.exports.completeOrder = async (req, res) => {
         //calculating exit time
         const exitTime = date.getTime();
 
-        console.log(exitTime);
+        console.log("Current exit time", exitTime);
 
 
         //human readable format for end time
