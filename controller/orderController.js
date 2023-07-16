@@ -375,6 +375,7 @@ module.exports.completeOrder = async (req, res) => {
             timeZone: 'Asia/Kolkata'
         });
 
+
         //removing the seconds
         endTime = endTime.substring(0, endTime.length - 3);
 
