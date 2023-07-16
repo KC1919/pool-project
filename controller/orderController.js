@@ -367,6 +367,8 @@ module.exports.completeOrder = async (req, res) => {
         //calculating exit time
         const exitTime = date.getTime();
 
+        console.log(exitTime);
+
 
         //human readable format for end time
         let endTime = date.toLocaleTimeString('en-GB', {
