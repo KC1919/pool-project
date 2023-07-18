@@ -77,6 +77,11 @@
                 onclick="handleCustomerClick(event)">View
               </button>
             </td> 
+            <td>
+              <button class="btn btn-danger btn-sm" id=delete$<%= customer.cid %>
+                onclick="deleteCustomer(event)">Delete
+              </button>
+            </td> 
         </tr>
         <%})%>
 
@@ -115,7 +120,7 @@
 
                 <div class="form-group form-input-div">
                     <label for="mobile">Mobile</label>
-                    <input class="form-control" id="mobile" type="text" name="mobile" minlength="0" maxlength="10" placeholder="Enter mobile" required>
+                    <input class="form-control" id="mobile" type="text" name="mobile" minlength="0" maxlength="10" placeholder="Enter mobile">
                 </div>
             </div>
 

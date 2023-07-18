@@ -145,3 +145,31 @@ module.exports.filterCustomers = async (req, res) => {
         console.log("Failed to fetch customers");
     }
 }
+
+module.exports.deleteCustomer = async (req, res) => {
+    try {
+        const customerId = req.params.id;
+
+        Customer.findOneAndDelete({
+            'cid': customerId
+        }).then(result => {
+            res.status(200).json({
+                'message': "Customer deleted successfully",
+                success: true
+            })
+        }).catch(error => {
+            res.status(400).json({
+                'message': "Failed to delete customer",
+                success: false
+            })
+        })
+
+    } catch (error) {
+        console.log("Failed to delete customer", error);
+        res.status(500).json({
+            'message': "Failed to delete customer",
+            success: false,
+            error: error.message
+        })
+    }
+}

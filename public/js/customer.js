@@ -231,3 +231,35 @@ async function handleNextClick(e) {
         console.log("Cannot load next page", error);
     }
 }
+
+async function deleteCustomer(e) {
+    try {
+
+        const confirmDelete = confirm('Confirm Delete Customer');
+
+        if (confirmDelete == true) {
+            const customerId = e.target.id.split('$')[1];
+
+            const response = await fetch(`/customer/delete/${customerId}`, {
+                method: "DELETE",
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            });
+
+            const jsonResp = await response.json();
+
+            alert(jsonResp.message);
+
+            if (jsonResp.success == true) {
+                window.location.reload();
+            }
+
+        }
+        // console.log(jsonResp.message);
+
+    } catch (error) {
+        console.log("Failed to delete customer", error);
+        alert("failed to delete customer", error.message)
+    }
+}

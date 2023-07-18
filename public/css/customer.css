@@ -131,7 +131,7 @@ body {
 
 .pagination-div{
     width: 20%;
-    margin: 1rem auto;
+    margin: 0 auto;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
