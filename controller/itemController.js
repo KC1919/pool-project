@@ -23,13 +23,21 @@ module.exports.addItem = async (req, res) => {
         } else {
 
             //item details object
+            // const itemDetails = {
+            //     name: itemData.name.toUpperCase(),
+            //     costPrice: parseInt(itemData.costPrice),
+            //     sellPrice: parseInt(itemData.sellPrice),
+            //     qty: parseInt(itemData.qty)
+            // }
+
             const itemDetails = {
                 name: itemData.name.toUpperCase(),
-                costPrice: parseInt(itemData.costPrice),
-                sellPrice: parseInt(itemData.sellPrice),
+                costPrice: itemData.costPrice,
+                sellPrice: itemData.sellPrice,
                 qty: parseInt(itemData.qty)
             }
 
+            console.log(itemDetails);
             //creating new item
             const item = new Item(itemDetails);
 

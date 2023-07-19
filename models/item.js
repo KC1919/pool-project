@@ -12,11 +12,11 @@ const itemSchema = mongoose.Schema({
         required: true
     },
     costPrice: {
-        type: Number,
+        type: mongoose.Types.Decimal128,
         required: true
     },
     sellPrice: {
-        type: Number,
+        type: mongoose.Types.Decimal128,
         required: true
     },
     qty: {
