@@ -102,12 +102,12 @@ module.exports.getSales = async (req, res) => {
     try {
 
         const pageNumber = req.params.page;
-        const skipCount = (pageNumber - 1) * 10;
+        const skipCount = (pageNumber - 1) * 12;
 
         // console.log(pageNumber);
         // console.log(skipCount);
 
-        const salesData = await Sale.find({}).skip(skipCount).limit(10).sort({
+        const salesData = await Sale.find({}).skip(skipCount).limit(12).sort({
             "date": -1
         })
         // const salesData = await Sale.find({});

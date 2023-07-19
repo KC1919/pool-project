@@ -6,13 +6,12 @@ let customerId;
 //     console.log(data);
 // })
 
-
-if (parseInt(localStorage.getItem("page")) * 10 > customerCount) {
-    document.getElementById('pagination-next-btn-div').hidden = true;
+if (customerCount <= 10 || localStorage.getItem("page") == null || parseInt(localStorage.getItem("page")) == 1) {
+    document.getElementById('pagination-prev-btn-div').hidden = true;
 }
 
-if (customerCount <= 10 || localStorage.getItem("page") == null || parseInt(localStorage.getItem("page")) * 10 <= customerCount) {
-    document.getElementById('pagination-prev-btn-div').hidden = true;
+if (localStorage.getItem("page") != null && (parseInt(localStorage.getItem("page")) * 10 > customerCount || customerCount <= 10)) {
+    document.getElementById('pagination-next-btn-div').hidden = true;
 }
 
 async function handleCustomerClick(e) {
