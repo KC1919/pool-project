@@ -8,7 +8,7 @@ module.exports.addCustomer = async (req, res) => {
     try {
         const data = req.body;
 
-        console.log(data);
+        // console.log(data);
 
         //generating unique customer id
         data.cid = v4();
@@ -17,13 +17,13 @@ module.exports.addCustomer = async (req, res) => {
         //     timeZone: 'Asia/Kolkata'
         // }));
 
-        console.log("Selected current time", new Date(data.date + " " + data.time).getTime());
+        // console.log("Selected current time", new Date(data.date + " " + data.time).getTime());
 
         // console.log("Other selected current time",new Date().toLocaleTimeString('en-GB', {
         //     timeZone: 'Asia/Kolkata'
         // }).getTime());
 
-        console.log("Current time", new Date().getTime());
+        // console.log("Current time", new Date().getTime());
 
         // data.entryTime = new Date().getTime();
 
@@ -38,6 +38,10 @@ module.exports.addCustomer = async (req, res) => {
         // })
 
         // console.log(data);
+
+        if (data.tableNumber.length == 0) data.tableNumber = 0;
+        if (data.tableSize.length == 0) data.tableSize = "none";
+        if (data.mobile.length == 0) data.mobile = "-";
 
         //creating new customer
         const customer = new Customer(data);

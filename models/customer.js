@@ -23,11 +23,13 @@ const customerSchema = mongoose.Schema({
     },
     tableNumber: {
         type: String,
-        required: true
+        required: true,
+        default:null
     },
     tableSize: {
         type: String,
-        required: true
+        required: true,
+        default:null
     },
     exitTime: {
         type: String
@@ -43,7 +45,7 @@ const customerSchema = mongoose.Schema({
             default: 0
         },
         amount: {
-            type: Number,
+            type: mongoose.Types.Decimal128,
             required: true,
             default: 0,
             min: 0

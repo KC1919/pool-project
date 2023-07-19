@@ -78,7 +78,7 @@
     </div>
 
     <div class="add-memship-form-div" id="add-expense-form-div">
-        <form id="add-expense-form">
+        <form onsubmit="addExpense(event)" id="add-expense-form">
 
             <div class="form-close-btn-div" onclick="closeNewExpenseForm(event)">
                 <i class="fa-sharp fa-solid fa-xmark fa-lg"></i>
@@ -101,7 +101,7 @@
                 </div>
             </div>  
             <div class="form-group form-input-div add-member-btn-div">
-                <button type="submit" class="btn btn-primary btn-sm" onclick="addExpense(event)">Add</button>
+                <button type="submit" class="btn btn-primary btn-sm">Add</button>
             </div>  
         </form>
     </div>

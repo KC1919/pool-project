@@ -82,7 +82,7 @@ async function placeOrder(e) {
         let totalQty;
         for (let i = 0; i < items.length; i++) {
             if (items[i].itemId == itemId) {
-                pricePerItem = items[i].sellPrice;
+                pricePerItem = items[i].sellPrice.$numberDecimal;
                 totalQty = items[i].qty;
                 break;
             }
@@ -99,6 +99,9 @@ async function placeOrder(e) {
 
             const newTableRow = document.createElement('tr');
             newTableRow.setAttribute("class", "table-row");
+
+            console.log(pricePerItem);
+            // console.log(itemQty);
 
             for (let i = 0; i <= 3; i++) {
                 const td = document.createElement('td');

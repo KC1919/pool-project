@@ -111,7 +111,7 @@ module.exports.addToOrder = async (req, res) => {
         const orderDetails = {
             "itemId": req.body.itemId,
             "qty": parseInt(req.body.itemQty),
-            "amount": parseInt(req.body.amount)
+            "amount": req.body.amount
         }
 
         //fetching the item details
@@ -400,25 +400,31 @@ module.exports.completeOrder = async (req, res) => {
 
         console.log("Current exit time", exitTime);
 
-        //calculating time duration played
-        const timeDiff = parseInt(exitTime) - parseInt(customer.entryTime);
-
         let tableAmount = 0;
 
+        if (customer.tableSize != "none") {
 
-        //fetching price for table size
-        const tableAmountPerHour = await Table.findOne({
-            'size': customer.tableSize
-        }, {
-            'price': 1
-        });
+            //calculating time duration played
+            const timeDiff = parseInt(exitTime) - parseInt(customer.entryTime);
 
-        //calculating hours
-        const timeRatio = timeDiff / (60 * 60 * 1000);
 
-        //calculating price for the time duration played
-        tableAmount = Math.round(tableAmountPerHour.price * timeRatio);
+            //fetching price for table size
+            const tableAmountPerHour = await Table.findOne({
+                'size': customer.tableSize
+            }, {
+                'price': 1
+            });
 
+            //calculating hours
+            const timeRatio = timeDiff / (60 * 60 * 1000);
+
+            //calculating price for the time duration played
+            tableAmount = Math.round(tableAmountPerHour.price * timeRatio);
+
+        }
+
+        //rounding the amount(if in decimal) to nearest round figure
+        customer.orderAmount = Math.round(customer.orderAmount);
 
         //total amount = tableAmount + orderAmount
         const totalPayableAmount = tableAmount + customer.orderAmount;
