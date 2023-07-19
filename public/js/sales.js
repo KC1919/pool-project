@@ -1,10 +1,12 @@
-if (parseInt(localStorage.getItem("salesPageNumber")) * 10 > salesCount) {
+if (parseInt(localStorage.getItem("salesPageNumber")) == 1 || salesCount <= 12 || localStorage.getItem("salesPageNumber") == null) {
+    document.getElementById('pagination-prev-btn-div').hidden = true;
+}
+
+if (localStorage.getItem("salesPageNumber") != null && (parseInt(localStorage.getItem("salesPageNumber")) * 12 > salesCount || salesCount <= 12)) {
     document.getElementById('pagination-next-btn-div').hidden = true;
 }
 
-if (salesCount <= 10 || localStorage.getItem("salesPageNumber") == null || parseInt(localStorage.getItem("salesPageNumber")) * 10 <= salesCount) {
-    document.getElementById('pagination-prev-btn-div').hidden = true;
-}
+
 
 async function filterByDate(e) {
     try {
