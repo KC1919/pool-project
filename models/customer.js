@@ -7,7 +7,7 @@ const customerSchema = mongoose.Schema({
         unique: true
     },
     mobile: {
-        type: String,
+        type: Number,
     },
     name: {
         type: String,
