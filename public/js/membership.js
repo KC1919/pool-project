@@ -122,6 +122,8 @@ async function saveMemberToDb(memberData) {
         const jsonResp = await response.json();
 
         alert(jsonResp.message);
+
+        window.location.reload();
     } catch (error) {
         console.log("Failed to remove membership from database", error.message);
         alert("Failed to remove membership from database", error.message);
@@ -131,9 +133,9 @@ async function saveMemberToDb(memberData) {
 async function removeMember(e) {
     try {
 
-        const confirmRemove=confirm("Remove the membership?");
+        const confirmRemove = confirm("Remove the membership?");
 
-        if(confirmRemove==true){
+        if (confirmRemove == true) {
             const memberId = e.target.id;
             const rowElem = document.getElementById('table-row-' + memberId);
             rowElem.remove();
@@ -188,7 +190,7 @@ async function editMember(e) {
         const memberData = {
             name,
             mobile,
-            "credit":newCredit
+            "credit": newCredit
         }
 
         editMemberDataDB(memberData)

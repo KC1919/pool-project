@@ -4,7 +4,6 @@ const memberSchema = mongoose.Schema({
     mobile: {
         type: String,
         required: true,
-        unique: true
     },
     name: {
         type: String,
