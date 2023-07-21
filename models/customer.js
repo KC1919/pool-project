@@ -4,7 +4,6 @@ const customerSchema = mongoose.Schema({
     cid: {
         type: String,
         required: true,
-        unique: true
     },
     mobile: {
         type: Number,
