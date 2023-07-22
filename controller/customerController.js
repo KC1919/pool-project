@@ -41,7 +41,7 @@ module.exports.addCustomer = async (req, res) => {
 
         if (data.tableNumber.length == 0) data.tableNumber = 0;
         if (data.tableSize.length == 0) data.tableSize = "none";
-        if (data.mobile.length == 0) data.mobile = "-";
+        if (data.mobile.length == 0) data.mobile = null;
 
         //creating new customer
         const customer = new Customer(data);
