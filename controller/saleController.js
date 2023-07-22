@@ -281,7 +281,7 @@ module.exports.getExpenseByDate = async (req, res) => {
 
         console.log([expenseData]);
 
-        console.log(expenseData.expense[0]);
+        // console.log(expenseData.expense[0]);
 
         res.render('expense.ejs', {
             "expenseData": expenseData != null ? [expenseData] : [],
