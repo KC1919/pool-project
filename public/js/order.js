@@ -224,39 +224,45 @@ async function completeOrder(e) {
     try {
         // console.log(cid);
 
-        const response = await fetch('/order/completeOrder', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "cid": cid
+        const time = prompt("Enter exit time");
+
+        if (time != null) {
+
+            const response = await fetch('/order/completeOrder', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "cid": cid,
+                    "endTime": time
+                })
             })
-        })
 
-        const jsonResp = await response.json();
+            const jsonResp = await response.json();
 
-        // console.log(jsonResp);
+            // console.log(jsonResp);
 
-        const orderAmount = jsonResp.billData.orderAmount;
-        const tableAmount = jsonResp.billData.tableAmount;
-        const totalPayableAmount = jsonResp.billData.totalPayableAmount;
+            const orderAmount = jsonResp.billData.orderAmount;
+            const tableAmount = jsonResp.billData.tableAmount;
+            const totalPayableAmount = jsonResp.billData.totalPayableAmount;
 
-        const completeOrderElem = document.getElementById('complete-order-div');
+            const completeOrderElem = document.getElementById('complete-order-div');
 
-        // console.log(completeOrderElem);
+            // console.log(completeOrderElem);
 
-        for (let i = 1; i <= 3; i++) {
-            if (i == 1) {
-                completeOrderElem.children[i].children[1].innerHTML = tableAmount;
-            } else if (i == 2) {
-                completeOrderElem.children[i].children[1].innerHTML = orderAmount;
-            } else if (i == 3) {
-                completeOrderElem.children[i].children[1].innerHTML = totalPayableAmount;
+            for (let i = 1; i <= 3; i++) {
+                if (i == 1) {
+                    completeOrderElem.children[i].children[1].innerHTML = tableAmount;
+                } else if (i == 2) {
+                    completeOrderElem.children[i].children[1].innerHTML = orderAmount;
+                } else if (i == 3) {
+                    completeOrderElem.children[i].children[1].innerHTML = totalPayableAmount;
+                }
             }
-        }
 
-        completeOrderElem.style.display = "block";
+            completeOrderElem.style.display = "block";
+        }
 
     } catch (error) {
         console.log(error.message);
@@ -312,8 +318,8 @@ async function memshipInput(e) {
 async function finishOrder(e) {
     try {
 
-        const memshipData=document.getElementById('memship-mobile').value;
-        if(memshipData.length==0)
+        const memshipData = document.getElementById('memship-mobile').value;
+        if (memshipData.length == 0)
             alert("If membership exists, kindly apply.")
 
         const confirmFinishOrder = confirm("Click yes to finish the order.")

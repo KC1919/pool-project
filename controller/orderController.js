@@ -348,39 +348,8 @@ module.exports.removeItem = async (req, res) => {
 module.exports.completeOrder = async (req, res) => {
     try {
 
-        // const io = req.app.get("socketio");
-
-        // io.on('connection', socket => {
-        //     console.log("Client connected");
-        //     socket.emit('orderComplete', {
-        //         "data": "done"
-        //     });
-        // })
-
-        // console.log(new Date().getTime());
-
-        const date = new Date();
-
         //data received from frontend, order amount and customer id
         const data = req.body;
-
-        //calculating exit time
-        // const exitTime = date.getTime();
-
-
-
-        //human readable format for end time
-        let endTime = date.toLocaleTimeString('en-GB', {
-            timeZone: 'Asia/Kolkata'
-        });
-
-
-        //removing the seconds
-        endTime = endTime.substring(0, endTime.length - 3);
-
-
-        // console.log(endTime.substring(0,endTime.length-3));
-
 
         //fetching customer details
         const customer = await Customer.findOne({
@@ -393,12 +362,43 @@ module.exports.completeOrder = async (req, res) => {
             'date': 1
         });
 
+
+        const date = new Date();
+
         //calculating exit time
-        const exitTime = new Date(customer.date + " " + endTime).getTime();
+        // const exitTime = date.getTime();
 
-        console.log("My current exit time", new Date(customer.date + " " + endTime).getTime());
+        let exitTime;
 
-        console.log("Current exit time", exitTime);
+        let endTime;
+
+        if (data.endTime == '') {
+            //human readable format for end time
+            endTime = date.toLocaleTimeString('en-GB', {
+                timeZone: 'Asia/Kolkata'
+            });
+
+
+            //removing the seconds
+            endTime = endTime.substring(0, endTime.length - 3);
+
+            //calculating exit time
+            exitTime = new Date(customer.date + " " + endTime).getTime();
+
+            console.log("My current exit time", new Date(customer.date + " " + endTime).getTime());
+        }
+
+
+        // console.log(endTime.substring(0,endTime.length-3));
+        else {
+            endTime = data.endTime;
+            exitTime = new Date(customer.date + " " + endTime).getTime();
+
+            console.log("Current exit time", new Date().getTime());
+
+            console.log("New exit time", new Date(customer.date + " " + endTime).getTime());
+        }
+
 
         let tableAmount = 0;
 
