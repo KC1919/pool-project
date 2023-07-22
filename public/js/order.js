@@ -224,7 +224,15 @@ async function completeOrder(e) {
     try {
         // console.log(cid);
 
-        const time = prompt("Enter exit time");
+        let endTime = new Date().toLocaleTimeString('en-GB', {
+            timeZone: 'Asia/Kolkata'
+        });
+
+
+        //removing the seconds
+        endTime = endTime.substring(0, endTime.length - 3);
+
+        const time = prompt("Enter exit time",endTime);
 
         if (time != null) {
 
