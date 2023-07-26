@@ -45,7 +45,7 @@
             <% expenseData.forEach(expense=>{ %>
 
                 <div class="expense-table-div">
-                    <i><%=expense.date.toISOString().substring(0, 10)%></i>
+                    <i><%=new Date(Date.parse(expense.date)).toDateString()%></i>
                     <table class="table text-center expense-table" id="table">
 
                         <thead class="thead-dark">
