@@ -5,6 +5,8 @@ module.exports.updateSale = async (req, res) => {
     try {
         let saleData = req.body;
 
+        console.log(saleData);
+
         // console.log(new Date().toLocaleString());
         // console.log(new Date().toLocaleDateString());
 
@@ -36,7 +38,7 @@ module.exports.updateSale = async (req, res) => {
                 "date": result.date
             }, {
                 $inc: {
-                    "totalAmount": saleData.amount,
+                    "orderAmount": saleData.amount,
                     "totalProfit": saleData.profit,
                     "totalCustomer": 1
                 }
@@ -145,7 +147,9 @@ module.exports.filterSales = async (req, res) => {
     try {
         const filterDate = req.params.filterDate;
 
-        // console.log(filterDate);
+        console.log(filterDate);
+
+        console.log(new Date(Date.parse(filterDate)).toDateString());
 
         const sales = await Sale.find({
             'date': filterDate
@@ -162,7 +166,12 @@ module.exports.filterSales = async (req, res) => {
         });
 
     } catch (error) {
-        console.log("Failed to fetch sales");
+        console.log("Failed to fetch sales, server error", error);
+        res.status(500).json({
+            message: "Failed to fetch sales, server error",
+            success: false,
+            error: error.message
+        })
     }
 }
 

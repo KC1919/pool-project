@@ -484,7 +484,8 @@ module.exports.finishOrder = async (req, res) => {
             "cid": cid
         }, {
             "totalPaidAmount": 1,
-            "date": 1
+            "date": 1,
+            "orderAmount":1
         });
 
         Customer.updateOne({
@@ -503,18 +504,21 @@ module.exports.finishOrder = async (req, res) => {
                 // console.log(customer.date);
                 // console.log(customer.totalPaidAmount);
 
+                // console.log(customer.orderAmount);
+
                 const saleUpdateResult = await Sale.findOneAndUpdate({
                     "date": customer.date
                 }, {
                     $inc: {
                         "totalCustomer": 1,
-                        "totalAmount": customer.totalPaidAmount
+                        "orderAmount": customer.orderAmount,
+                        "tableAmount": customer.totalPaidAmount - customer.orderAmount,
                     }
                 }, {
                     upsert: true
                 })
 
-                // console.log(saleUpdateResult);
+                console.log(saleUpdateResult);
 
                 res.status(200).json({
                     "message": "payment status and sales updated",

@@ -6,7 +6,12 @@ const saleSchema = mongoose.Schema({
         required: true,
         // default: new Date().toLocaleDateString()
     },
-    totalAmount: {
+    orderAmount: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    tableAmount: {
         type: Number,
         required: true,
         default: 0
