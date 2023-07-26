@@ -38,16 +38,18 @@
                 <!-- <th scope="col">#</th> -->
                 <th scope="col">Date</th>
                 <th scope="col">No. of Customers</th>
-                <th scope="col">Sale</th>
+                <th scope="col">Item Sale</th>
+                <th scope="col">Table Sale</th>
                 <!-- <th scope="col">Profit</th> -->
               </tr>
             </thead>
             <tbody id="table-body">
               <% salesData.forEach(sales=>{ %>
               <tr class="table-row" id=table-row-<%=sales.date%>>
-                  <td scope="row"><%=sales.date%></td>
+                  <td scope="row"> <%= new Date(Date.parse(sales.date)).toDateString() %></td>
                   <td><%=sales.totalCustomer%></td>
-                  <td>Rs. <%=sales.totalAmount%></td>
+                  <td>Rs. <%=sales.orderAmount%></td>
+                  <td>Rs. <%=sales.tableAmount%></td>
               </tr>
               <%})%>
       

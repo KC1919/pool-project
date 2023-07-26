@@ -50,6 +50,7 @@
           <th scope="col">Date</th>
           <th scope="col">Entry Time</th>
           <th scope="col">Exit Time</th>
+          <th scope="col">Total Bill</th>
         </tr>
       </thead>
       <tbody id="table-body">
@@ -65,6 +66,7 @@
             <td><%=customer.tableSize%></td>
             <td><%=customer.date%></td>
             <td><%=customer.time%></td>
+            <!-- <td><%=customer.totalPaidAmount%></td> -->
             <td>
               <% if (customer.paymentStatus==true) { %>
                 <%=customer.exitTime%>
@@ -72,6 +74,16 @@
                 
               <% } %>
             </td>
+
+            <td>
+              <% if (customer.paymentStatus==true) { %>
+                Rs. <%=customer.totalPaidAmount%>
+              <% }else{%>
+                
+              <% } %>
+            </td>
+
+
             <td>
               <button class="view-btn" id=<%= customer.cid %>
                 onclick="handleCustomerClick(event)">View
