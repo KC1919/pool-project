@@ -24,17 +24,23 @@ module.exports.updateSale = async (req, res) => {
             //then update the sale
 
             //updated data
-            const data = {
-                "date": result.date,
-                "totalAmount": parseInt(saleData.amount) + result.totalAmount,
-                "totalProfit": parseInt(saleData.profit) + result.totalProfit,
-                "totalCustomer": parseInt(1) + result.totalCustomer
-            }
+            // const data = {
+            //     "date": result.date,
+            //     "totalAmount": parseInt(saleData.amount) + result.totalAmount,
+            //     "totalProfit": parseInt(saleData.profit) + result.totalProfit,
+            //     "totalCustomer": parseInt(1) + result.totalCustomer
+            // }
 
             //updating the sale
             Sale.findOneAndUpdate({
                 "date": result.date
-            }, data).then(result => {
+            }, {
+                $inc: {
+                    "totalAmount": saleData.amount,
+                    "totalProfit": saleData.profit,
+                    "totalCustomer": 1
+                }
+            }).then(result => {
                 if (result != null) {
                     res.status(200).json({
                         message: "Sale updated",
