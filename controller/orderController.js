@@ -359,7 +359,8 @@ module.exports.completeOrder = async (req, res) => {
             'entryTime': 1,
             'totalAmount': 1,
             'orderAmount': 1,
-            'date': 1
+            'date': 1,
+            'time': 1
         });
 
 
@@ -392,11 +393,35 @@ module.exports.completeOrder = async (req, res) => {
         // console.log(endTime.substring(0,endTime.length-3));
         else {
             endTime = data.endTime;
-            exitTime = new Date(customer.date + " " + endTime).getTime();
 
-            console.log("Current exit time", new Date().getTime());
+            if (endTime < customer.time) {
+                let nextDay = new Date(new Date().getTime() + (24 * 60 * 60 * 1000))
 
-            console.log("New exit time", new Date(customer.date + " " + endTime).getTime());
+                let nextDate = nextDay.toISOString('en-GB', {
+                    timeZone: 'Asia/Kolkata'
+                }).substring(0, 10)
+
+                exitTime = new Date(nextDate + " " + endTime).getTime();
+
+                // console.log(exitTime);
+
+                // console.log(nextDay.toDateString());
+                // console.log(nextDay.toISOString('en-GB', {
+                //     timeZone: 'Asia/Kolkata'
+                // }).substring(0, 10));
+
+                // console.log(nextDate);
+
+                // console.log(nextDay.toLocaleDateString('en-GB', {
+                //     timeZone: 'Asia/Kolkata'
+                // }).substring(0,10));
+            } else {
+                exitTime = new Date(customer.date + " " + endTime).getTime();
+
+                // console.log("Current exit time", new Date().getTime());
+
+                // console.log("New exit time", new Date(customer.date + " " + endTime).getTime());
+            }
         }
 
 
@@ -404,9 +429,15 @@ module.exports.completeOrder = async (req, res) => {
 
         if (customer.tableSize != "none") {
 
+            console.log(customer.time);
+            console.log(endTime);
             //calculating time duration played
-            const timeDiff = parseInt(exitTime) - parseInt(customer.entryTime);
+            timeDiff = parseInt(exitTime) - parseInt(customer.entryTime);
 
+            console.log(timeDiff);
+            if (timeDiff < 0) {
+                timeDiff = -timeDiff % 12;
+            }
 
             //fetching price for table size
             const tableAmountPerHour = await Table.findOne({
@@ -485,7 +516,7 @@ module.exports.finishOrder = async (req, res) => {
         }, {
             "totalPaidAmount": 1,
             "date": 1,
-            "orderAmount":1
+            "orderAmount": 1
         });
 
         Customer.updateOne({
