@@ -22,12 +22,12 @@ body {
     display: flex;
     width: 30%;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 .heading-div {
     width: fit-content;
-    margin: 0.3rem 25rem;
+    margin: 0.3rem 15rem;
     align-items: center;
     text-align: center;
     justify-content: center;
