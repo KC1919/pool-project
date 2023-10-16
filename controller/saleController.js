@@ -126,7 +126,8 @@ module.exports.getSales = async (req, res) => {
 
         res.render('sales.ejs', {
             "salesData": salesData,
-            "salesCount": salesCount
+            "salesCount": salesCount,
+            "filterStatus": false
         });
 
         // res.status(200).json({
@@ -143,37 +144,37 @@ module.exports.getSales = async (req, res) => {
     }
 }
 
-module.exports.filterSales = async (req, res) => {
-    try {
-        const filterDate = req.params.filterDate;
+// module.exports.filterSales = async (req, res) => {
+//     try {
+//         const filterDate = req.params.filterDate;
 
-        console.log(filterDate);
+//         // console.log(filterDate);
 
-        console.log(new Date(Date.parse(filterDate)).toDateString());
+//         // console.log(new Date(Date.parse(filterDate)).toDateString());
 
-        const sales = await Sale.find({
-            'date': filterDate
-        }).lean().sort({
-            "date": -1
-        });
+//         const sales = await Sale.find({
+//             'date': filterDate
+//         }).lean().sort({
+//             "date": -1
+//         });
 
-        // console.log(sales);
-        const salesCount = sales.length;
+//         // console.log(sales);
+//         const salesCount = sales.length;
 
-        res.render("sales.ejs", {
-            "salesData": sales,
-            "salesCount": salesCount
-        });
+//         res.render("sales.ejs", {
+//             "salesData": sales,
+//             "salesCount": salesCount
+//         });
 
-    } catch (error) {
-        console.log("Failed to fetch sales, server error", error);
-        res.status(500).json({
-            message: "Failed to fetch sales, server error",
-            success: false,
-            error: error.message
-        })
-    }
-}
+//     } catch (error) {
+//         console.log("Failed to fetch sales, server error", error);
+//         res.status(500).json({
+//             message: "Failed to fetch sales, server error",
+//             success: false,
+//             error: error.message
+//         })
+//     }
+// }
 
 module.exports.getExpense = async (req, res) => {
     try {
@@ -305,6 +306,69 @@ module.exports.getExpenseByDate = async (req, res) => {
         console.log("Failed to render expense page, server error", error);
         res.status(500).json({
             'message': "Failed to render expense data, server error",
+            error: error.message
+        })
+    }
+}
+
+module.exports.filterSaleByDates = async (req, res) => {
+    try {
+        const startDate = req.params.startDate;
+        const endDate = req.params.endDate;
+
+        console.log(startDate);
+        console.log(endDate);
+
+        console.log(new Date(startDate));
+        console.log(new Date(endDate));
+
+        // console.log(new Date(Date.parse(startDate)).toDateString());
+        // console.log(new Date(Date.parse(endDate)).toDateString());
+
+        const sales = await Sale.find({
+            'createdAt': {
+                $gte: new Date(startDate),
+                $lte: new Date(endDate)
+            }
+        })
+
+        let totalOrderAmount = 0;
+        let totalTableAmount = 0;
+        let totalCustomers = 0;
+
+        sales.forEach(sale => {
+            totalOrderAmount += sale.orderAmount;
+            totalTableAmount += sale.tableAmount;
+            totalCustomers += sale.totalCustomer;
+        })
+
+        const salesData = {
+            "totalCustomer": totalCustomers,
+            "tableAmount": totalTableAmount,
+            "orderAmount": totalOrderAmount,
+            "startDate": startDate,
+            "endDate": endDate
+        }
+
+        // console.log(totalSaleAmount);
+        // console.log(totalCustomers);
+
+        // console.log(sales);
+
+        console.log(salesData);
+        const salesCount = sales.length;
+
+        res.render("sales.ejs", {
+            "salesData": [salesData],
+            "salesCount": salesCount,
+            "filterStatus": true
+        });
+
+    } catch (error) {
+        console.log("Failed to fetch sales, server error", error);
+        res.status(500).json({
+            message: "Failed to fetch sales, server error",
+            success: false,
             error: error.message
         })
     }
