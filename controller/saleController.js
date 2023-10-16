@@ -319,22 +319,24 @@ module.exports.filterSaleByDates = async (req, res) => {
         console.log(startDate);
         console.log(endDate);
 
-        console.log(new Date(startDate));
-        console.log(new Date(endDate));
+        // console.log(new Date(startDate));
+        // console.log(new Date(endDate));
 
         // console.log(new Date(Date.parse(startDate)).toDateString());
         // console.log(new Date(Date.parse(endDate)).toDateString());
 
         const sales = await Sale.find({
-            'createdAt': {
-                $gte: new Date(startDate),
-                $lte: new Date(endDate)
+            'date': {
+                $gte: startDate,
+                $lte: endDate
             }
         })
 
         let totalOrderAmount = 0;
         let totalTableAmount = 0;
         let totalCustomers = 0;
+
+        // console.log(sales);
 
         sales.forEach(sale => {
             totalOrderAmount += sale.orderAmount;
