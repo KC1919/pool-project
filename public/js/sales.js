@@ -10,10 +10,24 @@ if (localStorage.getItem("salesPageNumber") != null && (parseInt(localStorage.ge
 
 async function filterByDate(e) {
     try {
-        const filterDate = document.getElementById('date-input-filter').value;
+        const startDate = document.getElementById('start-date-input-filter').value;
+        const endDate = document.getElementById('end-date-input-filter').value;
 
-        if (filterDate.length > 0) {
-            window.location.href = `/sale/filterSales/${filterDate}`
+        if (startDate.length > 0 && endDate.length > 0) {
+            // const response = await fetch('/sale/filter', {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     },
+            //     body: JSON.stringify({
+            //         "startDate": startDate,
+            //         "endDate": endDate
+            //     })
+            // });
+
+            window.location.href=`/sale/filter/${startDate}/${endDate}`
+
+            
         } else {
             alert("Select Date");
         }

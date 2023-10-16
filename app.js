@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const ejs = require('ejs');
 const PORT = 3000;
-const path = require('path')
-const socketio = require('socket.io');
+// const path = require('path')
+// const socketio = require('socket.io');
 
 
 const cookieParser = require('cookie-parser');
@@ -33,15 +33,9 @@ const tableRouter = require('./routes/tableRoutes');
 const membershipRouter = require('./routes/membershipRoutes');
 
 
+// const io = socketio(server);
 
-const server = app.listen(PORT, (err) => {
-    console.log('Server listening on port: ' + PORT);
-    connectDb();
-})
-
-const io = socketio(server);
-
-app.set("socketio", io);
+// app.set("socketio", io);
 
 
 app.get('/', (req, res) => {
@@ -61,6 +55,12 @@ app.use('/order', orderRouter);
 app.use('/sale', saleRouter);
 app.use('/table', tableRouter);
 app.use('/membership', membershipRouter);
+
+
+app.listen(PORT, (err) => {
+    console.log('Server listening on port: ' + PORT);
+    connectDb();
+})
 
 // io.on('connection', socket => {
 //     console.log('Client connected');

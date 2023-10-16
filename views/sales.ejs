@@ -17,8 +17,9 @@
     <div class="header-div">
 
         <div class="search-bar-btn-div">
-            <div class="search-bar-div">
-              <input id="date-input-filter" class="form-control" type="date" placeholder="Search by date" onfocus="this.showPicker()">
+            <div class="search-bar-div" style="display: flex;justify-content: space-between;">
+              <input id="start-date-input-filter" class="form-control" type="date" placeholder="Choose start date" onfocus="this.showPicker()">
+              <input id="end-date-input-filter" class="form-control" type="date" placeholder="Choose end date" onfocus="this.showPicker()">
             </div>
     
             <div class="search-btn-div">
@@ -46,7 +47,11 @@
             <tbody id="table-body">
               <% salesData.forEach(sales=>{ %>
               <tr class="table-row" id=table-row-<%=sales.date%>>
+                <% if(filterStatus==true) { %>
+                  <td scope="row"> <%= new Date(Date.parse(sales.startDate)).toDateString() %> to <%= new Date(Date.parse(sales.endDate)).toDateString() %></td>
+                <%}else{%>
                   <td scope="row"> <%= new Date(Date.parse(sales.date)).toDateString() %></td>
+                <%}%>
                   <td><%=sales.totalCustomer%></td>
                   <td>Rs. <%=sales.orderAmount%></td>
                   <td>Rs. <%=sales.tableAmount%></td>
