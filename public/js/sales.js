@@ -14,20 +14,14 @@ async function filterByDate(e) {
         const endDate = document.getElementById('end-date-input-filter').value;
 
         if (startDate.length > 0 && endDate.length > 0) {
-            // const response = await fetch('/sale/filter', {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     },
-            //     body: JSON.stringify({
-            //         "startDate": startDate,
-            //         "endDate": endDate
-            //     })
-            // });
 
-            window.location.href=`/sale/filter/${startDate}/${endDate}`
+            if (startDate <= endDate) {
+                window.location.href = `/sale/filter/${startDate}/${endDate}`
+            } else {
+                alert("Start date cannot be less than End date")
+            }
 
-            
+
         } else {
             alert("Select Date");
         }
