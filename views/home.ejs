@@ -11,17 +11,33 @@
     />
   </head>
 
-  <body>
-    <div>
-      <div style="margin: 1rem auto; width: fit-content">
-        <h2>Welcome to the world of Snooker</h2>
+  <body style="margin: 0; box-sizing: border-box;padding: 0; color: azure;">
+    <div style="height: 90vh; width: 100%; background-image: url(img/snook2.avif);">
+      <div style="margin: 0 auto; width: fit-content; padding-top: 2rem;" >
+        <h2 style="color: azure;">Welcome to the world of Snooker</h2>
       </div>
 
-      <div style="width: fit-content; margin: 1rem auto;">
+      <!-- <div style="width: fit-content; margin: 1rem auto;">
         <a href="/auth/login" style="text-decoration: none"
           ><button class="btn btn-primary">Sign in</button
         ></a>
-      </div>
+      </div> -->
+
+      <div style="width: fit-content; margin: 5rem auto;">
+        <form class="login-form" id="login-form" style="text-align: center;" action="/auth/login" method="post">
+            <div class="input-div" style="margin: 1rem;">
+                <label for="email" style="margin-bottom: 0.5rem;"><em>Email</em></label>
+                <input class="form-control" type="email" name="email">
+            </div>
+            <div class="input-div" style="margin: 1rem;">
+                <label for="email" style="margin-bottom: 0.5rem;"><em>Password</em></label>
+                <input class="form-control" type="password" name="password">
+            </div>
+            <div style="margin: 1.5rem;">
+                <button class="btn btn-primary btn-sm" type="submit">Login</button>
+            </div>
+        </form>
+    </div>
     </div>
   </body>
 </html>
