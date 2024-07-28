@@ -60,10 +60,11 @@ async function addExpense(e) {
 
 async function filterByDate(e) {
     try {
-        const filterDate = document.getElementById('date-input-filter').value;
+        const startDate = document.getElementById('start-date-input-filter').value;
+        const endDate = document.getElementById('end-date-input-filter').value;
 
-        if (filterDate.length > 0) {
-            window.location.href = `/sale/expenses/${filterDate}`
+        if (startDate.length > 0 && endDate.length > 0) {
+            window.location.href = `/sale/expenses/${startDate}/${endDate}`
         } else {
             alert("Select Date");
         }

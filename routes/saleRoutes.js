@@ -11,6 +11,6 @@ router
     .get('/filter/:startDate/:endDate', verifyUser, saleController.filterSaleByDates)
     .get('/expenses', verifyUser, saleController.getExpense)
     .post('/addExpense', verifyUser, saleController.addExpense)
-    .get('/expenses/:date', verifyUser, saleController.getExpenseByDate)
+    .get('/expenses/:startDate/:endDate', verifyUser, saleController.getExpenseByDate)
 
 module.exports = router;

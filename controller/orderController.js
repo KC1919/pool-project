@@ -2,18 +2,12 @@ const Customer = require('../models/customer');
 const Table = require('../models/table');
 const Item = require('../models/item');
 const app = require('express')();
-const io = app.get("socketio");
 const Sale = require('../models/sale');
 
 
 
 module.exports.getCustomerOrder = async (req, res) => {
     try {
-
-        // const io = req.app.get("socketio")
-        // io.on('connection', socket => {
-        //     console.log("Client connected");
-        // })
 
         //extracting customer id from the request parameter
         const cid = req.params.cid;
@@ -33,10 +27,6 @@ module.exports.getCustomerOrder = async (req, res) => {
         customerOrder.forEach(async item => {
             itemIds.push(item.itemId);
         })
-
-        // console.log(customerOrder);
-
-        // console.log(itemIds);
 
         //fetching the item details of all the items present in the order
         const itemData = await Item.find({
@@ -62,23 +52,17 @@ module.exports.getCustomerOrder = async (req, res) => {
         //array to store the updated order with item details for all the items in the order 
         let updatedCustomerOrder = []
 
-        // customerOrder.forEach(order=>{
-
-        //updating each item details present in the order
+        //updating each item details present in the order, (adding SP & item name)
         for (let i = 0; i < customerOrder.length; i++) {
             const itemData = itemsMap.get(customerOrder[i].itemId);
             let newOrder = JSON.parse(JSON.stringify(customerOrder[i]));
-            newOrder.costPrice = itemData.costPrice;
             newOrder.sellPrice = itemData.sellPrice;
             newOrder.itemName = itemData.name;
             updatedCustomerOrder.push(newOrder);
         }
 
-        // console.log(updatedCustomerOrder);
-
+        // fetching all the items
         const items = await Item.find({});
-
-        // console.log(items);
 
         //sending the order details to the orders page of the customer
         res.render('order.ejs', {
@@ -119,7 +103,7 @@ module.exports.addToOrder = async (req, res) => {
             'itemId': orderDetails.itemId
         });
 
-        const amount = item.sellPrice * orderDetails.qty;
+        const orderAmount = item.sellPrice * orderDetails.qty;
 
         //fetching the customer details
         const customer = await Customer.findOne({
@@ -150,10 +134,9 @@ module.exports.addToOrder = async (req, res) => {
             const updateItem = {
                 "itemId": orderDetails.itemId,
                 "qty": orderDetails.qty + presentItem.qty,
-                "amount": orderDetails.amount + presentItem.amount
+                "amount": orderAmount
             }
 
-            // console.log(updateItem);
 
             //updating the item in the orders list of the customer
             Customer.updateOne({
@@ -165,7 +148,7 @@ module.exports.addToOrder = async (req, res) => {
                     "order.$.amount": updateItem.amount
                 },
                 $inc: {
-                    "orderAmount": amount
+                    "orderAmount": orderAmount
                 }
             }).then(async result => {
 
@@ -215,7 +198,7 @@ module.exports.addToOrder = async (req, res) => {
                     'order': orderDetails
                 },
                 $inc: {
-                    'orderAmount': amount
+                    'orderAmount': orderAmount
                 }
             }).then(async result => {
 
@@ -366,9 +349,6 @@ module.exports.completeOrder = async (req, res) => {
 
         const date = new Date();
 
-        //calculating exit time
-        // const exitTime = date.getTime();
-
         let exitTime;
 
         let endTime;
@@ -389,8 +369,6 @@ module.exports.completeOrder = async (req, res) => {
             console.log("My current exit time", new Date(customer.date + " " + endTime).getTime());
         }
 
-
-        // console.log(endTime.substring(0,endTime.length-3));
         else {
             endTime = data.endTime;
 
@@ -403,24 +381,8 @@ module.exports.completeOrder = async (req, res) => {
 
                 exitTime = new Date(nextDate + " " + endTime).getTime();
 
-                // console.log(exitTime);
-
-                // console.log(nextDay.toDateString());
-                // console.log(nextDay.toISOString('en-GB', {
-                //     timeZone: 'Asia/Kolkata'
-                // }).substring(0, 10));
-
-                // console.log(nextDate);
-
-                // console.log(nextDay.toLocaleDateString('en-GB', {
-                //     timeZone: 'Asia/Kolkata'
-                // }).substring(0,10));
             } else {
                 exitTime = new Date(customer.date + " " + endTime).getTime();
-
-                // console.log("Current exit time", new Date().getTime());
-
-                // console.log("New exit time", new Date(customer.date + " " + endTime).getTime());
             }
         }
 
@@ -459,10 +421,6 @@ module.exports.completeOrder = async (req, res) => {
 
         //total amount = tableAmount + orderAmount
         const totalPayableAmount = tableAmount + customer.orderAmount;
-
-        // console.log(customer.totalAmount);
-        // console.log(tableAmount);
-        // console.log(totalPayableAmount);
 
         const billData = {
             "orderAmount": customer.orderAmount,
@@ -528,14 +486,6 @@ module.exports.finishOrder = async (req, res) => {
             }
         }).then(async result => {
             if (result.matchedCount != 0) {
-
-                // let currentDate = new Date().toISOString().replace(/T.*/,'').split('-').join('-')
-                // console.log(currentDate);
-
-                // console.log(customer.date);
-                // console.log(customer.totalPaidAmount);
-
-                // console.log(customer.orderAmount);
 
                 const saleUpdateResult = await Sale.findOneAndUpdate({
                     "date": customer.date
