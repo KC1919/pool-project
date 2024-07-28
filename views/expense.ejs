@@ -18,7 +18,11 @@
 
         <div class="search-bar-btn-div">
             <div class="search-bar-div">
-              <input id="date-input-filter" class="form-control" type="date" placeholder="Search by date" onfocus="this.showPicker()">
+              <input id="start-date-input-filter" class="form-control" type="date" placeholder="Search by date" onfocus="this.showPicker()">
+            </div>
+
+            <div class="search-bar-div">
+              <input id="end-date-input-filter" class="form-control" type="date" placeholder="Search by date" onfocus="this.showPicker()">
             </div>
     
             <div class="search-btn-div">
@@ -38,7 +42,11 @@
     <div class="sales-table-div">
 
         <div class="expense-date-div">
-            <h6>Date</h6>
+            <%if(startDate && endDate && totalExpense){%>
+                <p><p style="text-decoration: underline; display: inline-block;">Total Expense from <i><%=startDate%> to <%=endDate%>:</p> </i><strong style="margin-left: 1rem;">Rs. <%=totalExpense%></strong></p>
+            <%}else{%>
+                <h6>Date</h6>
+            <%}%>
         </div>
 
         <div class="expense-data-div">
@@ -69,7 +77,7 @@
                 </div>
 
                 <div class="day-total-expense-div">
-                    <p>Total Expense : <strong><%=expense.totalCost%></strong></p>
+                    <h6>Total Expense : Rs. <%=expense.totalCost%></h6>
                 </div>
                 <hr>
             <%})%>

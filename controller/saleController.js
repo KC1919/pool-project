@@ -181,10 +181,11 @@ module.exports.getExpense = async (req, res) => {
 
         const expenseData = await Expense.find({});
 
-        // console.log(expenseData); 
-
         res.render('expense.ejs', {
             "expenseData": expenseData != null ? expenseData : [],
+            "totalExpense": null,
+            "startDate": null,
+            "endDate": null
         });
     } catch (error) {
         console.log("Failed to render expense page, server error", error);
@@ -204,10 +205,6 @@ module.exports.addExpense = async (req, res) => {
             amount
         } = req.body;
 
-        // console.log(date);
-        // const ISODate = date.split('-').reverse().join('-');
-
-        // console.log(ISODate);
 
         //converting date from string to date object
         const myDate = new Date(date)
@@ -232,7 +229,6 @@ module.exports.addExpense = async (req, res) => {
                     'totalCost': amount
                 }
             }).then(result => {
-                // console.log(result);
                 res.status(200).json({
                     'message': "Expense updated successfully",
                     success: true
@@ -256,7 +252,6 @@ module.exports.addExpense = async (req, res) => {
             }
 
             Expense.create(dataObject).then(result => {
-                // console.log(result);
                 res.status(200).json({
                     'message': "Expense added successfully",
                     success: true
@@ -284,24 +279,51 @@ module.exports.addExpense = async (req, res) => {
 module.exports.getExpenseByDate = async (req, res) => {
     try {
 
-        const date = req.params.date;
-
-        // const ISODate = date.split('-').reverse().join('-');
+        const startDate = req.params.startDate;
+        const endDate = req.params.endDate;
 
         //converting date from string to date object
-        const myDate = new Date(date);
+        const myStartDate = new Date(startDate);
+        const myEndDate = new Date(endDate);
 
-        const expenseData = await Expense.findOne({
-            'date': myDate
-        });
+        if (startDate && endDate) {
 
-        console.log([expenseData]);
+            if (startDate == endDate) {
+                const expenseData = await Expense.findOne({
+                    'date': startDate
+                });
 
-        // console.log(expenseData.expense[0]);
+                res.render('expense.ejs', {
+                    "expenseData": expenseData != null ? [expenseData] : [],
+                    "totalExpense": expenseData.totalCost,
+                    "startDate": startDate,
+                    "endDate": endDate
+                });
+            }
+            else if (startDate != endDate) {
+                const expenseData = await Expense.find({
+                    'date': {
+                        $gte: myStartDate,
+                        $lte: myEndDate
+                    }
+                });
 
-        res.render('expense.ejs', {
-            "expenseData": expenseData != null ? [expenseData] : [],
-        });
+                let totalExpense = 0;
+
+                for (let i = 0; i < expenseData.length; i++) {
+                    const expense = expenseData[i];
+                    totalExpense += expense.totalCost;
+                }
+
+                res.render('expense.ejs', {
+                    "expenseData": expenseData != null ? expenseData : [],
+                    "totalExpense": totalExpense,
+                    "startDate": startDate,
+                    "endDate": endDate
+                });
+            }
+        }
+
     } catch (error) {
         console.log("Failed to render expense page, server error", error);
         res.status(500).json({
@@ -315,15 +337,6 @@ module.exports.filterSaleByDates = async (req, res) => {
     try {
         const startDate = req.params.startDate;
         const endDate = req.params.endDate;
-
-        console.log(startDate);
-        console.log(endDate);
-
-        // console.log(new Date(startDate));
-        // console.log(new Date(endDate));
-
-        // console.log(new Date(Date.parse(startDate)).toDateString());
-        // console.log(new Date(Date.parse(endDate)).toDateString());
 
         const sales = await Sale.find({
             'date': {
@@ -352,12 +365,6 @@ module.exports.filterSaleByDates = async (req, res) => {
             "endDate": endDate
         }
 
-        // console.log(totalSaleAmount);
-        // console.log(totalCustomers);
-
-        // console.log(sales);
-
-        console.log(salesData);
         const salesCount = sales.length;
 
         res.render("sales.ejs", {

@@ -8,36 +8,10 @@ module.exports.addCustomer = async (req, res) => {
     try {
         const data = req.body;
 
-        // console.log(data);
-
         //generating unique customer id
         data.cid = v4();
 
-        // console.log(new Date().toLocaleTimeString('en-GB', {
-        //     timeZone: 'Asia/Kolkata'
-        // }));
-
-        // console.log("Selected current time", new Date(data.date + " " + data.time).getTime());
-
-        // console.log("Other selected current time",new Date().toLocaleTimeString('en-GB', {
-        //     timeZone: 'Asia/Kolkata'
-        // }).getTime());
-
-        // console.log("Current time", new Date().getTime());
-
-        // data.entryTime = new Date().getTime();
-
         data.entryTime = new Date(data.date + " " + data.time).getTime();
-
-        // data.time = new Date().toLocaleTimeString('en-GB', {
-        //     timeZone: 'Asia/Kolkata'
-        // });
-
-        // data.time = new Date(data.date + " " + data.time).toLocaleTimeString('en-GB', {
-        //     timeZone: 'Asia/Kolkata'
-        // })
-
-        // console.log(data);
 
         if (data.tableNumber.length == 0) data.tableNumber = 0;
         if (data.tableSize.length == 0) data.tableSize = "none";
@@ -84,18 +58,7 @@ module.exports.allCustomers = async (req, res) => {
 
         const customersCount = await Customer.countDocuments();
 
-        // console.log(customersCount);
-
-        // const customers = await Customer.find({}).lean().sort({
-        //     "date": -1,
-        //     "time": -1
-        // });
-
-        // console.log(customers);
-
         const tableData = await Table.find({});
-
-        // console.log(tableData);
 
         res.render("customer.ejs", {
             "customers": customer,

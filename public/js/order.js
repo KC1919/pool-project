@@ -92,16 +92,12 @@ async function placeOrder(e) {
             alert("Insufficient Stock for the selected item");
         } else {
             orderForm.reset();
-            // closeForm(null);
 
             //creating new row with customer data
             const tableBody = document.getElementById('table-body');
 
             const newTableRow = document.createElement('tr');
             newTableRow.setAttribute("class", "table-row");
-
-            console.log(pricePerItem);
-            // console.log(itemQty);
 
             for (let i = 0; i <= 3; i++) {
                 const td = document.createElement('td');
@@ -131,8 +127,6 @@ async function placeOrder(e) {
             newTableRow.setAttribute('id', 'table-row-' + itemId);
 
             tableBody.appendChild(newTableRow);
-
-            // console.log(cid);
 
             const orderData = {
                 cid,
